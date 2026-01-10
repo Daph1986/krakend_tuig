@@ -1,6 +1,8 @@
-from django.urls import path
-from .views import home
+Krakend Tuig website
+======
 
-urlpatterns = [
-    path('', home, name='home'),
-]
+**Welcome to my company website and portfolio site!**
+
+<img src="static/img/logo.webp" alt="Logo" width="75%" height="75%">
+
+
