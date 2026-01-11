@@ -1,0 +1,93 @@
+{% load static %}
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-xl bg-marine navbar-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="hamburger_menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbar">
+      <div class="offcanvas-header bg-marine">
+        <button type="button" class="btn-close btn-close-sand" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-center flex-grow-1 pe-5 me-auto mb-2 mb-lg-0">
+           <li class="nav-item {% if request.path == '/home/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              <i class="fa-solid fa-house"></i>
+            </a>
+          </li>
+          <li class="nav-item {% if request.path == '/contact/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              Contact
+            </a>
+          </li>
+          <li class="nav-item {% if request.path == '/over_ons/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              Leer ons kennen
+            </a>
+          </li>
+          <li class="nav-item {% if request.path == '/doe_mee/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              Doe mee
+            </a>
+          </li>
+          <li class="nav-item {% if request.path == '/optredens/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              Optredens
+            </a>
+          </li>
+          <li class="nav-item {% if request.path == '/impressie/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              Foto’s & video’s
+            </a>
+          </li>
+          <li class="nav-item {% if request.path == '/vrienden_&_sponsers/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              Vrienden & Sponsors
+            </a>
+          </li>
+          <li class="nav-item {% if request.path == '/nl/accounts/login/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              <i class="fa-solid fa-user me-2"></i>Inloggen
+            </a>
+          </li>
+          <!-- Achter de login -->
+          {% if request.user.is_authenticated %}
+          {% if request.user.is_superuser %}
+          <li
+            class="nav-item {% if request.path == '/nl/accounts/profiel/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              Profiel
+            </a>
+            <ul class="dropdown-menu bg-grey border-0" aria-labelledby="offcanvasNavbarDropdown5">
+                <li><a href="#" class="dropdown-item">Profiel pagina</a></li>
+                <li><a href="#" class="dropdown-item">Ledenlijst/a></li>
+                <li><a href="#" class="dropdown-item">Liedteksten</a></li>
+                <li><a href="#" class="dropdown-item">Planning optredens</a></li>
+                <li><a href="#" class="dropdown-item">Smoelenboek</a></li>
+              </ul>
+          </li>
+          {% endif %}
+          <li
+            class="nav-item {% if request.path == '/nl/accounts/logout/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+            Log uit
+            </a>
+          </li>
+          {% else %}
+          <!-- Uncomment for safety -->
+          <!-- <li
+            class="nav-item {% if request.path == '/nl/accounts/register/'%}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+              Registreer je
+            </a>
+          </li> -->
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Navbar end -->

@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %} Krakend Tuig Home {% endblock %}
+
+{% block page_header %}
+<div class="hero-image position-relative w-100">
+  <img src="{% static 'img/krakend_tuig_hero.webp' %}" alt="Krakend Tuig Hero" class="img-fluid w-100">
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container mb-10 mt-3">
+  <div class="row text-center mx-3">
+    <h2>Welkom bij shantykoor Krakend Tuig</h2>
+    <div class="col-12">
+      <p>
+        Sinds 2006 brengen wij als Krakend Tuig muziek die je meeneemt op zee – en naar ons hart.
+        Wees welkom om mee te luisteren of mee te doen!
+      </p>
+      <br>
+      <h4>Mededelingen</h4>
+      <p>
+        Leden van Krakend Tuig kunnen hun wachtwoord opvragen bij webmaster.kt@krakendtuig.nl
+      </p>
+    </div>
+  </div>
+</div>
+<div class="slideshow">
+    <div class="slides fade">
+        <img src="{% static 'img/slide1.png' %}" alt="Krakend Tuig 1">
+        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    </div>
+    <div class="slides fade">
+        <img src="{% static 'img/slide2.png' %}" alt="Krakend Tuig 2">
+        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    </div>
+    <div class="slides fade">
+        <img src="{% static 'img/slide3.png' %}" alt="Krakend Tuig 3">
+        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    </div>
+    <div class="slides fade">
+        <img src="{% static 'img/slide4.png' %}" alt="Krakend Tuig 4">
+        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    </div>
+    <div class="slides fade">
+        <img src="{% static 'img/slide5.png' %}" alt="Krakend Tuig 5">
+        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    </div>
+    <div class="slides fade">
+        <img src="{% static 'img/slide6.png' %}" alt="Krakend Tuig 6">
+        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    </div>
+    <div class="slides fade">
+        <img src="{% static 'img/slide7.png' %}" alt="Krakend Tuig 7">
+        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    </div>
+    <div class="slides fade">
+        <img src="{% static 'img/slide8.png' %}" alt="Krakend Tuig 8">
+        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    </div>
+    <!-- Navigation -->
+    <div class="dots-container text-center">
+        <span class="dot" onclick="currentSlide(1)"></span> 
+        <span class="dot" onclick="currentSlide(2)"></span> 
+        <span class="dot" onclick="currentSlide(3)"></span> 
+        <span class="dot" onclick="currentSlide(4)"></span> 
+        <span class="dot" onclick="currentSlide(5)"></span> 
+        <span class="dot" onclick="currentSlide(6)"></span> 
+        <span class="dot" onclick="currentSlide(7)"></span> 
+        <span class="dot" onclick="currentSlide(8)"></span> 
+    </div>
+    <!-- Photocredit -->
+    <div class="slideshow-credit text-center mt-2">
+        Foto's: Fred Brave
+    </div>
+</div>
+<div class="mb-10"></div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{% endblock %}
+
+<script src="{% static 'js/hero_slideshow.js' %}"></script>
