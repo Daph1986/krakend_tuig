@@ -84,6 +84,10 @@ ul, li {
   display: block;
 }
 
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: #A65A2A;
+}
 /* --------------------------- Toasts ---------------------------- */
 
 .message-container {
@@ -126,8 +130,9 @@ ul, li {
   bottom: 30px;
   width: 100%;
   text-align: center;
-  font-size: 2rem;
+  font-size: 25px;
   color: #E2D8C9;
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .credit {
@@ -143,6 +148,52 @@ ul, li {
   object-fit: cover;
 }
 
+.sponsor-intro img {
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.sponsor-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.sponsor-link:hover {
+  color:#25324A;
+}
+
+.carousel {
+  position: relative;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+ position: absolute !important;
+  top: 50% !important;
+  bottom: auto !important;
+  transform: translateY(-50%);
+  height: auto;
+  width: 5%;
+  align-items: center;
+  opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #25324A;
+  border-radius: 50%;
+  padding: 10px;
+}
+
 /* --------------------------- Footer ---------------------------- */
 
 footer {
@@ -151,23 +202,12 @@ footer {
   color: #FFF;
 }
 
-footer a {
-  text-decoration: none;
-}
-
-.footer_icons {
-  margin-right: 10px;
-  font-weight: bold;
+.footer-text {
+  line-height: 1.4;
 }
 
 .footer-copyright {
   font-size: 12px;
-}
-
-.footer-link {
-  color: #000;
-  text-decoration: none;
-  position: relative;
 }
 
 .footer-link::before {
@@ -222,6 +262,15 @@ footer a {
     height: 250px;
   }
 
+  .special-img {
+    width: 250px;
+  }
+
+  .caption {
+    bottom: 27px;
+    font-size: 15px;
+  }
+
   .gtt-btn {
     bottom: 120px;
     right: 30px;
@@ -235,37 +284,7 @@ footer a {
     width: 80%;
     right: 40px;
   }
-
-  .mockups {
-    width: 250px;
-  }
-
-  .blossom {
-    width: 300px;
-  }
-
-  .avatar {
-    width: 100px;
-    height: 100px;
-  }
-
-  .hp {
-    margin-bottom: 30px;
-  }
-
-  .saber {
-    margin-bottom: 40px;
-  }
-
-  .mb-header {
-    margin-bottom: 75px;
-  }
-
-  .expamples {
-    width: 250px;
-  }
-
-  .div-space {
+  /* .div-space {
     margin-bottom: 50px;
   }
 
@@ -277,7 +296,7 @@ footer a {
     max-width: 300px;
     width: 100%;
     height: auto;
-  }
+  } */
 
   .carousel-control-next {
     top: 80%;
