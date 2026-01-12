@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mb-10 mt-3">
+<div class="container mt-3">
   <div class="row text-center mx-3">
     <h2>Welkom bij shantykoor Krakend Tuig</h2>
     <div class="col-12">
@@ -25,60 +25,79 @@
     </div>
   </div>
 </div>
-<div class="slideshow">
-    <div class="slides fade">
-        <img src="{% static 'img/slide1.png' %}" alt="Krakend Tuig 1">
-        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+<div class="container mb-10">
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="5000">
+      <img src="{% static 'img/slides/slide1.png' %}" class="d-block w-100" alt="Krakend Tuig 1">
+      <div class="caption">
+        Impressie van het optreden in Tamarinde 2023
+        <p class="credit">Foto: Fred Brave</p>
+      </div>
     </div>
-    <div class="slides fade">
-        <img src="{% static 'img/slide2.png' %}" alt="Krakend Tuig 2">
-        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src=" {% static 'img/slides/slide2.png' %}" class="d-block w-100" alt="Krakend Tuig 2">
+      <div class="caption">
+        Impressie van het optreden in Tamarinde 2023
+        <p class="credit">Foto: Fred Brave</p>
+      </div>
     </div>
-    <div class="slides fade">
-        <img src="{% static 'img/slide3.png' %}" alt="Krakend Tuig 3">
-        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="{% static 'img/slides/slide3.png' %}" class="d-block w-100" alt="Krakend Tuig 3">
+      <div class="caption">
+        Impressie van het optreden in Tamarinde 2023
+        <p class="credit">Foto: Fred Brave</p>
+      </div>
     </div>
-    <div class="slides fade">
-        <img src="{% static 'img/slide4.png' %}" alt="Krakend Tuig 4">
-        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="{% static 'img/slides/slide4.png' %}" class="d-block w-100" alt="Krakend Tuig 4">
+      <div class="caption">
+        Impressie van het optreden in Tamarinde 2023
+        <p class="credit">Foto: Fred Brave</p>
+      </div>
     </div>
-    <div class="slides fade">
-        <img src="{% static 'img/slide5.png' %}" alt="Krakend Tuig 5">
-        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="{% static 'img/slides/slide5.png' %}" class="d-block w-100" alt="Krakend Tuig 5">
+      <div class="caption">
+        Impressie van het optreden in Tamarinde 2023
+        <p class="credit">Foto: Fred Brave</p>
+      </div>
     </div>
-    <div class="slides fade">
-        <img src="{% static 'img/slide6.png' %}" alt="Krakend Tuig 6">
-        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="{% static 'img/slides/slide6.png' %}" class="d-block w-100" alt="Krakend Tuig 6">
+      <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
     </div>
-    <div class="slides fade">
-        <img src="{% static 'img/slide7.png' %}" alt="Krakend Tuig 7">
-        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="{% static 'img/slides/slide7.png' %}" class="d-block w-100" alt="Krakend Tuig 7">
+      <div class="caption">
+        Impressie van het optreden in Tamarinde 2023
+        <p class="credit">Foto: Fred Brave</p>
+      </div>
     </div>
-    <div class="slides fade">
-        <img src="{% static 'img/slide8.png' %}" alt="Krakend Tuig 8">
-        <div class="caption">Impressie van het optreden in Tamarinde 2023</div>
+    <div class="carousel-item"data-bs-interval="5000">
+      <img src="{% static 'img/slides/slide8.png' %}" class="d-block w-100" alt="Krakend Tuig 8">
+      <div class="caption">
+        Impressie van het optreden in Tamarinde 2023
+        <p class="credit">Foto: Fred Brave</p>
+      </div>
     </div>
-    <!-- Navigation -->
-    <div class="dots-container text-center">
-        <span class="dot" onclick="currentSlide(1)"></span> 
-        <span class="dot" onclick="currentSlide(2)"></span> 
-        <span class="dot" onclick="currentSlide(3)"></span> 
-        <span class="dot" onclick="currentSlide(4)"></span> 
-        <span class="dot" onclick="currentSlide(5)"></span> 
-        <span class="dot" onclick="currentSlide(6)"></span> 
-        <span class="dot" onclick="currentSlide(7)"></span> 
-        <span class="dot" onclick="currentSlide(8)"></span> 
-    </div>
-    <!-- Photocredit -->
-    <div class="slideshow-credit text-center mt-2">
-        Foto's: Fred Brave
-    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 </div>
-<div class="mb-10"></div>
-{% endblock %}
+</div>
 
-{% block postloadjs %}
-{{ block.super }}
-{% endblock %}
+  <div class="mb-10"></div>
+  {% endblock %}
 
-<script src="{% static 'js/hero_slideshow.js' %}"></script>
+  {% block postloadjs %}
+  {{ block.super }}
+  {% endblock %}
