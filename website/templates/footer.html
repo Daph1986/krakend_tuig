@@ -1,34 +1,21 @@
 {% load static %}
 
 <!-- Footer -->
-<footer class="fixed-bottom">
-  <div class="container-fluid footer-container mt-3 px-5">
-    <div class="row text-center text-md-start text-sand">
-      <div class="col-md-5 col-sm-12 my-md-4">
-        <!-- <a href="{% url 'home' %}"><img src="{% static './img/hd_logo_bars.webp' %}" class="hd-footer-logo"
-            alt="Hello Daphne logo"></a> -->
-      </div>
-      <div class="col-md-6 col-sm-12 mt-3 mt-md-0">
-        <ul class="list-unstyled text-center text-md-start">
-          <!-- <li class="d-inline">
-            <a target="_blank" href="https://www.facebook.com/p/Shantykoor-Krakend-Tuig-100078488242739/" data-toggle="tooltip" data-placement="top"
-            title="https://www.facebook.com/p/Shantykoor-Krakend-Tuig-100078488242739/" rel="noreferrer"><i
-                class="fab fa-facebook footer_icons hvr-grow text-center"></i></a>
-          </li> -->
-          <li class="d-inline">
-            <span class="footer-copyright"> 
-              <br> © {% now 'Y' %} - Krakend Tuig, alle rechten voorbehouden
-            </span>
-            <br>
-            <span class="footer-copyright">
-            KvK: 30213801 - IBAN: NL31RABO0120556529
-            </span>
-          </li>
-        </ul>
+<footer class="fixed-bottom footer">
+  <div class="container-fluid footer-container mt-3 position-relative">
+    <div class="row justify-content-center text-sand">
+      <div class="col-12 text-center footer-text">
+        <span class="footer-copyright"> 
+          © {% now 'Y' %} - Krakend Tuig, alle rechten voorbehouden
+        </span>
+        <br>
+        <span class="footer-copyright">
+          KvK: 30213801 - IBAN: NL31RABO0120556529
+        </span>
       </div>
       <button type="button" onclick="goToTop()" class="btn gtt-btn hvr-grow rounded-5" id="goToTopBtn">
-        <i class="fas fa-circle-arrow-up mx-auto my-auto" style="color:#E2D8C9; font-size: 24px;"></i>
-      </button>
+      <i class="fas fa-circle-arrow-up" style="color:#E2D8C9; font-size: 24px;"></i>
+    </button>
     </div>
   </div>
 </footer>
