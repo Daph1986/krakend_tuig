@@ -22,6 +22,8 @@ ALLOWED_HOSTS = HOST_NAME.split(',')
 
 SECRET_KEY = env('SECRET_KEY')
 
+CAPTCHA_FAILURE_FORM = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -33,6 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'website',
+    'contact',
+
+    'captcha',
+
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -46,6 +54,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 TEMPLATES = [
     {

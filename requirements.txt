@@ -1,4 +1,9 @@
-asgiref==3.11.0
-Django==6.0.1
-django-environ==0.12.0
-sqlparse==0.5.5
+asgiref==3.11.*
+crispy-bootstrap5==2025.*
+Django==6.0.*
+django-crispy-forms==2.*
+django-environ==0.12.*
+django-ranged-response==0.2.*
+django-simple-captcha==0.6.*
+pillow==12.1.*
+sqlparse==0.5.*
