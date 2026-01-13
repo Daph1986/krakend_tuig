@@ -1,0 +1,132 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Contact {% endblock %}
+
+{% block page_header %}
+<div class="container">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Contact
+    </h2>
+  </div>
+  <div class="row text-center mt-4">
+    <p class="col-12">
+      Vragen aan ons? Een optreden boeken? Dat kan hieronder vind je onze gegevens. Uiteraard kan je ook het
+      contactformulier gebruiken.
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5 contact-block">
+  <div class="row text-center text-md-start align-items-start">
+    <div class="col-12 col-md-4 mb-4">
+      <h5>Adres secretariaat</h5>
+      <p>
+        Shantykoor Krakend Tuig<br>
+        Nijftarlakestraat 6<br>
+        3621 GV Breukelen
+      </p>
+      <p>
+        <i class="fa-solid fa-envelope me-2"></i>
+        <a href="mailto:janboonacker@gmail.com" target="_blank">
+          janboonacker@gmail.com
+        </a>
+        <br>
+        <i class="fa-solid fa-phone me-2"></i>0625011812
+      </p>
+    </div>
+    <div class="col-12 col-md-4 mb-4">
+      <h5>Optreden boeken</h5>
+      <p>
+        Gert Frankhuisen<br>
+        <i class="fa-solid fa-phone me-2"></i>0625011812<br>
+        <i class="fa-solid fa-phone me-2"></i>0624589694
+      </p>
+      <p>
+        <i class="fa-solid fa-envelope me-2"></i>
+        <a href="mailto:gert.frankhuisen@gmail.com" target="_blank">
+          gert.frankhuisen@gmail.com
+        </a>
+      </p>
+    </div>
+    <div class="col-12 col-md-4 mb-4">
+      <h5>Vragen of opmerkingen over de site</h5>
+      <p>
+        Daphne Heimgartner-Frankhuisen <br>
+        Webbeheerder <br>
+      </p>
+      <a href="https://www.hellodaphne.nl/" target="_blank">
+        <i class="fa-solid fa-globe me-2"></i>
+        <img src="{% static 'img/sponsors/logo_hello_daphne.webp' %}" alt="Webbeheerder" class="img-fluid"
+          style="max-width: 120px;">
+      </a>
+      <p>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row text-center">
+    <div class="col-10 mx-auto mb-10">
+      <!-- Contact form -->
+      <form id="contact-form" method="POST" action="{% url 'contact' %}">
+        {% csrf_token %}
+        <fieldset class="rounded mb-2">
+          <legend class="fieldset-label">
+            <h6 class="mt-4">Jouw gegevens:</h6>
+          </legend>
+          {{ contact_form.first_name | as_crispy_field }}
+          {{ contact_form.last_name | as_crispy_field }}
+          {{ contact_form.email | as_crispy_field }}
+          {{ contact_form.phone_number | as_crispy_field }}
+          {{ contact_form.subject | as_crispy_field }}
+        </fieldset>
+        <fieldset class="rounded mb-2 mt-4">
+          <legend class="fieldset-label">
+            <h6 class="mt-2">Bericht:</h6>
+          </legend>
+          {{ contact_form.message | as_crispy_field }}
+        </fieldset>
+
+        <!-- CAPTCHA & Honeypot Widget -->
+        <fieldset class="rounded mb-2 mt-4 captcha">
+          <legend class="fieldset-label">
+            <h6 class="mt-2">Verifieer dat je geen robot bent</h6>
+          </legend>
+          {{ contact_form.captcha | as_crispy_field }}
+        </fieldset>
+
+        <div style="display:none;">
+          <label for="honeypot">Comments</label>
+          <input type="text" id="honeypot" name="honeypot">
+        </div>
+
+        <button type="submit" class="btn general-btn hvr-grow mt-3 mb-5" id="submit-button">
+          Verzenden
+        </button>
+      </form>
+      <!-- Contact form end -->
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById('contact-form');
+    const submitButton = document.getElementById('submit-button');
+
+    if (form && submitButton) {
+      form.addEventListener('submit', function (event) {
+        submitButton.disabled = true;
+        submitButton.innerText = "Verzonden...";
+      });
+    } else {
+      console.error("Form or submit button not found");
+    }
+  });
+</script>
+{% endblock %}

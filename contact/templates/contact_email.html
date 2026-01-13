@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="font-size: 1rem; color:#2B2B2B;font-family: 'Source Serif 4', serif;
+  background-color: #F2F2F2;
+  border: 1px solid #25324A;
+  border-radius: 25px;
+  padding: 1rem; height: auto;">
+  <!-- Header line -->
+  <p>Nieuw bericht via het contactformulier</p>
+  <!-- Header line end -->
+  <!-- Message body -->
+  <div>
+    <p>
+      <i>
+        <span><strong>Onderwerp:</strong></span> {{ subject }}<br><br>
+        <span><strong>Bericht:</strong></span> {{ message }}
+      </i>
+    </p>
+  </div>
+  <!-- Message body end -->
+  <!-- Signature -->
+  <p>Met vriendelijke groeten,<br>
+    <span><strong>{{ first_name|title }} {{ last_name|title }}</strong></span>
+    <i>
+      <span><strong>{{ phone_number }}</strong></span>
+      <span><strong>{{ email }}</strong></span>
+    </i>
+  </p>
+  <!-- Signature end -->
+</body>
+
+</html>
