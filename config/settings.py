@@ -36,6 +36,7 @@ INSTALLED_APPS = [
 
     'website',
     'contact',
+    'about',
 
     'captcha',
 

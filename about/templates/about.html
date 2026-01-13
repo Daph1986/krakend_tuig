@@ -1,0 +1,102 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %} Leer ons kennen {% endblock %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Wie zijn wij en wat is een shanty?
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row align-items-center">
+    <div class="col-12 col-md-7 text-center text-md-start">
+      <h5>“Krakend Tuig” – shanty zoals het altijd was</h5>
+      <p>
+        In april 2006 richtten Sjef van Miert en Peter Arts, samen met een aantal enthousiaste zangers, in Breukelen het
+        shantykoor Krakend Tuig op.
+      </p>
+      <p>
+        We zingen bekende en minder bekende shanties en zeemansliederen. Daarnaast bestaat ons repertoire uit onder
+        andere een Ierse lovesong en een Cubaans visserslied. Met deze afwisseling en onze vrolijke optredens werden we
+        al snel bekend in Breukelen, Maarssen en de wijde omtrek.
+      </p>
+      <p>
+        Onze dirigent is Jan Boonacker. Hij wordt op professionele wijze bijgestaan door accordeonisten Lydia van
+        Miltenburg, Jan Groenendijk, Jan Wouda en drummer Cor van den Wijngaard. Samen brengen zij een schat aan
+        muzikale ervaring mee.
+      </p>
+      <p>
+        Inmiddels bestaat Krakend Tuig uit 5 muzikanten, die vocaal worden ondersteund door 30 zangers. Samen hebben we
+        al veel succesvolle optredens verzorgd. Regelmatig worden er nieuwe optredens aan onze agenda toegevoegd.
+      </p>
+      <p>
+        We repeteren op de laatste drie maandagavonden van elke maand in het parochiehuis aan de Herenstraat 15 in
+        Breukelen.
+      </p>
+      <p>
+        Nieuwsgierig geworden?
+        Je bent van harte welkom om eens langs te komen en de sfeer te proeven bij Krakend Tuig!
+      </p>
+    </div>
+    <div class="col-12 col-md-5 mt-3 mt-md-0 text-center">
+      <img src="{% static 'img/about/zeilboot.webp' %}" class="img-fluid rounded" alt="Zeilboot">
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12 text-center text-md-start">
+      <h5>Wat is een shanty?</h5>
+      <p>Shantyliederen werden gezongen vanaf het einde van de 15e eeuw tot het begin van de 20e eeuw...</p>
+      <p>In de periode tussen 1800 en 1870 nam de wereldhandel over zee sterk toe...</p>
+      <p>Een shanty is een Engelstalig werklied dat aan boord van zeilschepen werd gezongen...</p>
+      <p>Een klassiek shantylied bestaat uit een afwisseling tussen een couplet en een vraag-en-antwoordstructuur...</p>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row align-items-start">
+    <div class="col-12 col-md-4 order-md-1 mt-3 mt-md-0 text-center mb-5">
+      <img src="{% static 'img/about/haalshanty.webp' %}" class="img-fluid rounded" alt="Haalshanty in actie">
+    </div>
+    <div class="col-12 col-md-8 order-md-2 text-center text-md-start">
+      <h5>Soorten shanties</h5>
+      <p><strong>Haalshanty</strong><br>Gezongen bij het hijsen van de zeilen.</p>
+      <p><strong>Kaapstander- of gangspilshanty</strong><br>Gebruikt bij het omhoog draaien van het anker.</p>
+      <p><strong>Ballastshanty</strong><br>Gezongen bij het aan boord brengen van ballast...</p>
+      <p><strong>Pompshanty</strong><br>Begeleidde het leegpompen van het ruim.</p>
+      <p><strong>Stamp ’n go shanty</strong><br>Bij het binnenhalen van lange lijnen.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row align-items-start">
+    <div class="col-12 col-md-8 text-center text-md-start mb-5">
+      <h5>Andere zeemansliederen</h5>
+      <p><strong>Forebitters</strong><br>
+        Ballades over het leven aan boord.</p>
+      <p><strong>Vissers- en zeemansliederen</strong><br>
+        Over heimwee, afscheid en thuishavens.</p>
+      <p><strong>Drinkliederen</strong><br>
+        Liederen over ontspanning, vriendschap en avontuur.</p>
+    </div>
+    <div class="col-12 col-md-4 mt-3 mt-md-0 text-center mb-10">
+      <img src="{% static 'img/about/drinkliederen.webp' %}" class="img-fluid rounded"
+        alt="Drinkliederen en gezelligheid">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{% endblock %}
