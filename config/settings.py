@@ -27,6 +27,7 @@ CAPTCHA_FAILURE_FORM = True
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'website',
     'contact',
     'about',
+    'agenda',
 
     'captcha',
 
@@ -62,7 +64,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,6 +77,52 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'Krakend Tuig Admin',
+    'site_header': 'Krakend Tuig',
+    'site_brand': 'Krakend Tuig',
+    'welcome_sign': 'Welkom in de beheeromgeving van Krakend Tuig',
+    'copyright': 'Krakend Tuig',
+
+    'topmenu_links': [
+        {'name': 'Website', 'url': '/', 'new_window': True},
+    ],
+
+    'show_sidebar': True,
+    'navigation_expanded': True,
+
+    'search_model': [
+        'auth.User',
+    ],
+}
+
+JAZZMIN_SETTINGS['custom_css'] = 'css/admin.css'
+
+JAZZMIN_UI_TWEAKS = {
+    'theme': 'simplex',
+    'dark_mode_theme': 'darkly',
+    'navbar_small_text': False,
+    'footer_small_text': True,
+    'body_small_text': False,
+    'brand_small_text': False,
+
+    'sidebar_nav_small_text': False,
+    'sidebar_disable_expand': False,
+    'sidebar_nav_child_indent': True,
+
+    'navbar': 'navbar-dark navbar-navy',
+    'accent': 'accent-navy',
+    'sidebar': 'sidebar-dark-navy',
+    'button_classes': {
+        'primary': 'btn-primary',
+        'secondary': 'btn-secondary',
+        'info': 'btn-info',
+        'warning': 'btn-warning',
+        'danger': 'btn-danger',
+        'success': 'btn-success',
+    },
+}
 
 
 # Database
@@ -132,4 +180,5 @@ EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = os.environ.get('GMAIL_FROM_EMAIL', '')
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS', '')
-CONTACT_RECIPIENT_EMAIL = os.environ.get("CONTACT_RECIPIENT_EMAIL", EMAIL_HOST_USER)
+CONTACT_RECIPIENT_EMAIL = os.environ.get(
+    "CONTACT_RECIPIENT_EMAIL", EMAIL_HOST_USER)
