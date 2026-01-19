@@ -1,0 +1,80 @@
+{% extends "main.html" %}
+{% load static %}
+{% block title %} Zing mee met Krakend Tuig {% endblock %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Zing mee met Krakend Tuig
+    </h2>
+    <p class="col-12 mb-0">
+      Een goede stem is meegenomen, maar een goede stemming is het belangrijkst!
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+
+  <div class="row g-4 align-items-start">
+    <!-- Video + caption -->
+    <div class="col-12 col-lg-7">
+      <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
+        <iframe
+          src="https://www.youtube.com/embed/l6UBUZQzRHQ?si=2kgIty_NObKDIrPk"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <p class="text-center text-lg-start mt-2 mb-0 small">
+        Impressie van een oefenavond uit 2023
+      </p>
+    </div>
+
+    <!-- Info card -->
+    <div class="col-12 col-lg-5">
+      <div class="info-card p-4 rounded shadow-sm text-center text-lg-start">
+        <h5 class="mb-3">Praktische informatie</h5>
+
+        <div class="mb-3">
+          <div class="fw-semibold">Repetities</div>
+          <div>Iedere maandagavond</div>
+          <div>19:30 – 21:30</div>
+          <div class="small">(behalve de eerste maandag van de maand)</div>
+        </div>
+
+        <div class="mb-3">
+          <div class="fw-semibold">Locatie</div>
+          <div>Parochiehuis</div>
+          <div>Herenstraat 15</div>
+          <div>3621 AP Breukelen</div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="mb-2 fw-semibold">Interesse?</div>
+        <div>Bel Jan Uijtewaal</div>
+
+        <a class="btn btn-sm mt-3 px-3 btn-primary-custom" href="tel:0613265120">
+          <i class="fa-solid fa-phone me-2"></i>0613265120
+        </a>
+
+        <div class="mt-3 small">
+          Of stuur een bericht via de
+          <a href="{% url 'contact' %}">contactpagina</a>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{% endblock %}

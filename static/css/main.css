@@ -325,6 +325,23 @@ ul, li {
   text-decoration: underline;
 }
 
+/* -------------------------- Zing mee --------------------------- */
+.info-card {
+  background: #F5F0E6;
+}
+
+.btn-primary-custom {
+  background-color: #A65A2A;
+  color: #fff;
+  border: none;
+}
+
+.btn-primary-custom:hover,
+.btn-primary-custom:focus {
+  background-color: #8f4d24;
+  color: #fff;
+}
+
 /* --------------------------- Footer ---------------------------- */
 
 footer {
