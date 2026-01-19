@@ -8,4 +8,5 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('', include('about.urls')),
     path('captcha/', include(captcha_urls)),
+    path('agenda/', include('agenda.urls')),
 ]

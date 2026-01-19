@@ -56,7 +56,7 @@ ul, li {
 
 .dropdown-item:focus, .dropdown-item:hover {
   color: #E2D8C9;
-  background-color: #E8d3C4;
+  background-color: #E8D3C4;
   width: 200px;
 }
 
@@ -342,6 +342,16 @@ ul, li {
   color: #fff;
 }
 
+/* --------------------------- Agenda ---------------------------- */
+.agenda-date {
+  min-width: 180px;
+}
+
+.agenda-icon {
+  opacity: 0.9;
+  font-size: 0.9em;
+}
+
 /* --------------------------- Footer ---------------------------- */
 
 footer {
@@ -432,6 +442,11 @@ footer {
     width: 80%;
     right: 40px;
   }
+
+  .agenda-date {
+    min-width: auto;
+  }
+
   /* .div-space {
     margin-bottom: 50px;
   }
