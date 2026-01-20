@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',
 
     'website',
     'contact',
@@ -129,7 +130,7 @@ JAZZMIN_UI_TWEAKS = {
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}")
+    'default': env.db('DATABASE_URL', default=f'sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}')
 }
 
 
@@ -169,6 +170,9 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # SMTP Configuration
 
@@ -181,4 +185,4 @@ DEFAULT_FROM_EMAIL = os.environ.get('GMAIL_FROM_EMAIL', '')
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS', '')
 CONTACT_RECIPIENT_EMAIL = os.environ.get(
-    "CONTACT_RECIPIENT_EMAIL", EMAIL_HOST_USER)
+    'CONTACT_RECIPIENT_EMAIL', EMAIL_HOST_USER)
