@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Geen toegang{% endblock %}
+
+{% block page_header %}
+<div class='container mb-3'>
+  <div class='row text-center'>
+    <h2 class='mt-5 mb-2 mx-md-auto col-12'>Geen toegang</h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class='container my-5'>
+  <div class='row justify-content-center'>
+    <div class='col-12 col-lg-8 col-xl-7'>
+      <div class='info-card p-4 rounded shadow-sm text-center'>
+        <p class='mb-3'>Je bent ingelogd, maar je hebt geen rechten om deze actie uit te voeren.</p>
+        <a class='btn general-btn hvr-grow' href='{% url "agenda:agenda" %}'>Terug naar de agenda</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

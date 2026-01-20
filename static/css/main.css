@@ -387,6 +387,10 @@ ul, li {
   font-size: 0.9em;
 }
 
+.login-container {
+  max-width: 520px;
+}
+
 /* --------------------------- Footer ---------------------------- */
 
 footer {

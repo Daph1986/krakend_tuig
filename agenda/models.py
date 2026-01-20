@@ -12,4 +12,10 @@ class Optreden(models.Model):
         ordering = ['datum']
 
     def __str__(self):
-        return f"{self.datum} – {self.titel}"
+        return f'{self.datum} – {self.titel}'
+
+    @property
+    def tijd_display(self):
+        if self.tijd:
+            return f'{self.tijd} uur'
+        return ''

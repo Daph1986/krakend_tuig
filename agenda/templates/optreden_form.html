@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}
+{% if optreden %}Optreden wijzigen{% else %}Optreden toevoegen{% endif %}
+{% endblock %}
+
+{% block page_header %}
+<div class='container mb-3'>
+  <div class='row text-center'>
+    <h2 class='mt-5 mb-2 mx-md-auto col-12'>
+      {% if optreden %}Optreden wijzigen{% else %}Optreden toevoegen{% endif %}
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class='container my-5'>
+  <div class='row justify-content-center'>
+    <div class='col-12 col-lg-10 col-xl-9'>
+      <div class='p-4 p-md-5 rounded'>
+
+        <form method='post' novalidate>
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+          <div class='alert alert-danger'>
+            {{ form.non_field_errors }}
+          </div>
+          {% endif %}
+
+          {% for field in form %}
+          <div class='row mb-4 {% if field.name != "datum" %}align-items-center{% else %}align-items-start{% endif %}'>
+
+            <div class='col-12 col-md-3'>
+              <label class='form-label mb-1 mb-md-0' for='{{ field.id_for_label }}'>
+                {{ field.label }}
+                {% if field.field.required %}
+                <span class='text-danger'>*</span>
+                {% endif %}
+              </label>
+            </div>
+
+            <div class='col-12 col-md-9'>
+              {% if field.field.widget.input_type == 'checkbox' %}
+              <div class='form-check'>
+                {{ field }}
+              </div>
+              {% else %}
+              {{ field }}
+              {% endif %}
+
+              {% if field.help_text %}
+              <div class='form-text'>{{ field.help_text }}</div>
+              {% endif %}
+
+              {% if field.errors %}
+              <div class='text-danger small mt-1'>{{ field.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          {% endfor %}
+
+          <div class='d-flex gap-2 mt-4'>
+            <button class='btn btn-success' type='submit'>Opslaan</button>
+            <a class='btn btn-danger' href='{% url "agenda:overzicht" %}'>Annuleren</a>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
