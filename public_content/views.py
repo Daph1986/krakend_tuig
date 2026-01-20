@@ -6,25 +6,46 @@ from .models import PhotoAlbum, Video
 
 
 def media_overview(request):
-    albums = PhotoAlbum.objects.filter(
+    albums_all = PhotoAlbum.objects.filter(
         is_published=True
     ).prefetch_related('photos')
 
-    videos = Video.objects.filter(is_published=True)
+    albums = albums_all[:5]
+    albums_total = albums_all.count()
 
-    members = MemberProfile.objects.filter(
+    videos_all = Video.objects.filter(is_published=True)
+    videos = videos_all[:5]
+    videos_total = videos_all.count()
+
+    members_all = MemberProfile.objects.filter(
         is_active=True,
         consent_public_profile=True,
     )
+    members = members_all[:12]
+    members_total = members_all.count()
 
     return render(
         request,
         'overview.html',
         {
             'albums': albums,
+            'albums_total': albums_total,
             'videos': videos,
+            'videos_total': videos_total,
             'members': members,
+            'members_total': members_total,
         },
+    )
+
+
+def albums_list(request):
+    albums = PhotoAlbum.objects.filter(
+        is_published=True
+    ).prefetch_related('photos')
+    return render(
+        request,
+        'albums_list.html',
+        {'albums': albums},
     )
 
 
@@ -33,14 +54,14 @@ def album_detail(request, slug):
         PhotoAlbum.objects.filter(is_published=True).prefetch_related('photos'),
         slug=slug,
     )
-    return render(
-        request,
-        'album_detail.html',
-        {'album': album},
-    )
+    return render(request, 'album_detail.html', {'album': album})
 
 
-# Deze mag blijven bestaan (bijv. voor directe URL of later gebruik)
+def videos_list(request):
+    videos = Video.objects.filter(is_published=True)
+    return render(request, 'videos_list.html', {'videos': videos})
+
+
 def smoelenboek_public(request):
     members = MemberProfile.objects.filter(
         is_active=True,

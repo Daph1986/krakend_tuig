@@ -8,4 +8,6 @@ urlpatterns = [
     path('fotos-en-videos/albums/<slug:slug>/', views.album_detail, name='album_detail'),
     path('smoelenboek/', views.smoelenboek_public, name='smoelenboek_public'),
     path('leden/smoelenboek/', views.smoelenboek_private, name='smoelenboek_private'),
+    path('videos/', views.videos_list, name='videos_list'),
+    path('albums/', views.albums_list, name='albums_list'),
 ]

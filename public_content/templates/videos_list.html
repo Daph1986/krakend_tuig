@@ -1,0 +1,68 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load embed %}
+
+{% block page_header %}
+<div class='container mb-3'>
+  <div class='row text-center'>
+    <h2 class='mt-5 mb-2 mx-md-auto col-12'>Alle video’s</h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class='container py-5 mb-10'>
+  <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-end align-items-center align-items-md-end gap-2 mb-4">
+    <a class="btn general-btn hvr-grow"
+       href="{% url 'public_content:overview' %}">
+      Terug
+    </a>
+  </div>
+  <div class='row g-4'>
+    {% for v in videos %}
+      <div class='col-12 col-lg-6'>
+        <div class='card h-100 info-card'>
+
+          {% if v.file %}
+            <video class='w-100' controls preload='metadata'>
+              <source src='{{ v.file.url }}' type='video/mp4'>
+              Je browser ondersteunt deze video niet.
+            </video>
+
+          {% elif v.is_embed and v.url %}
+            <div class='ratio ratio-16x9 rounded overflow-hidden shadow-sm'>
+              <iframe
+                src='{{ v.url|embed_url }}'
+                title='{{ v.title }}'
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                referrerpolicy='strict-origin-when-cross-origin'
+                allowfullscreen>
+              </iframe>
+            </div>
+
+          {% elif v.url %}
+            <div class='d-flex align-items-center justify-content-center bg-light video-placeholder'>
+              <a class='btn general-btn' href='{{ v.url }}' target='_blank' rel='noreferrer'>
+                Video bekijken
+              </a>
+            </div>
+          {% endif %}
+
+          <div class='card-body'>
+            <div class='fw-semibold'>{{ v.title }}</div>
+            {% if v.date %}
+              <div class='text-muted small mt-1'>{{ v.date }}</div>
+            {% endif %}
+            {% if v.description %}
+              <div class='small mt-2'>{{ v.description }}</div>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    {% empty %}
+      <p class='text-muted'>Er zijn nog geen video’s.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

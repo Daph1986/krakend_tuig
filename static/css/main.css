@@ -352,6 +352,31 @@ ul, li {
   color: #fff;
 }
 
+/* ------------------------- Media pages ------------------------- */
+
+.container-narrow {
+  max-width: 1100px;
+}
+
+.video-placeholder {
+  height: 280px;
+}
+
+.image-placeholder {
+  height: 220px;
+}
+
+.album-photo {
+  height: 240px;
+  object-fit: cover;
+}
+
+.member-photo {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+}
+
 /* --------------------------- Agenda ---------------------------- */
 .agenda-date {
   min-width: 180px;

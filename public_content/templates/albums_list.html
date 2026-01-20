@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block page_header %}
+<div class='container mb-3'>
+  <div class='row text-center'>
+    <h2 class='mt-5 mb-2 mx-md-auto col-12'>Alle fotoalbums</h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class='container py-5'>
+  <div class='row g-4'>
+    {% for album in albums %}
+      <div class='col-12 col-sm-6 col-lg-4'>
+        <a href='{% url 'public_content:album_detail' album.slug %}'
+           class='text-decoration-none text-dark'>
+          <div class='card h-100 info-card'>
+            {% with cover=album.photos.first %}
+              {% if cover %}
+                <img src='{{ cover.image.url }}'
+                     class='card-img-top image-placeholder'
+                     alt='{{ album.title }}'>
+              {% else %}
+                <div class='d-flex align-items-center justify-content-center bg-light image-placeholder'>
+                  <span class='text-muted'>Geen foto</span>
+                </div>
+              {% endif %}
+            {% endwith %}
+            <div class='card-body'>
+              <div class='fw-semibold'>{{ album.title }}</div>
+              {% if album.date %}
+                <div class='text-muted small mt-1'>{{ album.date }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      </div>
+    {% empty %}
+      <p class='text-muted'>Er zijn nog geen fotoalbums.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
