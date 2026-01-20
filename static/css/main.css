@@ -55,7 +55,7 @@ ul, li {
 }
 
 .dropdown-item:focus, .dropdown-item:hover {
-  color: #E2D8C9;
+  color: #A65A2A;
   background-color: #E8D3C4;
   width: 200px;
 }
@@ -390,6 +390,7 @@ ul, li {
 .login-container {
   max-width: 520px;
 }
+
 
 /* --------------------------- Footer ---------------------------- */
 

@@ -13,7 +13,7 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-center flex-grow-1 pe-5 me-auto mb-2 mb-lg-0">
-           <li class="nav-item {% if request.path == '/home/'%}active{% endif %}">
+          <li class="nav-item {% if request.path == '/home/'%}active{% endif %}">
             <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="{% url 'home' %}">
               <i class="fa-solid fa-house"></i>
             </a>
@@ -39,7 +39,7 @@
             </a>
           </li>
           {# Foto’s & video’s: active voor overview + album detail #}
-          <li class='nav-item {% if '/fotos-en-videos' in request.path %}active{% endif %}'>
+          <li class='nav-item {% if ' /fotos-en-videos' in request.path %}active{% endif %}'>
             <a class='nav-link text-sand ms-lg-2 ms-xl-4' href='{% url 'public_content:overview' %}'>
               Foto’s & video’s
             </a>
@@ -49,42 +49,45 @@
               Vrienden & Sponsors
             </a>
           </li>
-          <li class="nav-item {% if request.path == '/nl/accounts/login/'%}active{% endif %}">
-            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
+          <!-- Behind login -->
+          {% if request.user.is_authenticated %}
+
+          <li class="nav-item ms-lg-2 ms-xl-4 d-flex align-items-center">
+            <span class="m-0 text-sand">
+              Ingelogd als {{ request.user.first_name|default:request.user.username }}
+            </span>
+          </li>
+          {% if request.user.is_superuser %}
+          <li class="nav-item dropdown">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4 dropdown-toggle" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Profiel
+            </a>
+            <ul class="dropdown-menu bg-grey border-0">
+              <li><a href="#" class="dropdown-item">Profiel pagina</a></li>
+              <li><a href="#" class="dropdown-item">Ledenlijst</a></li>
+              <li><a href="#" class="dropdown-item">Liedteksten</a></li>
+              <li><a href="#" class="dropdown-item">Planning optredens</a></li>
+              <li><a href='{% url 'public_content:smoelenboek_public' %}' class="dropdown-item">Smoelenboek</a></li>
+            </ul>
+          </li>
+          {% endif %}
+          <li class="nav-item ms-lg-2 ms-xl-4 d-flex align-items-center">
+            <form method="post" action="{% url 'logout' %}" class="m-0">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{% url 'login' %}">
+              <button type="submit" class="nav-link text-sand btn btn-link p-0">
+                Log uit
+              </button>
+            </form>
+          </li>
+
+          {% else %}
+          <li class="nav-item ms-lg-2 ms-xl-4">
+            <a class="nav-link text-sand" href="{% url 'login' %}?next={{ request.path }}">
               <i class="fa-solid fa-user me-2"></i>Inloggen
             </a>
           </li>
-          <!-- Achter de login -->
-          {% if request.user.is_authenticated %}
-          {% if request.user.is_superuser %}
-          <li
-            class="nav-item {% if request.path == '/nl/accounts/profiel/'%}active{% endif %}">
-            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
-              Profiel
-            </a>
-            <ul class="dropdown-menu bg-grey border-0" aria-labelledby="offcanvasNavbarDropdown5">
-                <li><a href="#" class="dropdown-item">Profiel pagina</a></li>
-                <li><a href="#" class="dropdown-item">Ledenlijst/a></li>
-                <li><a href="#" class="dropdown-item">Liedteksten</a></li>
-                <li><a href="#" class="dropdown-item">Planning optredens</a></li>
-                <li><a href="#" class="dropdown-item">Smoelenboek</a></li>
-              </ul>
-          </li>
-          {% endif %}
-          <li
-            class="nav-item {% if request.path == '/nl/accounts/logout/'%}active{% endif %}">
-            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
-            Log uit
-            </a>
-          </li>
-          {% else %}
-          <!-- Uncomment for safety -->
-          <!-- <li
-            class="nav-item {% if request.path == '/nl/accounts/register/'%}active{% endif %}">
-            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
-              Registreer je
-            </a>
-          </li> -->
           {% endif %}
         </ul>
       </div>
