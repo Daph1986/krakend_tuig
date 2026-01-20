@@ -1,0 +1,155 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load embed %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Foto’s & video’s
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class='container py-5'>
+
+  <div class='row g-5 mb-5'>
+
+    <!-- Fotoalbums -->
+    <div class='col-12 col-lg-7'>
+      <h2 class='h5 mb-3'>Fotoalbums</h2>
+
+      <div class='row g-4'>
+        {% for album in albums %}
+        <div class='col-12 col-md-6'>
+          <a href='{% url 'public_content:album_detail' album.slug %}' class='text-decoration-none text-dark'>
+            <div class='card h-100 info-card'>
+              {% with cover=album.photos.first %}
+              {% if cover %}
+              <img src='{{ cover.image.url }}' class='card-img-top' style='height: 220px; object-fit: cover;'
+                alt='{{ album.title }}'>
+              {% else %}
+              <div class='d-flex align-items-center justify-content-center bg-light' style='height: 220px;'>
+                <span class='text-muted'>Geen foto</span>
+              </div>
+              {% endif %}
+              {% endwith %}
+              <div class='card-body'>
+                <div class='fw-semibold'>{{ album.title }}</div>
+                {% if album.date %}
+                <div class='text-muted small mt-1'>{{ album.date }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        </div>
+        {% empty %}
+        <p class='text-muted'>Er zijn nog geen fotoalbums.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Video’s -->
+    <div class='col-12 col-lg-5'>
+      <h2 class='h5 mb-3'>Video’s</h2>
+
+      <div class='row g-4'>
+        {% for v in videos %}
+        <div class='col-12'>
+          <div class='card h-100 info-card'>
+
+            {# 1) MP4 upload (werkt altijd) #}
+            {% if v.file %}
+              <video class='w-100' controls preload='metadata'>
+                <source src='{{ v.file.url }}' type='video/mp4'>
+                Je browser ondersteunt deze video niet.
+              </video>
+
+            {# 2) Embed (YouTube/Vimeo) #}
+            {% elif v.is_embed and v.url %}
+              <div class='ratio ratio-16x9 rounded overflow-hidden shadow-sm'>
+  <iframe
+    src='{{ v.url|embed_url }}'
+    title='{{ v.title }}'
+    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+    referrerpolicy='strict-origin-when-cross-origin'
+    allowfullscreen>
+  </iframe>
+</div>
+
+            {# 3) Fallback link #}
+            {% elif v.url %}
+              <div class='d-flex align-items-center justify-content-center bg-light' style='height: 280px;'>
+                <a class='btn btn-outline-secondary' href='{{ v.url }}' target='_blank' rel='noreferrer'>
+                  Video bekijken
+                </a>
+              </div>
+
+            {# 4) Geen bron ingevuld #}
+            {% else %}
+              <div class='d-flex align-items-center justify-content-center bg-light' style='height: 280px;'>
+                <span class='text-muted'>Geen video gekoppeld</span>
+              </div>
+            {% endif %}
+
+            <div class='card-body'>
+              <div class='fw-semibold'>{{ v.title }}</div>
+              {% if v.date %}
+              <div class='text-muted small mt-1'>{{ v.date }}</div>
+              {% endif %}
+              {% if v.description %}
+              <div class='small mt-2'>{{ v.description }}</div>
+              {% endif %}
+            </div>
+
+          </div>
+        </div>
+        {% empty %}
+        <p class='text-muted'>Er zijn nog geen video’s.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Smoelenboek (publiek, alleen met toestemming) -->
+  {% if members %}
+  <section>
+    <h2 class='h5 mb-3'>Smoelenboek</h2>
+
+    <div class='row g-4 mb-10'>
+      {% for m in members %}
+      <div class='col-6 col-md-4 col-lg-3'>
+        <div class='card h-100 text-center info-card'>
+          {% if m.photo %}
+          <img src='{{ m.photo.url }}' class='rounded-circle mx-auto mt-3'
+            style='width: 110px; height: 110px; object-fit: cover;' alt='{{ m.first_name }} {{ m.last_name }}'>
+          {% endif %}
+
+          <div class='card-body'>
+            <div class='fw-semibold'>
+              {{ m.first_name }} {{ m.last_name }}
+            </div>
+            {% if m.role %}
+            <div class='text-muted small mt-1'>{{ m.role }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if request.user.is_authenticated %}
+    <div class='text-center mt-4'>
+      <a class='btn btn-outline-secondary' href='{% url 'public_content:smoelenboek_private' %}'>
+        Alle leden bekijken
+      </a>
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+</div>
+{% endblock %}

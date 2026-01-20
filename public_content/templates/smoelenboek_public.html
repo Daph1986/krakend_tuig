@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+  <h1 class="h3 text-center mb-4">Smoelenboek</h1>
+
+  <div class="row g-4">
+    {% for m in members %}
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card h-100 text-center shadow-sm">
+          {% if m.photo %}
+            <img
+              src="{{ m.photo.url }}"
+              class="rounded-circle mx-auto mt-3"
+              style="width: 140px; height: 140px; object-fit: cover;"
+              alt="{{ m.first_name }} {{ m.last_name }}">
+          {% endif %}
+
+          <div class="card-body">
+            <div class="fw-semibold">{{ m.first_name }} {{ m.last_name }}</div>
+            {% if m.role %}
+              <div class="text-muted small mt-1">{{ m.role }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted">Nog geen leden die toestemming hebben gegeven.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

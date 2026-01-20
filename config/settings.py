@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'contact',
     'about',
     'agenda',
+    'public_content',
 
     'captcha',
 
@@ -186,3 +187,7 @@ EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS', '')
 CONTACT_RECIPIENT_EMAIL = os.environ.get(
     'CONTACT_RECIPIENT_EMAIL', EMAIL_HOST_USER)
+
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'public_content:smoelenboek_private'  # of straks je media-overview
+LOGOUT_REDIRECT_URL = 'accounts:login'

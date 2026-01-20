@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+{% load static %}
+
+<div class="container py-5" style="max-width: 720px;">
+  <h1 class="h3 mb-4">Mijn profiel</h1>
+
+  <form method="post" enctype="multipart/form-data" class="card card-body shadow-sm">
+    {% csrf_token %}
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Voornaam</label>
+        {{ form.first_name }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Achternaam</label>
+        {{ form.last_name }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Rol</label>
+        {{ form.role }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Profielfoto</label>
+        {{ form.photo }}
+      </div>
+
+      <div class="col-12">
+        <div class="form-check mt-2">
+          {{ form.consent_public_profile }}
+          <label class="form-check-label">
+            Ik geef toestemming om mijn profiel te tonen in het openbare smoelenboek
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-4" type="submit">Opslaan</button>
+  </form>
+</div>
+{% endblock %}
