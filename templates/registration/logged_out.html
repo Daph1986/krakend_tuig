@@ -1,0 +1,12 @@
+{% extends "registration/base.html" %}
+
+<!-- Overwrites standard Jazzmin admin logout -->
+{% block content %}
+    <p class="text-center">
+      Bedankt voor je beheerwerk vandaag.<br>
+      Je bent nu afgemeld.
+    </p>
+    <a class="btn {{ jazzmin_ui.button_classes.primary }} btn-block" href="{% url 'admin:index' %}">
+        Opnieuw aanmelden
+    </a>
+{% endblock %}

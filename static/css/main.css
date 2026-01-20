@@ -89,6 +89,7 @@ ul, li {
 .navbar-nav .nav-link.active {
   color: #A65A2A;
 }
+
 /* --------------------------- Toasts ---------------------------- */
 
 .message-container {
@@ -138,15 +139,15 @@ ul, li {
   display: inline-block;
   vertical-align: middle;
   -webkit-transform: translateZ(0);
-          transform: translateZ(0);
+  transform: translateZ(0);
   -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-          box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   -webkit-transition-duration: 0.3s;
-       -o-transition-duration: 0.3s;
-          transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
   -webkit-transition-property: -webkit-transform;
   transition-property: -webkit-transform;
   -o-transition-property: transform;
@@ -158,8 +159,8 @@ ul, li {
 .hvr-grow:focus,
 .hvr-grow:active {
   -webkit-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-          transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 
@@ -236,7 +237,7 @@ ul, li {
 }
 
 .sponsor-link:hover {
-  color:#25324A;
+  color: #25324A;
 }
 
 .carousel {
@@ -245,7 +246,7 @@ ul, li {
 
 .carousel-control-prev,
 .carousel-control-next {
- position: absolute !important;
+  position: absolute !important;
   top: 50% !important;
   bottom: auto !important;
   transform: translateY(-50%);
@@ -274,15 +275,19 @@ ul, li {
 .stripe-style-input::-webkit-input-placeholder:after {
   content: " *";
 }
+
 .stripe-style-input::-moz-placeholder:after {
   content: " *";
 }
+
 .stripe-style-input:-ms-input-placeholder:after {
   content: " *";
 }
+
 .stripe-style-input::-ms-input-placeholder:after {
   content: " *";
 }
+
 .stripe-style-input::placeholder:after {
   content: " *";
 }
@@ -328,6 +333,11 @@ ul, li {
 /* -------------------------- Zing mee --------------------------- */
 .info-card {
   background: #F5F0E6;
+}
+
+.contact-link {
+  color: #A65A2A;
+  text-decoration: underline;
 }
 
 .btn-primary-custom {
