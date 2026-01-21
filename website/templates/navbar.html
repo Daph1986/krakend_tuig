@@ -73,9 +73,9 @@
           </li>
           {% endif %}
           <li class="nav-item ms-lg-2 ms-xl-4 d-flex align-items-center">
-            <form method="post" action="{% url 'logout' %}" class="m-0">
+            <form method="post" action="{% url 'accounts:logout' %}" class="m-0">
               {% csrf_token %}
-              <input type="hidden" name="next" value="{% url 'login' %}">
+              <input type="hidden" name="next" value="{{ request.get_full_path }}">
               <button type="submit" class="nav-link text-sand btn btn-link p-0">
                 Log uit
               </button>
@@ -84,7 +84,7 @@
 
           {% else %}
           <li class="nav-item ms-lg-2 ms-xl-4">
-            <a class="nav-link text-sand" href="{% url 'login' %}?next={{ request.path }}">
+            <a class="nav-link text-sand" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">
               <i class="fa-solid fa-user me-2"></i>Inloggen
             </a>
           </li>

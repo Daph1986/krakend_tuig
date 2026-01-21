@@ -188,6 +188,5 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS', '')
 CONTACT_RECIPIENT_EMAIL = os.environ.get(
     'CONTACT_RECIPIENT_EMAIL', EMAIL_HOST_USER)
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'login'

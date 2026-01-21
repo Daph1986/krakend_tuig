@@ -105,11 +105,24 @@ ul, li {
 }
 
 .bg-success-custom {
-  background-color: #1E2A44;
+  background-color: #25324A;
 }
 
 .border-success-custom {
-  border-color: #1E2A44;
+  border-color: #25324A;
+}
+
+.bg-sand{
+  background-color: #E2D8C9;
+}
+
+.toast .btn-close {
+  filter: invert(1);
+  opacity: 0.85;
+}
+
+.toast .btn-close:hover {
+  opacity: 1;
 }
 
 /* --------------------------- Buttons --------------------------- */
