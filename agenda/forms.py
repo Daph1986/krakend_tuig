@@ -18,12 +18,20 @@ class OptredenForm(forms.ModelForm):
             else:
                 widget.attrs['class'] = 'form-control'
 
-        self.fields['datum'].widget = forms.DateInput(attrs={
-            'type': 'date',
-            'class': 'form-control',
-        })
+        self.fields['datum'].widget = forms.DateInput(
+            attrs={
+                'type': 'date',
+                'class': 'form-control',
+            },
+            format='%Y-%m-%d',
+        )
+        self.fields['datum'].input_formats = ['%Y-%m-%d']
 
-        self.fields['tijd'].widget = forms.TimeInput(attrs={
-            'type': 'time',
-            'class': 'form-control',
-        })
+        self.fields['tijd'].widget = forms.TimeInput(
+            attrs={
+                'type': 'time',
+                'class': 'form-control',
+            },
+            format='%H:%M',
+        )
+        self.fields['tijd'].input_formats = ['%H:%M']
