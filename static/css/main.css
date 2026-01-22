@@ -134,6 +134,15 @@ ul, li {
   border-radius: 25px;
 }
 
+.btn-gen-spec {
+  width: 250px;
+  border-radius: 25px;
+}
+
+.btn-gen-spec-sm {
+  border-radius: 25px;
+}
+
 /* .xxl-btn {
   background-color: #797471;
   color: #FFF;

@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Fotoalbums beheren
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <a class="btn general-btn hvr-grow me-4" href="{% url 'public_content:media_manage_home' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>Terug</a>
+    <a class="btn btn-outline-success btn-gen-spec hvr-grow" href="{% url 'public_content:album_create' %}">
+      <i class="fa-solid fa-plus me-2"></i>Nieuw album</a>
+  </div>
+  <div class="row g-4">
+    {% for album in albums %}
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100 info-card">
+        <div class="card-body">
+          <div class="fw-semibold">{{ album.title }}</div>
+          <div class="text-muted small mt-1">
+            {% if album.date %}{{ album.date }} · {% endif %}
+            volgorde: {{ album.order }} ·
+            {% if album.is_published %}gepubliceerd{% else %}verborgen{% endif %}
+          </div>
+          <div class="small text-muted mt-2">Foto’s: {{ album.photos.count }}</div>
+
+          <div class="d-flex gap-2 mt-3">
+            <a class="btn btn-outline-primary btn-gen-spec-sm hvr-grow me-2"
+              href="{% url 'public_content:album_update' album.pk %}"><i class="fa-solid fa-pen me-1"></i>Bewerken</a>
+            <a class="btn btn-outline-danger btn-gen-spec-sm hvr-grow"
+              href="{% url 'public_content:album_delete' album.pk %}"><i
+                class="fa-solid fa-trash me-1"></i>Verwijderen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">Nog geen albums.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

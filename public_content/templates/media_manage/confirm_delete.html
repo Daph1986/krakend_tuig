@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">{{ title }}</h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8 col-xl-7">
+      <div class="info-card p-4 rounded text-center">
+        <p class="mb-4">Weet je zeker dat je <strong>{{ object_name }}</strong> wilt verwijderen?</p>
+
+        <form method="post" class="d-flex justify-content-center gap-2">
+          {% csrf_token %}
+          <button class="btn hvr-grow btn-outline-danger btn-gen-spec me-3" type="submit">
+            <i class="fa-solid fa-trash me-1"></i>Ja, verwijderen
+          </button>
+          <a class="btn hvr-grow btn-outline-secondary btn-gen-spec" href="{{ cancel_url }}">
+            <i class="fa-solid fa-ban me-2"></i>Annuleren</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

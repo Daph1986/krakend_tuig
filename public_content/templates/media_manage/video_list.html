@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Video’s beheren
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class='container py-5'>
+  <div class='d-flex justify-content-between align-items-center mb-4'>
+    <a class="btn general-btn hvr-grow" href="{% url 'public_content:media_manage_home' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>Terug</a>
+    <a class='btn btn-outline-success btn-gen-spec hvr-grow' href="{% url 'public_content:video_create' %}">
+      <i class="fa-solid fa-plus me-2"></i>Nieuwe video</a>
+  </div>
+
+  <div class='row g-4'>
+    {% for v in videos %}
+    <div class='col-12 col-lg-6'>
+      <div class='card h-100 info-card'>
+        <div class='card-body'>
+          <div class='fw-semibold'>{{ v.title }}</div>
+          <div class='text-muted small mt-1'>
+            {% if v.date %}{{ v.date }} · {% endif %}
+            volgorde: {{ v.order }} ·
+            {% if v.is_published %}gepubliceerd{% else %}verborgen{% endif %}
+          </div>
+
+          <div class='d-flex gap-2 mt-3'>
+            <a class='btn btn-outline-primary btn-gen-spec hvr-grow me-3'
+              href="{% url 'public_content:video_update' v.pk %}"><i class="fa-solid fa-pen me-2"></i>Bewerken</a>
+            <a class='btn btn-outline-danger btn-gen-spec hvr-grow'
+              href="{% url 'public_content:video_delete' v.pk %}"><i class="fa-solid fa-trash me-2"></i>Verwijderen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class='text-muted'>Nog geen video’s.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

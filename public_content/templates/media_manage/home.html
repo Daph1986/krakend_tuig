@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Media beheren
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex flex-wrap gap-2 justify-content-center">
+    <a class="btn general-btn hvr-grow me-3 mb-3" href="{% url 'public_content:album_manage_list' %}">
+      <i class="fa-solid fa-camera me-2"></i>
+      Fotoalbums
+    </a>
+    <a class="btn general-btn hvr-grow me-3 mb-3" href="{% url 'public_content:video_manage_list' %}">
+      <i class="fa-solid fa-video me-2"></i>
+      Video’s
+    </a>
+  </div>
+</div>
+{% endblock %}
