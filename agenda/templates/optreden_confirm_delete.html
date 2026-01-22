@@ -15,7 +15,7 @@
 <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-12 col-lg-8 col-xl-7">
-      <div class="info-card p-4 rounded shadow-sm text-center">
+      <div class="info-card p-4 rounded text-center">
 
         <p class="mb-4">
           Weet je zeker dat je dit optreden wilt verwijderen?
@@ -23,11 +23,11 @@
 
         <form method="post" class="d-flex justify-content-center gap-2">
           {% csrf_token %}
-          <button class="btn btn-danger" type="submit">
+          <button class="btn hvr-grow btn-outline-danger btn-gen-spec me-3" type="submit">
             <i class="fa-solid fa-trash me-1"></i>Ja, verwijderen
           </button>
-          <a href="{% url 'agenda:overzicht' %}" class="btn btn-warning">
-            Annuleren
+          <a href="{% url 'agenda:overzicht' %}" class="btn hvr-grow btn-outline-secondary btn-gen-spec">
+            <i class="fa-solid fa-ban me-2"></i> Annuleren
           </a>
         </form>
 

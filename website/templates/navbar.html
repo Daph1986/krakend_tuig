@@ -39,11 +39,19 @@
             </a>
           </li>
           {# Foto’s & video’s: active voor overview + album detail #}
-          <li class='nav-item {% if ' /fotos-en-videos' in request.path %}active{% endif %}'>
-            <a class='nav-link text-sand ms-lg-2 ms-xl-4' href='{% url 'public_content:overview' %}'>
+          <li class="nav-item {% if '/fotos-en-videos' in request.path %}active{% endif %}">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="{% url 'public_content:overview' %}">
               Foto’s & video’s
             </a>
           </li>
+          <!-- Behind login -->
+          {% if user.is_authenticated and user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="{% url 'public_content:media_manage_home' %}">
+              Media beheren
+            </a>
+          </li>
+          {% endif %}
           <li class="nav-item {% if request.path == '/vrienden_&_sponsers/'%}active{% endif %}">
             <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="#">
               Vrienden & Sponsors
@@ -51,7 +59,6 @@
           </li>
           <!-- Behind login -->
           {% if request.user.is_authenticated %}
-
           <li class="nav-item ms-lg-2 ms-xl-4 d-flex align-items-center">
             <span class="m-0 text-sand">
               Ingelogd als {{ request.user.first_name|default:request.user.username }}
@@ -68,7 +75,7 @@
               <li><a href="#" class="dropdown-item">Ledenlijst</a></li>
               <li><a href="#" class="dropdown-item">Liedteksten</a></li>
               <li><a href="#" class="dropdown-item">Planning optredens</a></li>
-              <li><a href='{% url 'public_content:smoelenboek_public' %}' class="dropdown-item">Smoelenboek</a></li>
+              <li><a href="{% url 'public_content:smoelenboek_public' %}" class="dropdown-item">Smoelenboek</a></li>
             </ul>
           </li>
           {% endif %}
