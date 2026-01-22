@@ -1,14 +1,21 @@
 {% extends 'main.html' %}
 {% load static %}
 
-{% block content %}
-<div class="container py-5">
-  <h1 class="h3 text-center mb-4">Smoelenboek</h1>
+{% block page_header %}
+<div class="container mt-3 mb-3">
+  <div class="row text-center">
+    <div>
+      <h1 class="h3 mt-5 mb-2">Smoelenboek</h1>
+  </div>
+</div>
+{% endblock %}
 
+{% block content %}
 <div class="container py-5">
   <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-end align-items-center align-items-md-end gap-2 mb-4">
     <a class="btn general-btn hvr-grow"
        href="{% url 'public_content:overview' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>
       Terug
     </a>
   </div>

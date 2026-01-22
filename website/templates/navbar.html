@@ -64,7 +64,6 @@
               Ingelogd als {{ request.user.first_name|default:request.user.username }}
             </span>
           </li>
-          {% if request.user.is_superuser %}
           <li class="nav-item dropdown">
             <a class="nav-link text-sand ms-lg-2 ms-xl-4 dropdown-toggle" href="#" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,10 +74,9 @@
               <li><a href="#" class="dropdown-item">Ledenlijst</a></li>
               <li><a href="#" class="dropdown-item">Liedteksten</a></li>
               <li><a href="#" class="dropdown-item">Planning optredens</a></li>
-              <li><a href="{% url 'public_content:smoelenboek_public' %}" class="dropdown-item">Smoelenboek</a></li>
+              <li><a href="{% url 'public_content:smoelenboek_private' %}" class="dropdown-item">Smoelenboek</a></li>
             </ul>
           </li>
-          {% endif %}
           <li class="nav-item ms-lg-2 ms-xl-4 d-flex align-items-center">
             <form method="post" action="{% url 'accounts:logout' %}" class="m-0">
               {% csrf_token %}
