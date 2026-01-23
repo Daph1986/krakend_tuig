@@ -23,6 +23,7 @@ urlpatterns = [
     path('agenda/', include('agenda.urls')),
     path('accounts/', include('accounts.urls')),
     path('', include('public_content.urls')),
+    path('sponsors/', include('sponsors.urls', namespace='sponsors')),
 ]
 
 if settings.DEBUG:

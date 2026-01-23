@@ -1,0 +1,79 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}
+{{ titel }}
+{% endblock %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      {{ titel }}
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10 col-xl-9">
+      <div class="p-4 p-md-5 rounded kt-card">
+
+        <form method="post" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+          </div>
+          {% endif %}
+
+          {% for field in form %}
+          <div class="row mb-4 align-items-center">
+
+            <div class="col-12 col-md-3">
+              <label class="form-label mb-1 mb-md-0" for="{{ field.id_for_label }}">
+                {{ field.label }}
+                {% if field.field.required %}
+                <span class="text-danger">*</span>
+                {% endif %}
+              </label>
+            </div>
+
+            <div class="col-12 col-md-9">
+              {% if field.field.widget.input_type == 'checkbox' %}
+              <div class="form-check">
+                {{ field }}
+              </div>
+              {% else %}
+              {{ field }}
+              {% endif %}
+
+              {% if field.help_text %}
+              <div class="form-text">{{ field.help_text }}</div>
+              {% endif %}
+
+              {% if field.errors %}
+              <div class="text-danger small mt-1">{{ field.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+
+          <div class="d-flex gap-2 mt-4 justify-content-between">
+            <button class="btn hvr-grow btn-outline-success btn-gen-spec me-3" type="submit">
+              <i class="fa-regular fa-floppy-disk me-2"></i>Opslaan
+            </button>
+            <a class="btn hvr-grow btn-outline-secondary btn-gen-spec" href="{% url 'sponsors:beheer' %}">
+              <i class="fa-solid fa-ban me-2"></i>Annuleren
+            </a>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

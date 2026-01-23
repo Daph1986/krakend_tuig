@@ -112,7 +112,7 @@ ul, li {
   border-color: #25324A;
 }
 
-.bg-sand{
+.bg-sand {
   background-color: #E2D8C9;
 }
 
@@ -142,13 +142,6 @@ ul, li {
 .btn-gen-spec-sm {
   border-radius: 25px;
 }
-
-/* .xxl-btn {
-  background-color: #797471;
-  color: #FFF;
-  width: 325px;
-  border-radius: 25px;
-} */
 
 .custom-danger-btn {
   background-color: #da1111;
@@ -185,10 +178,6 @@ ul, li {
   transform: scale(1.1);
 }
 
-
-/* .xxl-btn.hvr-grow:hover,
-.xxl-btn.hvr-grow:focus,
-.xxl-btn.hvr-grow:active,  */
 .general-btn.hvr-grow:hover,
 .general-btn.hvr-grow:focus {
   background-color: #8F4C22;
@@ -413,6 +402,81 @@ ul, li {
   max-width: 520px;
 }
 
+/* --------------------- Vrienden & Sponsors --------------------- */
+.sponsor-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.sponsor-item {
+  text-decoration: none;
+}
+
+.sponsor-logo-wrap {
+  width: 300px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-logo-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.sponsor-item:hover img {
+  transform: scale(1.05);
+}
+
+.kt-table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.kt-table thead th {
+  background-color: #F5F0E6;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.kt-table tbody td,
+.kt-table tbody th {
+  background-color: #F5F0E6;
+}
+
+/* Scheidingslijnen */
+.kt-table tbody tr:not(:last-child) td,
+.kt-table tbody tr:not(:last-child) th {
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.kt-table .col-logo {
+  width: 160px;
+}
+
+.kt-table .col-volgorde {
+  width: 110px;
+}
+
+.kt-table .col-actief {
+  width: 90px;
+}
+
+.kt-table .col-acties {
+  width: 190px;
+}
+
+.sponsor-logo-admin {
+  max-height: 60px;
+  max-width: 140px;
+  object-fit: contain;
+  display: block;
+}
 
 /* --------------------------- Footer ---------------------------- */
 
@@ -467,6 +531,28 @@ footer {
   }
 } */
 
+@media (min-width: 1200px) {
+  .sponsor-grid {
+    gap: 2.5rem;
+  }
+
+  .sponsor-logo-wrap {
+    width: 260px;
+    height: 150px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .sponsor-grid {
+    gap: 2rem;
+  }
+
+  .sponsor-logo-wrap {
+    width: 230px;
+    height: 140px;
+  }
+}
+
 @media (max-width: 767.98px) {
 
   body,
@@ -509,20 +595,6 @@ footer {
     min-width: auto;
   }
 
-  /* .div-space {
-    margin-bottom: 50px;
-  }
-
-  .no-margin-left {
-    margin-left: 0 !important;
-  }
-
-  .post-body img {
-    max-width: 300px;
-    width: 100%;
-    height: auto;
-  } */
-
   .carousel-control-next {
     top: 80%;
     right: 5%;
@@ -531,5 +603,12 @@ footer {
   .carousel-control-prev {
     top: 80%;
     left: 5%;
+  }
+}
+
+@media (max-width: 576px) {
+  .sponsor-logo-wrap {
+    width: 240px;
+    height: 130px;
   }
 }

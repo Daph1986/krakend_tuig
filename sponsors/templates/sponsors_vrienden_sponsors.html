@@ -1,0 +1,86 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Vrienden &amp; Sponsors
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="container my-5">
+  <div class="row g-4 text-center mb-5">
+    <div class="col-md-6">
+      <h4 class="mb-3">Vrienden &amp; Sponsors van Krakend Tuig</h4>
+      <p>
+        Shantykoor “Krakend Tuig” treedt niet alleen op tijdens reguliere optredens, maar ook in verzorgingstehuizen, 
+        waar wij tegen een gereduceerd tarief zingen.
+      </p>
+      <p>
+        Om het koor te kunnen voorzien van goede geluidsapparatuur en om de bijkomende kosten te kunnen dragen, 
+        zijn er de “Vrienden van Krakend Tuig”.
+      </p>
+      <p class="mb-0">
+        Dankzij hun steun kunnen wij blijven doen wat we het liefste doen: muziek brengen naar de mensen.
+      </p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <h4 class="mb-3">Ook een vriend van Shantykoor “Krakend Tuig” worden</h4>
+      <p class="mb-2">
+        Iedere donatie, groot of klein, is van harte welkom.
+        Met jouw steun help je ons om te blijven zingen en optreden.
+      </p>
+      <p class="mb-2">
+        Shantykoor “Krakend Tuig” <br>
+        <span class="fw-semibold">Bankrekening:</span> NL31RABO0120556529
+      </p>
+      <p class="mb4">
+      Interesse om sponsor te worden van ons shantyfestival of shantycafé?
+      Bekijk dan het Bidbook en het Sponsorcontract via de knoppen hieronder.
+      </p>
+
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a class="btn general-btn hvr-grow me-2" href="{% static 'pdf/bidbook.pdf' %}" target="_blank" rel="noreferrer">Bidbook</a>
+        <a class="btn general-btn hvr-grow" href="{% static 'pdf/sponsorcontract.pdf' %}" target="_blank" rel="noreferrer">Sponsorcontract</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-5">
+
+  <h2 class="h4 text-center mb-4">Dankzij hun steun kan Krakend Tuig blijven zingen en optreden.</h2>
+
+  <div class="sponsor-grid">
+  {% for sponsor in sponsors %}
+    {% if sponsor.website %}
+      <a href="{{ sponsor.website }}" target="_blank" rel="noreferrer" class="sponsor-item">
+    {% else %}
+      <div class="sponsor-item">
+    {% endif %}
+
+        <div class="sponsor-logo-wrap">
+          <img src="{{ sponsor.logo.url }}" alt="{{ sponsor.naam }}">
+        </div>
+
+    {% if sponsor.website %}
+      </a>
+    {% else %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+
+  {% if user.is_staff %}
+    <div class="text-center mt-5 mb-10">
+      <a class="btn general-btn hvr-grow" href="{% url 'sponsors:beheer' %}">Sponsors beheren</a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}
+

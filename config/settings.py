@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'about',
     'agenda',
     'public_content',
+    'sponsors',
 
     'captcha',
 
