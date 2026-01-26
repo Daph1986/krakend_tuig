@@ -235,10 +235,11 @@ ul, li {
   object-fit: cover;
 }
 
-.sponsor-intro img {
-  object-fit: contain;
-  margin-bottom: 10px;
+.sponsor-logo-wrap--home {
+  width: 260px;
+  height: 120px;
 }
+
 
 .sponsor-link {
   color: inherit;
@@ -566,10 +567,6 @@ footer {
 
   .hero-image {
     height: 250px;
-  }
-
-  .special-img {
-    width: 250px;
   }
 
   .caption {

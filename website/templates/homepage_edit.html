@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Homepage bewerken{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Homepage bewerken</h1>
+    <a class="btn general-btn hvr-grow" href="{% url 'home' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>
+      Terug
+    </a>
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="p-3">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+      {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.hero_image.id_for_label }}">Hero afbeelding</label>
+      {{ form.hero_image }}
+      {% if form.hero_image.errors %}<div class="text-danger mt-1">{{ form.hero_image.errors }}</div>{% endif %}
+      <div class="form-text">Upload een nieuwe afbeelding om de huidige te vervangen.</div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.welkom_titel.id_for_label }}">Welkom titel</label>
+      {{ form.welkom_titel }}
+      {% if form.welkom_titel.errors %}<div class="text-danger mt-1">{{ form.welkom_titel.errors }}</div>{% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.welkom_tekst.id_for_label }}">Welkom tekst</label>
+      {{ form.welkom_tekst }}
+      {% if form.welkom_tekst.errors %}<div class="text-danger mt-1">{{ form.welkom_tekst.errors }}</div>{% endif %}
+      <div class="form-text">Je mag enters gebruiken.</div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.mededelingen_tekst.id_for_label }}">Mededelingen tekst</label>
+      {{ form.mededelingen_tekst }}
+      {% if form.mededelingen_tekst.errors %}<div class="text-danger mt-1">{{ form.mededelingen_tekst.errors }}</div>
+      {%endif %}
+      <div class="form-text">Bijvoorbeeld met mailadres of extra info.</div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.mededelingen_email.id_for_label }}">Mededelingen e-mail</label>
+      {{ form.mededelingen_email }}
+      {% if form.mededelingen_email.errors %}<div class="text-danger mt-1">{{ form.mededelingen_email.errors }}</div>
+      {%endif %}
+    </div>
+
+    <div class="d-flex gap-2 mt-4 justify-content-between">
+      <button class="btn hvr-grow btn-outline-success btn-gen-spec me-3" type="submit">
+        <i class="fa-regular fa-floppy-disk me-2"></i>Opslaan</button>
+        <a class="btn hvr-grow btn-outline-secondary btn-gen-spec" href="{% url 'home' %}">
+        <i class="fa-solid fa-ban me-2"></i>Annuleren</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

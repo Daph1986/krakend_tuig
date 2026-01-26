@@ -4,84 +4,68 @@
 
 {% block page_header %}
 <div class="hero-image position-relative w-100">
+  {% if homepage.hero_image %}
+  <img src="{{ homepage.hero_image.url }}" alt="Krakend Tuig Hero" class="img-fluid w-100">
+  {% else %}
   <img src="{% static 'img/krakend_tuig_hero.webp' %}" alt="Krakend Tuig Hero" class="img-fluid w-100">
+  {% endif %}
 </div>
 {% endblock %}
+
 
 {% block content %}
 <div class="container mt-3">
   <div class="row text-center mx-3">
-    <h2>Welkom bij shantykoor Krakend Tuig</h2>
+    <h2>{{ homepage.welkom_titel }}</h2>
     <div class="col-12">
-      <p>
-        Sinds 2006 brengen wij als Krakend Tuig muziek die je meeneemt op zee – en naar ons hart.
-        Wees welkom om mee te luisteren of mee te doen!
-      </p>
+      <p>{{ homepage.welkom_tekst|linebreaksbr }}</p>
       <br>
-      <h4>Mededelingen</h4>
+      <h4>{{ homepage.mededelingen_titel }}</h4>
       <p class="contact-block">
-        Leden van Krakend Tuig kunnen hun wachtwoord opvragen bij 
-        <a href="mailto:beheer@krakendtuig.nl" target="_blank">
-          beheer@krakendtuig.nl
+        {{ homepage.mededelingen_tekst|linebreaksbr }}
+        {% if homepage.mededelingen_email %}
+        <br>
+        <a href="mailto:{{ homepage.mededelingen_email }}" target="_blank">
+          {{ homepage.mededelingen_email }}
         </a>
+        {% endif %}
       </p>
+
     </div>
   </div>
 </div>
-<div class="container text-center my-4 sponsor-intro">
-  <h3>Ontmoet onze <a href="#" class="sponsor-link">sponsoren</a></h3>
-  <p class="mb-3">
-    Dankzij hun steun kan Krakend Tuig blijven zingen en optreden.
-  </p>
 
-  <div class="d-flex flex-wrap justify-content-center align-items-center gap-4">
-    <a href="https://fietsenvoormijneten.nl/verkooppunt/appel-en-peer-2/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_appel_peer.webp' %}" alt="Appel en peer" height="100">
-    </a>
-    <a href="https://www.archeonjefsi.nl/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_archeon.webp' %}" alt="Archeon Jefsi" height="100">
-    </a>
-    <a href="https://www.barbloemstede.nl/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_bar_bloemstede.webp' %}" alt="Bar Bloemstede" height="100">
-    </a>
-    <a href="https://raadsinformatie.stichtsevecht.nl/Vergaderingen/Commissie-Fysiek-Domein/2018/11-september/19:31/Bedrijveninvesteringszone-BIZ-plan-20180607-Breukelen-winkeldorp-aan-de-Vecht-1.pdf"
-      target="_blank">
-      <img src="{% static 'img/sponsors/logo_biz.webp' %}" alt="BIZ Breukelen" height="100">
-    </a>
-    <a href="https://www.facebook.com/people/Cafe-Bar-De-Breukelaer/100057251718634/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_cafe_bar_de_breukelaer.webp' %}" alt="Cafe Bar De Breukelaer" height="100">
-    </a>
-    <a href="https://cultuurfondsstichtsevecht.nl/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_cultuurfonds_stichtse_vecht.webp' %}" alt="Cultuurfonds Stichtse Vecht"
-        height="100">
-    </a>
-    <a href="https://www.patrickdegenkamp.nl/" target="_blank">
-      <img class="special-img" src="{% static 'img/sponsors/logo_degenkamp_74.webp' %}" alt="Hoveniersbedrijf Partick Degenkamp 74"
-        height="100">
-    </a>
-    <a href="https://ducadelcosma.com/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_duca_del_cosmo.webp' %}" alt="Duca del Cosma" height="100">
-    </a>
-    <a href="https://ferryquik.nl/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_dvc.webp' %}" alt="DVC sign" height="100">
-    </a>
-    <a href="https://www.facebook.com/profile.php?id=61559126489164" target="_blank">
-      <img src="{% static 'img/sponsors/logo_greendoor.webp' %}" alt="Greendoor BV" height="100">
-    </a>
-    <a href="https://www.depoelheiwerken.nl/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_heibedrijf_de_poel.webp' %}" alt="Heibedrijf De Poel" height="100">
-    </a>
-    <a href="https://peepswork.com/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_peeps_work.webp' %}" alt="Peeps work" height="100">
-    </a>
-    <img src="{% static 'img/sponsors/logo_van_maanen.webp' %}" alt="Van Maanen" height="100">
-    </a>
-    <a href="https://www.warmtebouw.nl/" target="_blank">
-      <img src="{% static 'img/sponsors/logo_warmtebouw.webp' %}" alt="Warmtebouw" height="100">
-    </a>
-  </div>
+{% if user.is_staff %}
+<div class="container text-center mt-3">
+  <a class="btn general-btn hvr-grow" href="{% url 'homepage_edit' %}">
+    Homepage bewerken
+  </a>
 </div>
-<div class="container">
+{% endif %}
+
+<div class="container text-center my-4 sponsor-intro">
+  {% include 'partials/home_sponsor_intro.html' %}
+  <div class="sponsor-grid mt-5">
+    {% for sponsor in sponsors %}
+    {% if sponsor.website %}
+    <a href="{{ sponsor.website }}" target="_blank" rel="noreferrer" class="sponsor-item">
+      {% else %}
+      <div class="sponsor-item">
+        {% endif %}
+
+        <div class="sponsor-logo-wrap sponsor-logo-wrap--home">
+          <img src="{{ sponsor.logo.url }}" alt="{{ sponsor.naam }}" class="sponsor-logo">
+        </div>
+
+        {% if sponsor.website %}
+    </a>
+    {% else %}
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+</div>
+<div class="container mt-5">
   <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active mb-10" data-bs-interval="5000">
