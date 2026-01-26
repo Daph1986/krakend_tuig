@@ -5,9 +5,9 @@
 {% block page_header %}
 <div class="hero-image position-relative w-100">
   {% if homepage.hero_image %}
-  <img src="{{ homepage.hero_image.url }}" alt="Krakend Tuig Hero" class="img-fluid w-100">
+    <img src="{{ homepage.hero_image.url }}" alt="Krakend Tuig Hero">
   {% else %}
-  <img src="{% static 'img/krakend_tuig_hero.webp' %}" alt="Krakend Tuig Hero" class="img-fluid w-100">
+    <img src="{% static 'img/krakend_tuig_hero.webp' %}" alt="Krakend Tuig Hero">
   {% endif %}
 </div>
 {% endblock %}

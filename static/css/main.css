@@ -200,14 +200,18 @@ ul, li {
 /* ---------------------------- Home ----------------------------- */
 
 .hero-image {
-  height: 40vh;
-  object-fit: cover;
+  position: relative;
+  width: 100%;
+  height: clamp(260px, 28vw, 520px); /* min, schaal, max */
   overflow: hidden;
 }
 
-.responsive {
-  width: 50%;
-  height: auto;
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 
 .caption {
