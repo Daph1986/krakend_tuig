@@ -1,4 +1,4 @@
-{% extends "main.html" %}
+{% extends 'main.html' %}
 {% load static %}
 {% block title %} Zing mee met Krakend Tuig {% endblock %}
 
@@ -19,61 +19,76 @@
 <div class="container my-5">
 
   <div class="row g-4 align-items-start">
+
     <!-- Video + caption -->
     <div class="col-12 col-lg-7">
       <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
-        <iframe
-          src="https://www.youtube.com/embed/l6UBUZQzRHQ?si=2kgIty_NObKDIrPk"
-          title="YouTube video player"
+        <iframe src="{{ content.video_url }}" title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen>
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
         </iframe>
       </div>
 
       <p class="text-center text-lg-start mt-2 mb-0 small">
-        Impressie van een oefenavond uit 2023
+        {{ content.video_caption }}
       </p>
     </div>
 
     <!-- Info card -->
     <div class="col-12 col-lg-5 mb-10">
       <div class="info-card p-4 rounded shadow-sm text-center text-lg-start">
+
         <h5 class="mb-3">Praktische informatie</h5>
 
+        <!-- Repetities -->
         <div class="mb-3">
           <div class="fw-semibold">Repetities</div>
-          <div>Iedere maandagavond</div>
-          <div>19:30 – 21:30</div>
-          <div class="small"><em>(behalve de eerste maandag van de maand)</em></div>
+          <div>{{ content.repetities_regel_1 }}</div>
+          <div>{{ content.repetities_regel_2 }}</div>
+          {% if content.repetities_toelichting %}
+          <div class="small">
+            <em>{{ content.repetities_toelichting }}</em>
+          </div>
+          {% endif %}
         </div>
 
+        <!-- Locatie -->
         <div class="mb-3">
           <div class="fw-semibold">Locatie</div>
-          <div>Parochiehuis</div>
-          <div>Herenstraat 15</div>
-          <div>3621 AP Breukelen</div>
+          <div>{{ content.locatie_regel_1 }}</div>
+          <div>{{ content.locatie_regel_2 }}</div>
+          <div>{{ content.locatie_regel_3 }}</div>
         </div>
 
         <hr class="my-4">
 
-        <div class="mb-2 fw-semibold">Interesse?</div>
-        <div>Bel Gert Frankhuisen</div>
+        <!-- Contact -->
+        <div class="mb-2 fw-semibold">{{ content.contact_kop }}</div>
+        <div>Bel {{ content.contact_naam }}</div>
 
-        <a class="btn btn-sm mt-3 px-3 btn-primary-custom" href="tel:0625011812">
-          <i class="fa-solid fa-phone me-2"></i>0625011812
+        <a class="btn btn-sm mt-3 px-3 btn-primary-custom" href="tel:{{ content.contact_telefoon }}">
+          <i class="fa-solid fa-phone me-2"></i>{{ content.contact_telefoon }}
         </a>
+
         <div class="mt-3 small">
           Of stuur een bericht via de
-          <a class="contact-link" href="{% url 'contact:contact' %}">contactpagina</a>.
+          <a class="contact-link" href="{% url 'contact:contact' %}">
+            contactpagina
+          </a>.
         </div>
+
+        {% if user.is_staff %}
+        <div class="container text-center mt-3">
+          <a class="btn general-btn hvr-grow" href="{% url 'zing_mee_edit' %}">
+            Praktische info bewerken
+          </a>
+        </div>
+        {% endif %}
+
       </div>
     </div>
+
   </div>
 
 </div>
-{% endblock %}
-
-{% block postloadjs %}
-{{ block.super }}
 {% endblock %}

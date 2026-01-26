@@ -1,6 +1,7 @@
 from django import forms
 from .models import HomePageContent
 from .models import HomeSlide
+from .models import ZingMeeContent
 
 
 class HomePageContentForm(forms.ModelForm):
@@ -54,3 +55,14 @@ class HomeSlideForm(forms.ModelForm):
                 widget.attrs['class'] = 'form-check-input'
             else:
                 widget.attrs['class'] = 'form-control'
+
+
+class ZingMeeContentForm(forms.ModelForm):
+    class Meta:
+        model = ZingMeeContent
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'

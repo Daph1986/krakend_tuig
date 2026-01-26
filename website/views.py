@@ -4,8 +4,8 @@ from django.contrib import messages
 from sponsors.models import Sponsor
 from django.db.models.functions import Lower
 
-from .models import HomePageContent, HomeSlide
-from .forms import HomePageContentForm, HomeSlideForm
+from .models import HomePageContent, HomeSlide, ZingMeeContent
+from .forms import HomePageContentForm, HomeSlideForm, ZingMeeContentForm
 
 
 def home(request):
@@ -97,4 +97,21 @@ def home_slide_delete(request, pk):
 
 
 def zing_mee(request):
-    return render(request, 'zing_mee.html')
+    content, _ = ZingMeeContent.objects.get_or_create(pk=1)
+    return render(request, 'zing_mee.html', {'content': content})
+
+
+@staff_member_required
+def zing_mee_edit(request):
+    content, _ = ZingMeeContent.objects.get_or_create(pk=1)
+
+    if request.method == 'POST':
+        form = ZingMeeContentForm(request.POST, instance=content)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'De pagina "Zing mee" is bijgewerkt.')
+            return redirect('zing_mee')
+    else:
+        form = ZingMeeContentForm(instance=content)
+
+    return render(request, 'zing_mee_edit.html', {'form': form})

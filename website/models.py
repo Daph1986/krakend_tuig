@@ -38,3 +38,36 @@ class HomeSlide(models.Model):
 
     def __str__(self):
         return self.caption or f'Slide {self.id}'
+
+
+class ZingMeeContent(models.Model):
+    # Video
+    video_url = models.URLField(
+        default='https://www.youtube.com/embed/l6UBUZQzRHQ'
+    )
+    video_caption = models.CharField(
+        max_length=200,
+        default='Impressie van een oefenavond uit 2023'
+    )
+
+    # Praktische info
+    repetities_regel_1 = models.CharField(max_length=100, default='Iedere maandagavond')
+    repetities_regel_2 = models.CharField(max_length=100, default='19:30 – 21:30')
+    repetities_toelichting = models.CharField(
+        max_length=150,
+        default='(behalve de eerste maandag van de maand)',
+        blank=True
+    )
+
+    locatie_regel_1 = models.CharField(max_length=100, default='Parochiehuis')
+    locatie_regel_2 = models.CharField(max_length=100, default='Herenstraat 15')
+    locatie_regel_3 = models.CharField(max_length=100, default='3621 AP Breukelen')
+
+    contact_kop = models.CharField(max_length=50, default='Interesse?')
+    contact_naam = models.CharField(max_length=100, default='Gert Frankhuisen')
+    contact_telefoon = models.CharField(max_length=20, default='0625011812')
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return 'Zing mee – content'

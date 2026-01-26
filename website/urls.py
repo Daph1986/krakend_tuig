@@ -10,4 +10,5 @@ urlpatterns = [
     path(_('homepage/slides/<int:pk>/bewerken/'), views.home_slide_update, name='home_slide_update'),
     path(_('homepage/slides/<int:pk>/verwijderen/'), views.home_slide_delete, name='home_slide_delete'),
     path(_('zing_mee/'), views.zing_mee, name='zing_mee'),
+    path('beheer/zing-mee/', views.zing_mee_edit, name='zing_mee_edit'),
 ]
