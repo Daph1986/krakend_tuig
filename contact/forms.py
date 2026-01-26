@@ -1,6 +1,7 @@
 from django import forms
 from captcha.fields import CaptchaField
 from django.utils.translation import gettext_lazy as _
+from .models import ContactPageContent
 
 
 class ContactForm(forms.Form):
@@ -38,3 +39,24 @@ class ContactForm(forms.Form):
             self.fields[field_name].widget.attrs['placeholder'] = f"{placeholder} *"
             self.fields[field_name].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field_name].label = False
+
+
+class ContactPageContentForm(forms.ModelForm):
+    class Meta:
+        model = ContactPageContent
+        fields = [
+            'secretariaat_titel', 'secretariaat_regel1', 'secretariaat_regel2', 'secretariaat_regel3',
+            'secretariaat_email', 'boeken_titel', 'boeken_naam', 'boeken_tel', 'boeken_email',
+            'site_titel', 'site_naam', 'site_rol',
+            'site_url', 'site_url_label', 'site_logo', 'site_email',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            widget = field.widget
+            if isinstance(widget, forms.CheckboxInput):
+                widget.attrs['class'] = 'form-check-input'
+            else:
+                widget.attrs['class'] = 'form-control'

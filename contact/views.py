@@ -7,10 +7,15 @@ from django.contrib import messages
 from django.conf import settings
 from django.utils.translation import gettext as _
 
-from .forms import ContactForm
+from django.contrib.admin.views.decorators import staff_member_required
+
+from .forms import ContactForm, ContactPageContentForm
+from .models import ContactPageContent
 
 
 def contact(request):
+    content, created = ContactPageContent.objects.get_or_create(id=1)
+
     if request.method == 'POST':
         contact_form = ContactForm(request.POST)
         honeypot = request.POST.get('honeypot')
@@ -53,7 +58,7 @@ def contact(request):
                 return HttpResponse(_('Invalid header found.'))
             except Exception:
                 messages.error(request, _("Het bericht kon niet worden verzonden. Probeer het later opnieuw."))
-                return render(request, 'contact.html', {'contact_form': contact_form})
+                return render(request, 'contact.html', {'contact_form': contact_form, 'contact': content})
 
             messages.success(request, _("Bedankt voor je bericht. We nemen spoedig contact met je op."))
             return redirect(reverse('home'))
@@ -61,4 +66,21 @@ def contact(request):
     else:
         contact_form = ContactForm()
 
-    return render(request, 'contact.html', {'contact_form': contact_form})
+    return render(request, 'contact.html', {'contact_form': contact_form, 'contact': content})
+
+
+@staff_member_required
+def contact_edit(request):
+    content, created = ContactPageContent.objects.get_or_create(id=1)
+
+    if request.method == 'POST':
+        form = ContactPageContentForm(request.POST, request.FILES, instance=content)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Contactpagina opgeslagen."))
+            return redirect('contact:contact')
+        messages.error(request, _("Controleer het formulier."))
+    else:
+        form = ContactPageContentForm(instance=content)
+
+    return render(request, 'contact_edit.html', {'form': form})

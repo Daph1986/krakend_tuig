@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Contactpagina bewerken{% endblock %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Contactpagina bewerken
+    </h2>
+    <a class="btn general-btn hvr-grow" href="{% url 'contact:contact' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>
+      Terug
+    </a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 mb-10" style="max-width: 900px;">
+
+  <form method="post" enctype="multipart/form-data" class="p-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="d-flex gap-2 mt-4 justify-content-between">
+      <button class="btn hvr-grow btn-outline-success btn-gen-spec me-3" type="submit">
+        <i class="fa-regular fa-floppy-disk me-2"></i>Opslaan</button>
+      <a class="btn hvr-grow btn-outline-secondary btn-gen-spec" href="{% url 'contact:contact' %}">
+        <i class="fa-solid fa-ban me-2"></i>Annuleren</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -22,63 +22,97 @@
 {% block content %}
 <div class="container my-5 contact-block">
   <div class="row text-center text-md-start align-items-start">
+
     <div class="col-12 col-md-4 mb-4">
-      <h5>Adres secretariaat</h5>
+      <h5>{{ contact.secretariaat_titel }}</h5>
+
       <p>
-        Shantykoor Krakend Tuig<br>
-        Nijftarlakestraat 6<br>
-        3621 GV Breukelen
+        {% if contact.secretariaat_regel1 %}{{ contact.secretariaat_regel1 }}<br>{% endif %}
+        {% if contact.secretariaat_regel2 %}{{ contact.secretariaat_regel2 }}<br>{% endif %}
+        {% if contact.secretariaat_regel3 %}{{ contact.secretariaat_regel3 }}{% endif %}
       </p>
-      <p>
-        <i class="fa-solid fa-envelope me-2"></i>
-        <a href="mailto:secretariaat@krakendtuig.nl" target="_blank">
-          secretariaat@krakendtuig.nl
-        </a>
-        <br>
-      
-      </p>
+
+      {% if contact.secretariaat_email %}
+        <p class="mb-0">
+          <i class="fa-solid fa-envelope me-2"></i>
+          <a href="mailto:{{ contact.secretariaat_email }}" target="_blank">
+            {{ contact.secretariaat_email }}
+          </a>
+        </p>
+      {% endif %}
     </div>
+
     <div class="col-12 col-md-4 mb-4">
-      <h5>Optreden boeken</h5>
-      <p>
-        Gert Frankhuisen<br>
-        <a class="btn btn-sm mt-3 px-3 btn-primary-custom text-white" href="tel:0625011812">
-          <i class="fa-solid fa-phone me-2 text-white"></i>0625011812
-        </a> <br>
-      </p>
-      <p>
-        <i class="fa-solid fa-envelope me-2"></i>
-        <a href="mailto:contact@krakendtuig.nl" target="_blank">
-          contact@krakendtuig.nl
+      <h5>{{ contact.boeken_titel }}</h5>
+
+      {% if contact.boeken_naam %}
+        <p class="mb-2">{{ contact.boeken_naam }}</p>
+      {% endif %}
+
+      {% if contact.boeken_tel %}
+        <a class="btn btn-sm mt-2 px-3 btn-primary-custom text-white" href="tel:{{ contact.boeken_tel }}">
+          <i class="fa-solid fa-phone me-2 text-white"></i>{{ contact.boeken_tel }}
         </a>
-      </p>
+      {% endif %}
+
+      {% if contact.boeken_email %}
+        <p class="mt-3 mb-0">
+          <i class="fa-solid fa-envelope me-2"></i>
+          <a href="mailto:{{ contact.boeken_email }}" target="_blank">
+            {{ contact.boeken_email }}
+          </a>
+        </p>
+      {% endif %}
     </div>
+
     <div class="col-12 col-md-4 mb-4">
-      <h5>Vragen of opmerkingen over de site</h5>
+      <h5>{{ contact.site_titel }}</h5>
+
       <p>
-        Daphne Heimgartner-Frankhuisen <br>
-        Webbeheerder
+        {% if contact.site_naam %}{{ contact.site_naam }}<br>{% endif %}
+        {% if contact.site_rol %}{{ contact.site_rol }}{% endif %}
       </p>
-      <a href="https://www.hellodaphne.nl/" target="_blank">
-        <i class="fa-solid fa-globe me-2"></i>
-        <img src="{% static 'img/sponsors/logo_hello_daphne.webp' %}" alt="Webbeheerder" class="img-fluid"
-          style="max-width: 120px;">
-      </a>
-      <p>
-        <i class="fa-solid fa-envelope me-2"></i>
-        <a href="mailto:beheer@krakendtuig.nl" target="_blank">
-          beheer@krakendtuig.nl
+
+      {% if contact.site_url %}
+        <a href="{{ contact.site_url }}" target="_blank" rel="noreferrer">
+          <i class="fa-solid fa-globe me-2"></i>
+
+          {# Optie: logo óf tekst #}
+          {% if contact.site_logo %}
+            <img src="{{ contact.site_logo.url }}" alt="{{ contact.site_url_label|default:'Website' }}"
+                 class="img-fluid" style="max-width: 120px;">
+          {% else %}
+            {{ contact.site_url_label|default:contact.site_url }}
+          {% endif %}
         </a>
-      </p>
+      {% endif %}
+
+      {% if contact.site_email %}
+        <p class="mt-3 mb-0">
+          <i class="fa-solid fa-envelope me-2"></i>
+          <a href="mailto:{{ contact.site_email }}" target="_blank">
+            {{ contact.site_email }}
+          </a>
+        </p>
+      {% endif %}
     </div>
+
   </div>
+
+  {% if user.is_staff %}
+    <div class="text-center mt-4">
+      <a class="btn general-btn hvr-grow" href="{% url 'contact:contact_edit' %}">
+        Contactpagina bewerken
+      </a>
+    </div>
+  {% endif %}
 </div>
 
 <div class="container">
   <div class="row text-center">
     <div class="col-10 mx-auto mb-10">
       <!-- Contact form -->
-      <form id="contact-form" method="POST" action="{% url 'contact' %}">
+      <form id="contact-form" method="POST" action="{% url 'contact:contact' %}">
         {% csrf_token %}
         <fieldset class="rounded mb-2">
           <legend class="fieldset-label">
