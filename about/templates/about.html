@@ -16,39 +16,41 @@
 <div class="container my-5">
   <div class="row align-items-center">
     <div class="col-12 col-md-7 text-center text-md-start">
-      <h5>“Krakend Tuig” – shanty zoals het altijd was</h5>
+      <h5>{{ intro.title }}</h5>
+
+      {% if intro.paragraph_1 %}<p>{{ intro.paragraph_1 }}</p>{% endif %}
+      {% if intro.paragraph_2 %}<p>{{ intro.paragraph_2 }}</p>{% endif %}
+      {% if intro.paragraph_3 %}<p>{{ intro.paragraph_3 }}</p>{% endif %}
+      {% if intro.paragraph_4 %}<p>{{ intro.paragraph_4 }}</p>{% endif %}
+      {% if intro.paragraph_5 %}<p>{{ intro.paragraph_5 }}</p>{% endif %}
+      {% if intro.paragraph_6 %}<p>{{ intro.paragraph_6 }}</p>{% endif %}
+      {% if intro.paragraph_7 %}
       <p>
-        In april 2006 richtten Sjef van Miert en Peter Arts, samen met een aantal enthousiaste zangers, in Breukelen het
-        shantykoor Krakend Tuig op.
+        {{ intro.paragraph_7 }}
+        <a class="contact-link" href="{% url 'zing_mee' %}">hier</a>
       </p>
-      <p>
-        We zingen bekende en minder bekende shanties en zeemansliederen. Daarnaast bestaat ons repertoire uit onder
-        andere een Ierse lovesong en een Cubaans visserslied. Met deze afwisseling en onze vrolijke optredens werden we
-        al snel bekend in Breukelen, Maarssen en de wijde omtrek.
-      </p>
-      <p>
-        Onze dirigent is Jan Boonacker. Hij wordt op professionele wijze bijgestaan door accordeonisten Lydia van
-        Miltenburg, Jan Groenendijk, Jan Wouda en drummer Cor van den Wijngaard. Samen brengen zij een schat aan
-        muzikale ervaring mee.
-      </p>
-      <p>
-        Inmiddels bestaat Krakend Tuig uit 5 muzikanten, die vocaal worden ondersteund door 30 zangers. Samen hebben we
-        al veel succesvolle optredens verzorgd. Regelmatig worden er nieuwe optredens aan onze agenda toegevoegd.
-      </p>
-      <p>
-        We repeteren op de laatste drie maandagavonden van elke maand in het parochiehuis aan de Herenstraat 15 in
-        Breukelen.
-      </p>
-      <p>
-        Nieuwsgierig geworden?
-        Je bent van harte welkom om eens langs te komen en de sfeer te proeven bij Krakend Tuig!
-      </p>
+      {% endif %}
+
+
+
+      {% if user.is_staff %}
+      <div class="container text-center text-md-start mt-3">
+        <a class="btn general-btn hvr-grow" href="{% url 'about:about_intro_edit' %}">
+          Over ons info bewerken
+        </a>
+      </div>
+      {% endif %}
     </div>
+
+
     <div class="col-12 col-md-5 mt-3 mt-md-0 text-center">
-      <img src="{% static 'img/about/zeilboot.webp' %}" class="img-fluid rounded" alt="Zeilboot">
+      {% if intro.image %}
+      <img src="{{ intro.image.url }}" class="img-fluid rounded" alt="Zeilboot">
+      {% endif %}
     </div>
   </div>
 </div>
+
 
 <div class="container my-5">
   <div class="row">
@@ -114,8 +116,5 @@
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block postloadjs %}
-{{ block.super }}
+<div class="mb-10"></div>
 {% endblock %}
