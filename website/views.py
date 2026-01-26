@@ -1,11 +1,11 @@
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from sponsors.models import Sponsor
 from django.db.models.functions import Lower
 
-from .models import HomePageContent
-from .forms import HomePageContentForm
+from .models import HomePageContent, HomeSlide
+from .forms import HomePageContentForm, HomeSlideForm
 
 
 def home(request):
@@ -37,6 +37,63 @@ def homepage_edit(request):
         form = HomePageContentForm(instance=homepage)
 
     return render(request, 'homepage_edit.html', {'form': form})
+
+
+@staff_member_required
+def home_slides_list(request):
+    homepage, _ = HomePageContent.objects.get_or_create(id=1)
+    slides = homepage.slides.all()  # ook inactief, zodat je kunt beheren
+    return render(request, 'slides_list.html', {'homepage': homepage, 'slides': slides})
+
+
+@staff_member_required
+def home_slide_create(request):
+    homepage, _ = HomePageContent.objects.get_or_create(id=1)
+
+    if request.method == 'POST':
+        form = HomeSlideForm(request.POST, request.FILES)
+        if form.is_valid():
+            slide = form.save(commit=False)
+            slide.homepage = homepage
+            slide.save()
+            messages.success(request, 'Slide toegevoegd.')
+            return redirect('home_slides_list')
+        messages.error(request, 'Controleer het formulier.')
+    else:
+        form = HomeSlideForm()
+
+    return render(request, 'slide_form.html', {'form': form, 'mode': 'create'})
+
+
+@staff_member_required
+def home_slide_update(request, pk):
+    homepage, _ = HomePageContent.objects.get_or_create(id=1)
+    slide = get_object_or_404(HomeSlide, pk=pk, homepage=homepage)
+
+    if request.method == 'POST':
+        form = HomeSlideForm(request.POST, request.FILES, instance=slide)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Slide opgeslagen.')
+            return redirect('home_slides_list')
+        messages.error(request, 'Controleer het formulier.')
+    else:
+        form = HomeSlideForm(instance=slide)
+
+    return render(request, 'slide_form.html', {'form': form, 'mode': 'edit', 'slide': slide})
+
+
+@staff_member_required
+def home_slide_delete(request, pk):
+    homepage, _ = HomePageContent.objects.get_or_create(id=1)
+    slide = get_object_or_404(HomeSlide, pk=pk, homepage=homepage)
+
+    if request.method == 'POST':
+        slide.delete()
+        messages.success(request, 'Slide verwijderd.')
+        return redirect('home_slides_list')
+
+    return render(request, 'slide_confirm_delete.html', {'slide': slide})
 
 
 def zing_mee(request):

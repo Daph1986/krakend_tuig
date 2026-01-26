@@ -68,61 +68,19 @@
 <div class="container mt-5">
   <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active mb-10" data-bs-interval="5000">
-        <img src="{% static 'img/slides/slide1.png' %}" class="d-block w-100" alt="Krakend Tuig 1">
+      {% for slide in slides %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}"
+        data-bs-interval="{{ slide.interval_ms }}">
+        <img src="{{ slide.image.url }}" class="d-block w-100" alt="{{ slide.caption|default:'Krakend Tuig' }}">
+
+        {% if slide.caption or slide.credit %}
         <div class="caption">
-          Impressie van het optreden in Tamarinde 2023
-          <p class="credit">Foto: Fred Brave</p>
+          {{ slide.caption }}
+          {% if slide.credit %}
+          <p class="credit">Foto: {{ slide.credit }}</p>
+          {% endif %}
         </div>
-      </div>
-      <div class="carousel-item mb-10" data-bs-interval="5000">
-        <img src=" {% static 'img/slides/slide2.png' %}" class="d-block w-100" alt="Krakend Tuig 2">
-        <div class="caption">
-          Impressie van het optreden in Tamarinde 2023
-          <p class="credit">Foto: Fred Brave</p>
-        </div>
-      </div>
-      <div class="carousel-item mb-10" data-bs-interval="5000">
-        <img src="{% static 'img/slides/slide3.png' %}" class="d-block w-100" alt="Krakend Tuig 3">
-        <div class="caption">
-          Impressie van het optreden in Tamarinde 2023
-          <p class="credit">Foto: Fred Brave</p>
-        </div>
-      </div>
-      <div class="carousel-item mb-10" data-bs-interval="5000">
-        <img src="{% static 'img/slides/slide4.png' %}" class="d-block w-100" alt="Krakend Tuig 4">
-        <div class="caption">
-          Impressie van het optreden in Tamarinde 2023
-          <p class="credit">Foto: Fred Brave</p>
-        </div>
-      </div>
-      <div class="carousel-item mb-10" data-bs-interval="5000">
-        <img src="{% static 'img/slides/slide5.png' %}" class="d-block w-100" alt="Krakend Tuig 5">
-        <div class="caption">
-          Impressie van het optreden in Tamarinde 2023
-          <p class="credit">Foto: Fred Brave</p>
-        </div>
-      </div>
-      <div class="carousel-item mb-10" data-bs-interval="5000">
-        <img src="{% static 'img/slides/slide6.png' %}" class="d-block w-100" alt="Krakend Tuig 6">
-        <div class="caption">
-          Impressie van het optreden in Tamarinde 2023
-          <p class="credit">Foto: Fred Brave</p>
-        </div>
-      </div>
-      <div class="carousel-item mb-10" data-bs-interval="5000">
-        <img src="{% static 'img/slides/slide7.png' %}" class="d-block w-100" alt="Krakend Tuig 7">
-        <div class="caption">
-          Impressie van het optreden in Tamarinde 2023
-          <p class="credit">Foto: Fred Brave</p>
-        </div>
-      </div>
-      <div class="carousel-item mb-10" data-bs-interval="5000">
-        <img src="{% static 'img/slides/slide8.png' %}" class="d-block w-100" alt="Krakend Tuig 8">
-        <div class="caption">
-          Impressie van het optreden in Tamarinde 2023
-          <p class="credit">Foto: Fred Brave</p>
-        </div>
+        {% endif %}
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
         data-bs-slide="prev">
@@ -134,7 +92,17 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
+      {% empty %}
+      {# Optioneel: fallback als er nog geen slides zijn #}
+      {% endfor %}
     </div>
+  </div>
+  <div class="mb-10">
+    {% if user.is_staff %}
+      <div class="container text-center me-3 mt-3 d-flex justify-content-center gap-2 flex-wrap">
+        <a class="btn general-btn hvr-grow" href="{% url 'home_slides_list' %}">Carousel beheren</a>
+      </div>
+      {% endif %}
   </div>
 </div>
 {% endblock %}
