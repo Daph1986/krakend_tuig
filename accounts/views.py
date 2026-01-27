@@ -5,21 +5,32 @@ from django.contrib.auth import logout
 from django.utils.http import url_has_allowed_host_and_scheme
 
 from .forms import MemberProfileForm
+from .models import MemberProfile
+
+
+@login_required
+def profile_detail(request):
+    profile, _ = MemberProfile.objects.get_or_create(user=request.user)
+    return render(request, 'profile_detail.html', {'profile': profile})
 
 
 @login_required
 def profile_edit(request):
-    profile = request.user.member_profile
+    profile, _ = MemberProfile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
         form = MemberProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('accounts:profile_edit')
+            messages.success(request, 'Je profiel is opgeslagen.')
+            return redirect('accounts:profile_detail')
     else:
         form = MemberProfileForm(instance=profile)
 
-    return render(request, 'accounts/profile_edit.html', {'form': form})
+    return render(request, 'profile_edit.html', {
+        'form': form,
+        'profile': profile,
+    })
 
 
 def logout_view(request):

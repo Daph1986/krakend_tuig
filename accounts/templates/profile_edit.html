@@ -1,41 +1,65 @@
 {% extends 'main.html' %}
 {% load static %}
 
-<div class="container py-5" style="max-width: 720px;">
-  <h1 class="h3 mb-4">Mijn profiel</h1>
+{% block title %} Mijn profiel bewerken {% endblock %}
 
-  <form method="post" enctype="multipart/form-data" class="card card-body shadow-sm">
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Mijn profiel bewerken
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <form method="post" enctype="multipart/form-data" class="p-3" novalidate>
     {% csrf_token %}
 
     <div class="row g-3">
       <div class="col-md-6">
-        <label class="form-label">Voornaam</label>
+        <label class="form-label" for="{{ form.first_name.id_for_label }}">Voornaam</label>
         {{ form.first_name }}
+        {{ form.first_name.errors }}
       </div>
+
       <div class="col-md-6">
-        <label class="form-label">Achternaam</label>
+        <label class="form-label" for="{{ form.last_name.id_for_label }}">Achternaam</label>
         {{ form.last_name }}
+        {{ form.last_name.errors }}
       </div>
+
       <div class="col-md-6">
-        <label class="form-label">Rol</label>
+        <label class="form-label" for="{{ form.role.id_for_label }}">Rol</label>
         {{ form.role }}
+        {{ form.role.errors }}
       </div>
+
       <div class="col-md-6">
-        <label class="form-label">Profielfoto</label>
+        <label class="form-label" for="{{ form.photo.id_for_label }}">Profielfoto</label>
         {{ form.photo }}
+        {{ form.photo.errors }}
       </div>
 
       <div class="col-12">
         <div class="form-check mt-2">
           {{ form.consent_public_profile }}
-          <label class="form-check-label">
+          <label class="form-check-label" for="{{ form.consent_public_profile.id_for_label }}">
             Ik geef toestemming om mijn profiel te tonen in het openbare smoelenboek
           </label>
+          {{ form.consent_public_profile.errors }}
         </div>
       </div>
     </div>
-
-    <button class="btn btn-primary mt-4" type="submit">Opslaan</button>
+    <div class="d-flex gap-2 mt-4 justify-content-between">
+      <button class="btn hvr-grow btn-outline-success btn-gen-spec me-3" type="submit">
+        <i class="fa-regular fa-floppy-disk me-2"></i>Opslaan</button>
+      <a class="btn hvr-grow btn-outline-secondary btn-gen-spec" href="{% url 'accounts:profile_detail' %}">
+        <i class="fa-solid fa-ban me-2"></i>Annuleren</a>
+    </div>
   </form>
 </div>
+
 {% endblock %}

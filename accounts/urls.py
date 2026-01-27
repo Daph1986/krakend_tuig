@@ -11,5 +11,7 @@ urlpatterns = [
         name='login',
     ),
     path('logout/', views.logout_view, name='logout'),
-    path('profiel/', views.profile_edit, name='profile_edit'),
+
+    path('profiel/', views.profile_detail, name='profile_detail'),
+    path('profiel/bewerken/', views.profile_edit, name='profile_edit'),
 ]

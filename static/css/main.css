@@ -483,8 +483,27 @@ ul, li {
   display: block;
 }
 
-/* --------------------------- Footer ---------------------------- */
+/* --------------------------- Profile --------------------------- */
+.profile-avatar {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 999px;
+}
 
+.profile-avatar-fallback {
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  background-color: #f0f0f0;
+}
+
+
+/* --------------------------- Footer ---------------------------- */
 footer {
   padding: 0.8rem;
   background-color: #25324A;

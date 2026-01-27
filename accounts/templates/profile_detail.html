@@ -1,0 +1,94 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %} Mijn profiel {% endblock %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+      Mijn profiel
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex justify-content-center mb-5">
+    <a class="btn hvr-grow general-btn" href="{% url 'accounts:profile_edit' %}">
+      <i class="fa-solid fa-pen-to-square me-2"></i>
+      Profiel bewerken
+    </a>
+  </div>
+  <div class="row g-4 align-items-start">
+
+    <div class="col-12 col-md-4 text-center">
+      {% if profile.photo %}
+      <img src="{{ profile.photo.url }}" alt="Profielfoto" class="profile-avatar mb-3">
+      {% else %}
+      <div class="profile-avatar-fallback mb-3">
+        {{ profile.first_name|slice:":1" }}{{ profile.last_name|slice:":1" }}
+      </div>
+      {% endif %}
+    </div>
+    <div class="col-12 col-md-8 text-center text-md-start">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <p class="mb-1 text-muted">Voornaam</p>
+          <p class="fw-medium">{{ profile.first_name|default:"—" }}</p>
+        </div>
+
+        <div class="col-md-6">
+          <p class="mb-1 text-muted">Achternaam</p>
+          <p class="fw-medium">{{ profile.last_name|default:"—" }}</p>
+        </div>
+
+        <div class="col-md-6">
+          <p class="mb-1 text-muted">Rol</p>
+          <p class="fw-medium">{{ profile.role|default:"—" }}</p>
+        </div>
+
+        <div class="col-md-6">
+          <p class="mb-1 text-muted">Openbaar profiel</p>
+          <p class="fw-medium">
+            {% if profile.consent_public_profile %}
+            Ja
+            {% else %}
+            Nee
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="my-5">
+  <div class="row g-4 justify-content-center text-center">
+    <div class="col-12 col-sm-6 col-lg-3">
+      <a href="#" class="btn hvr-grow general-btn">
+        <i class="fa-solid fa-users me-2"></i>
+        <span>Ledenlijst</span>
+      </a>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+      <a href="#" class="btn hvr-grow general-btn">
+        <i class="fa-solid fa-music me-2"></i>
+        <span>Liedteksten</span>
+      </a>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+      <a href="#" class="btn hvr-grow general-btn">
+        <i class="fa-solid fa-calendar-days me-2"></i>
+        <span>Planning optredens</span>
+      </a>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+      <a href="{% url 'public_content:smoelenboek_private' %}" class="btn hvr-grow general-btn">
+        <i class="fa-solid fa-id-badge me-2"></i>
+        <span>Smoelenboek</span>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="mb-10"></div>
+{% endblock %}
