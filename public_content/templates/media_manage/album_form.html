@@ -4,7 +4,7 @@
 {% block page_header %}
 <div class="container mb-3">
   <div class="row text-center">
-    <h2 class="mt-5 mb-2 mx-md-auto col-12">
+    <h2 class="mt-5 mx-md-auto col-12">
       {% if mode == 'create' %}Nieuw album{% else %}Album bewerken{% endif %}
     </h2>
     {% if album and user.is_superuser %}
@@ -93,7 +93,7 @@
           <div class="text-muted small mt-1">Volgorde: {{ p.order }}</div>
           {% if p.credit %}<div class="text-muted small">{{ p.credit }}</div>{% endif %}
 
-          <div class="d-flex gap-2 mt-3">
+          <div class="d-flex gap-2 justify-content-between mt-3">
             <a class="btn btn-outline-primary btn-gen-spec hvr-grow me-2"
               href="{% url 'public_content:albumphoto_update' p.pk %}"><i class="fa-solid fa-pen me-1"></i>Bewerken</a>
             <a class="btn btn-outline-danger btn-gen-spec hvr-grow me-2"
@@ -109,4 +109,5 @@
   </div>
   {% endif %}
 </div>
+<div class="mb-10"></div>
 {% endblock %}

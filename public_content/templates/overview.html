@@ -16,12 +16,8 @@
 <div class="container py-5">
 
   <div class="row g-5">
-
-    <!-- LINKS: Fotoalbums + Smoelenboek -->
     <div class="col-12 col-lg-7">
-
-      <!-- Fotoalbums -->
-      <h2 class="h5 mb-3">Fotoalbums</h2>
+      <h2 class="d-flex justify-content-center justify-content-md-start h5 mb-3">Fotoalbums</h2>
       <div class="row g-4 mb-5">
         {% for album in albums %}
         <div class="col-12 col-md-6">
@@ -57,12 +53,8 @@
         </a>
       </div>
       {% endif %}
-
-
-      <!-- Smoelenboek (publiek) -->
       {% if members %}
-      <h2 class="h5 mb-3">Smoelenboek</h2>
-
+      <h2 class="d-flex justify-content-center justify-content-md-start h5 mb-3">Smoelenboek</h2>
       <div class="row g-4">
         {% for m in members %}
         <div class="col-6 col-md-4 col-xl-3">
@@ -82,7 +74,6 @@
         </div>
         {% endfor %}
       </div>
-
       {% if members_total > members|length %}
       <div class="text-center mt-4">
         <a class="btn general-btn" href="{% url 'public_content:smoelenboek_public' %}">
@@ -91,25 +82,19 @@
       </div>
       {% endif %}
       {% endif %}
-
     </div>
-
-    <!-- RECHTS: Video’s -->
     <div class="col-12 col-lg-5 mb-10">
-      <h2 class="h5 mb-3">Video’s</h2>
-
+      <h2 class="d-flex justify-content-center justify-content-md-start h5 mb-3">Video’s</h2>
       <div class="row g-4">
         {% for v in videos %}
         <div class="col-12">
           <div class="card h-100 info-card">
-
             {# MP4 upload #}
             {% if v.file %}
             <video class="w-100" controls preload="metadata">
               <source src="{{ v.file.url }}" type="video/mp4">
               Je browser ondersteunt deze video niet.
             </video>
-
             {# Embed (YouTube / Vimeo) #}
             {% elif v.is_embed and v.url %}
             <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
@@ -118,7 +103,6 @@
                 referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
               </iframe>
             </div>
-
             {# Fallback link #}
             {% elif v.url %}
             <div class="d-flex align-items-center justify-content-center bg-light video-placeholder">
@@ -126,13 +110,11 @@
                 Video bekijken
               </a>
             </div>
-
             {% else %}
             <div class="d-flex align-items-center justify-content-center bg-light video-placeholder">
               <span class="text-muted">Geen video gekoppeld</span>
             </div>
             {% endif %}
-
             <div class="card-body">
               <div class="fw-semibold">{{ v.title }}</div>
               {% if v.date %}
@@ -142,14 +124,12 @@
               <div class="small mt-2">{{ v.description }}</div>
               {% endif %}
             </div>
-
           </div>
         </div>
         {% empty %}
         <p class="text-muted">Er zijn nog geen video’s.</p>
         {% endfor %}
       </div>
-
       {% if videos_total > videos|length %}
       <div class="text-center mt-4">
         <a class="btn general-btn hvr-grow" href="{% url 'public_content:videos_list' %}">
@@ -157,10 +137,7 @@
         </a>
       </div>
       {% endif %}
-
     </div>
-
   </div>
-
 </div>
 {% endblock %}

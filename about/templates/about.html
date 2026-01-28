@@ -30,9 +30,6 @@
         <a class="contact-link" href="{% url 'zing_mee' %}">hier</a>
       </p>
       {% endif %}
-
-
-
       {% if user.is_staff %}
       <div class="container text-center text-md-start mt-3">
         <a class="btn general-btn hvr-grow" href="{% url 'about:about_intro_edit' %}">
@@ -41,8 +38,6 @@
       </div>
       {% endif %}
     </div>
-
-
     <div class="col-12 col-md-5 mt-3 mt-md-0 text-center">
       {% if intro.image %}
       <img src="{{ intro.image.url }}" class="img-fluid rounded" alt="Zeilboot">
@@ -116,5 +111,4 @@
     </div>
   </div>
 </div>
-<div class="mb-10"></div>
 {% endblock %}

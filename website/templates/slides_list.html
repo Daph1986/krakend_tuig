@@ -3,62 +3,74 @@
 
 {% block title %}Carousel slides beheren{% endblock %}
 
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mx-md-auto col-12">
+      Carousel slides beheren
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0">Carousel slides beheren</h1>
-    <div class="d-flex gap-2">
-      <a class="btn general-btn hvr-grow me-3" href="{% url 'home' %}">
+    <a class="btn general-btn hvr-grow me-3" href="{% url 'home' %}">
       <i class="fa-solid fa-arrow-rotate-left me-2"></i>
       Terug
-      </a>
-      <a class="btn btn-outline-success btn-gen-spec hvr-grow" href="{% url 'home_slide_create' %}">Nieuwe slide</a>
-    </div>
+    </a>
+    <a class="btn btn-outline-success btn-gen-spec hvr-grow" href="{% url 'home_slide_create' %}">Nieuwe slide</a>
   </div>
 
   <div class="card info-card p-3">
     {% if slides %}
-      <div class="table-responsive">
-        <table class="table align-middle mb-0">
-          <thead>
-            <tr>
-              <th>Voorbeeld</th>
-              <th>Caption</th>
-              <th>Volgorde</th>
-              <th>Actief</th>
-              <th class="text-end">Acties</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for slide in slides %}
-              <tr>
-                <td style="width: 160px;">
-                  <img src="{{ slide.image.url }}" alt="" style="max-width: 140px; height: auto; border-radius: 8px;">
-                </td>
-                <td>
-                  {{ slide.caption|default:'-' }}
-                  {% if slide.credit %}
-                    <div class="small text-muted">Foto: {{ slide.credit }}</div>
-                  {% endif %}
-                </td>
-                <td>{{ slide.volgorde }}</td>
-                <td>{% if slide.actief %}Ja{% else %}Nee{% endif %}</td>
-                <td class="text-end">
-                  <a class="btn btn-sm btn-outline-primary btn-gen-spec-sm hvr-grow me-2" href="{% url 'home_slide_update' slide.pk %}">
-                    <i class="fa-solid fa-pen me-2"></i>Bewerken
-                  </a>
-                  <a class="btn btn-sm btn-outline-danger btn-gen-spec-sm hvr-grow" href="{% url 'home_slide_delete' slide.pk %}">
-                    <i class="fa-solid fa-trash me-2"></i>Verwijderen
-                  </a>
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Voorbeeld</th>
+            <th>Caption</th>
+            <th>Volgorde</th>
+            <th>Actief</th>
+            <th class="text-end">Acties</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for slide in slides %}
+          <tr>
+            <td style="width: 160px;">
+              <img src="{{ slide.image.url }}" alt="" style="max-width: 140px; height: auto; border-radius: 8px;">
+            </td>
+            <td>
+              {{ slide.caption|default:'-' }}
+              {% if slide.credit %}
+              <div class="small text-muted">Foto: {{ slide.credit }}</div>
+              {% endif %}
+            </td>
+            <td>{{ slide.volgorde }}</td>
+            <td>{% if slide.actief %}Ja{% else %}Nee{% endif %}</td>
+            <td class="text-end">
+              <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
+                <a class="btn btn-sm btn-outline-primary btn-gen-spec-sm hvr-grow me-2"
+                  href="{% url 'home_slide_update' slide.pk %}">
+                  <i class="fa-solid fa-pen me-2"></i>Bewerken
+                </a>
+                <a class="btn btn-sm btn-outline-danger btn-gen-spec-sm hvr-grow"
+                  href="{% url 'home_slide_delete' slide.pk %}">
+                  <i class="fa-solid fa-trash me-2"></i>Verwijderen
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
     {% else %}
-      <p class="mb-0">Nog geen slides. Klik op “Nieuwe slide”.</p>
+    <p class="mb-0">Nog geen slides. Klik op “Nieuwe slide”.</p>
     {% endif %}
   </div>
 </div>
+<div class="mb-10"></div>
 {% endblock %}
