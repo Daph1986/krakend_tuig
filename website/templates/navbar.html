@@ -71,12 +71,16 @@
             </a>
             <ul class="dropdown-menu bg-grey border-0">
               <li><a href="{% url 'accounts:profile_detail' %}" class="dropdown-item">Profiel pagina</a></li>
-              <li><a href="#" class="dropdown-item">Ledenlijst</a></li>
+              <li><a href="{% url 'accounts:members_list' %}" class="dropdown-item">Ledenlijst</a></li>
               <li><a href="#" class="dropdown-item">Liedteksten</a></li>
               <li><a href="#" class="dropdown-item">Planning optredens</a></li>
               <li><a href="{% url 'public_content:smoelenboek_private' %}" class="dropdown-item">Smoelenboek</a></li>
+              <li>
+                <a href="{% url 'accounts:password_change' %}" class="dropdown-item">Wachtwoord wijzigen</a>
+              </li>
             </ul>
           </li>
+        
           <li class="nav-item ms-lg-2 ms-xl-4 d-flex align-items-center">
             <form method="post" action="{% url 'accounts:logout' %}" class="m-0">
               {% csrf_token %}

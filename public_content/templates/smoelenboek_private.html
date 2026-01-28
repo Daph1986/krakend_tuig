@@ -8,15 +8,18 @@
       <h1 class="h3 mt-5 mb-2">Smoelenboek</h1>
       <div class="text-muted">Alle leden (alleen zichtbaar na inloggen)</div>
   </div>
-  <a class="btn general-btn hvr-grow" href="{% url 'accounts:profile_detail' %}">
-      <i class="fa-solid fa-arrow-rotate-left me-2"></i>
-      Terug
-    </a>
 </div>
 {% endblock %}
 
 {% block content %}
 <div class="container py-5">
+  <div class="d-flex justify-content-center justify-content-md-start mb-4">
+    <a class="btn general-btn hvr-grow"
+       href="{% url 'accounts:profile_detail' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>
+      Terug
+    </a>
+  </div>
   <div class="row g-4">
     {% for m in members %}
       <div class="col-6 col-md-4 col-lg-3">
