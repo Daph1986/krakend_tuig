@@ -343,7 +343,6 @@ ul, li {
 
 .contact-block a:hover {
   color: #A65A2A;
-  text-decoration: underline;
 }
 
 /* -------------------------- Zing mee --------------------------- */
@@ -502,6 +501,15 @@ ul, li {
   background-color: #f0f0f0;
 }
 
+/* --------------------------- Members --------------------------- */
+.members-table thead th {
+  border-bottom: 1px solid rgba(0,0,0,.15);
+  font-weight: 600;
+}
+
+.members-table tbody tr {
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
 
 /* --------------------------- Footer ---------------------------- */
 footer {

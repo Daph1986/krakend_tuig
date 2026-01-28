@@ -1,0 +1,77 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load text_extras %}
+
+{% block title %} Ledenlijst {% endblock %}
+
+{% block page_header %}
+<div class="container mb-3">
+  <div class="row text-center">
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">Ledenlijst</h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 1100px;">
+
+  <div class="d-flex justify-content-center mb-4">
+    <a class="btn hvr-grow general-btn" href="{% url 'accounts:members_pdf' %}">
+      <i class="fa-regular fa-file-pdf me-2"></i>Download ledenlijst (PDF)
+    </a>
+  </div>
+
+  <h3 class="h5 mt-4">Zangers</h3>
+  <div class="table-responsive mb-5">
+    <table class="table align-middle members-table kt-table">
+      <thead>
+        <tr>
+          <th>Achternaam</th><th>Voornaam</th><th>Adres</th><th>Postcode</th><th>Plaats</th><th>Telefoon</th><th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in zangers %}
+          <tr>
+            <td>{{ m.sortable_last_name }}</td>
+            <td>{{ m.first_name }}</td>
+            <td>{{ m.address|default:"—" }}</td>
+            <td>{{ m.postal_code|default:"—" }}</td>
+            <td>{{ m.city|default:"—" }}</td>
+            <td>{{ m.phone|default:"—"|split_lines:"/"|linebreaksbr }}</td>
+            <td>{{ m.email|default:"—" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7">Geen zangers gevonden.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="h5">Muzikanten</h3>
+  <div class="table-responsive">
+    <table class="table align-middle members-table kt-table">
+      <thead>
+        <tr>
+          <th>Achternaam</th><th>Voornaam</th><th>Adres</th><th>Postcode</th><th>Plaats</th><th>Telefoon</th><th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in muzikanten %}
+          <tr>
+            <td>{{ m.sortable_last_name }}</td>
+            <td>{{ m.first_name }}</td>
+            <td>{{ m.address|default:"—" }}</td>
+            <td>{{ m.postal_code|default:"—" }}</td>
+            <td>{{ m.city|default:"—" }}</td>
+            <td>{{ m.phone|default:"—"|split_lines:"/"|linebreaksbr }}</td>
+            <td>{{ m.email|default:"—" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7">Geen muzikanten gevonden.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="mb-10"></div>
+{% endblock %}

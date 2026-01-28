@@ -63,29 +63,35 @@
     </div>
   </div>
   <hr class="my-5">
-  <div class="row g-4 justify-content-center text-center">
-    <div class="col-12 col-sm-6 col-lg-3">
-      <a href="#" class="btn hvr-grow general-btn">
+  <div class="d-flex flex-wrap justify-content-center gap-4 gap-xl-5 text-center">
+    <div>
+      <a href="{% url 'accounts:members_list' %}" class="btn hvr-grow general-btn">
         <i class="fa-solid fa-users me-2"></i>
         <span>Ledenlijst</span>
       </a>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3">
+    <div>
       <a href="#" class="btn hvr-grow general-btn">
         <i class="fa-solid fa-music me-2"></i>
         <span>Liedteksten</span>
       </a>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3">
+    <div>
       <a href="#" class="btn hvr-grow general-btn">
         <i class="fa-solid fa-calendar-days me-2"></i>
         <span>Planning optredens</span>
       </a>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3">
+    <div>
       <a href="{% url 'public_content:smoelenboek_private' %}" class="btn hvr-grow general-btn">
         <i class="fa-solid fa-id-badge me-2"></i>
         <span>Smoelenboek</span>
+      </a>
+    </div>
+    <div>
+      <a href="{% url 'accounts:password_change' %}" class="btn hvr-grow general-btn">
+        <i class="fa-solid fa-id-badge me-2"></i>
+        <span>Wachtwoord wijzigen</span>
       </a>
     </div>
   </div>
