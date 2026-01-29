@@ -1,5 +1,4 @@
 // ----------------------- Scroll to top button ----------------------- //
-
 let topbutton = document.getElementById("goToTopBtn");
 
 window.onscroll = function () { scrollPage(); };
@@ -23,19 +22,27 @@ $(document).ready(function () {
 });
 
 // ----------------------- Menu hover ----------------------- //
-
 $(document).ready(function () {
-  // Dropdown menu openen bij hover
   $('.nav-item.dropdown').hover(function () {
     $(this).find('.dropdown-menu').addClass('show');
   }, function () {
     $(this).find('.dropdown-menu').removeClass('show');
   });
 
-  // Causes the dropdown menu to close when the mouse is outside the menu
   $('.dropdown-menu').hover(function () {
     $(this).addClass('show');
   }, function () {
     $(this).removeClass('show');
+  });
+});
+
+// ------------- Bootstrap tooltips activeren --------------- //
+document.addEventListener('DOMContentLoaded', function () {
+  const tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+
+  tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+    new bootstrap.Tooltip(tooltipTriggerEl);
   });
 });

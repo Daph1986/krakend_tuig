@@ -1,0 +1,201 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load planning_extras %}
+
+{% block page_header %}
+<div class="container mt-3 mb-3">
+  <div class="row text-center">
+    <h1 class="h3 mt-5 mb-2">Planning optredens</h1>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <div class="d-flex justify-content-center justify-content-md-between mb-4">
+    <a class="btn general-btn hvr-grow me-4" href="{% url 'accounts:profile_detail' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>
+      Terug
+    </a>
+
+    {% if is_beheer %}
+      <a class="btn btn-outline-success btn-gen-spec hvr-grow" href="{% url 'planning:optreden_create' %}">
+        <i class="fa-solid fa-plus me-2"></i>
+        Nieuw optreden
+      </a>
+    {% endif %}
+  </div>
+
+  {# ===================== MOBIEL (cards) ===================== #}
+  <div class="d-block d-md-none">
+    {% if not optredens %}
+      <div class="planning-card p-3">
+        <div class="text-muted">Er staan nog geen optredens gepland.</div>
+        {% if is_beheer %}
+          <div class="mt-3">
+            <a class="btn btn-outline-success btn-gen-spec hvr-grow" href="{% url 'planning:optreden_create' %}">
+              <i class="fa-solid fa-plus me-2"></i>
+              Nieuw optreden
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% for optreden in optredens %}
+      <div class="planning-card mb-3">
+        <div class="p-3 pb-2">
+          <div class="fw-semibold">{{ optreden.titel }}</div>
+
+          <div class="small text-muted">
+            {{ optreden.datum|date:"d-m-Y" }}{% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }}{% endif %}
+          </div>
+
+          {% if optreden.locatie or optreden.adres %}
+            <div class="small mt-2">
+              {% if optreden.locatie %}{{ optreden.locatie }}{% endif %}
+              {% if optreden.adres %}
+                <div class="text-muted">{{ optreden.adres }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if is_beheer %}
+            <div class="d-flex gap-3 mt-2">
+              <a class="small" href="{% url 'planning:optreden_update' optreden.pk %}">bewerken</a>
+              <a class="small text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">verwijderen</a>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="px-3 pb-3">
+          {% for lid in leden %}
+            {% cell_key lid.user_id optreden.id as k %}
+            <div class="d-flex align-items-center gap-2 py-2 border-top">
+              <div class="fw-semibold" style="min-width: 42%;">
+                {{ lid.first_name }} {{ lid.full_last_name }}
+              </div>
+
+              <div class="planning-cell flex-grow-1" data-status="{{ status_map|get_cell_status:k }}">
+                <div
+                  {% if not is_beheer and lid.user_id != current_user_id %}
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Je kunt alleen je eigen aanwezigheid aanpassen"
+                  {% endif %}
+                >
+                  <select
+                    class="form-select form-select-sm planning-select"
+                    data-optreden-id="{{ optreden.id }}"
+                    {% if is_beheer %}data-user-id="{{ lid.user_id }}"{% endif %}
+                    {% if not is_beheer and lid.user_id != current_user_id %}disabled{% endif %}
+                  >
+                    <option value="" {% if not status_map|get_cell_status:k %}selected{% endif %}>-- kies --</option>
+
+                    {% for value,label in status_choices %}
+                      <option value="{{ value }}" {% if status_map|get_cell_status:k == value %}selected{% endif %}>
+                        {{ label }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+    <div class="mb-10"></div>
+  </div>
+
+  {# ===================== DESKTOP (tabel) ===================== #}
+  <div class="d-none d-md-block">
+    <div class="planning-card">
+      <div class="table-responsive">
+        <table class="table table-sm align-middle planning-table">
+          <thead>
+            <tr>
+              <th class="sticky-col sticky-head">Lid</th>
+
+              {% for optreden in optredens %}
+                <th class="sticky-head">
+                  <div class="d-flex flex-column gap-1">
+                    <div class="fw-semibold">{{ optreden.titel }}</div>
+
+                    <div class="small text-muted">
+                      {{ optreden.datum|date:"d-m-Y" }}
+                      {% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }}{% endif %}
+                    </div>
+
+                    {% if optreden.locatie or optreden.adres %}
+                      <div class="small">
+                        {% if optreden.locatie %}{{ optreden.locatie }}{% endif %}
+                        {% if optreden.adres %}
+                          <div class="text-muted">{{ optreden.adres }}</div>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+
+                    {% if is_beheer %}
+                      <div class="d-flex gap-2 mt-1">
+                        <a class="small" href="{% url 'planning:optreden_update' optreden.pk %}">bewerken</a>
+                        <a class="small text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">verwijderen</a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </th>
+              {% endfor %}
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for lid in leden %}
+              <tr>
+                <td class="sticky-col">
+                  {{ lid.first_name }} {{ lid.full_last_name }}
+                </td>
+
+                {% for optreden in optredens %}
+                  {% cell_key lid.user_id optreden.id as k %}
+                  <td class="planning-cell" data-status="{{ status_map|get_cell_status:k }}">
+                    <div
+                      {% if not is_beheer and lid.user_id != current_user_id %}
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Je kunt alleen je eigen aanwezigheid aanpassen"
+                      {% endif %}
+                    >
+                      <select
+                        class="form-select form-select-sm planning-select"
+                        data-optreden-id="{{ optreden.id }}"
+                        {% if is_beheer %}data-user-id="{{ lid.user_id }}"{% endif %}
+                        {% if not is_beheer and lid.user_id != current_user_id %}disabled{% endif %}
+                      >
+                        <option value="" {% if not status_map|get_cell_status:k %}selected{% endif %}>-- kies --</option>
+
+                        {% for value,label in status_choices %}
+                          <option value="{{ value }}" {% if status_map|get_cell_status:k == value %}selected{% endif %}>
+                            {{ label }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="planning-config" data-status-url="{% url 'planning:status_update' %}"></div>
+{% endblock %}
+
+{% block postloadjs %}
+<script src="{% static 'js/planning.js' %}"></script>
+{% endblock %}

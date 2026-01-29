@@ -16,14 +16,15 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 
-    path('', include('website.urls')),
-    path('contact/', include('contact.urls')),
     path('', include('about.urls')),
-    path('captcha/', include(captcha_urls)),
-    path('agenda/', include('agenda.urls')),
     path('accounts/', include('accounts.urls')),
+    path('agenda/', include('agenda.urls')),
+    path('captcha/', include(captcha_urls)),
+    path('contact/', include('contact.urls')),
+    path('planning/', include('planning.urls', namespace='planning')),
     path('', include('public_content.urls')),
     path('sponsors/', include('sponsors.urls', namespace='sponsors')),
+    path('', include('website.urls')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block page_header %}
+<div class="container mt-3 mb-3">
+  <div class="row text-center">
+    <h1 class="h3 mt-5 mb-2">{% if mode == 'create' %}Nieuw optreden{% else %}Optreden bewerken{% endif %}</h1>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="d-flex justify-content-center justify-content-md-between mb-4">
+    <a class="btn general-btn hvr-grow" href="{% url 'planning:overzicht' %}">Terug</a>
+  </div>
+
+  <form method="post" class="p-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="d-flex gap-2 mt-4 justify-content-between">
+      <button class="btn hvr-grow btn-outline-success btn-gen-spec me-3" type="submit">
+        <i class="fa-regular fa-floppy-disk me-2"></i>Opslaan</button>
+      <a class="btn hvr-grow btn-outline-secondary btn-gen-spec" href="{% url 'planning:overzicht' %}">
+        <i class="fa-solid fa-ban me-2"></i>Annuleren</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

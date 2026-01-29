@@ -36,12 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
 
-    'website',
-    'contact',
     'about',
     'agenda',
+    'contact',
+    'planning',
     'public_content',
     'sponsors',
+    'website',
 
     'captcha',
 
