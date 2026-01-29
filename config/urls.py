@@ -21,6 +21,7 @@ urlpatterns = [
     path('agenda/', include('agenda.urls')),
     path('captcha/', include(captcha_urls)),
     path('contact/', include('contact.urls')),
+    path('liedteksten/', include('liederen.urls', namespace='liederen')),
     path('planning/', include('planning.urls', namespace='planning')),
     path('', include('public_content.urls')),
     path('sponsors/', include('sponsors.urls', namespace='sponsors')),

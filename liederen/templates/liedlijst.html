@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Liedteksten{% endblock %}
+
+{% block page_header %}
+<div class="container mt-3 mb-3">
+  <div class="row text-center">
+    <h1 class="h3 mt-5 mb-2">Liedteksten</h1>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex justify-content-center justify-content-md-between mb-4">
+    <a class="btn general-btn hvr-grow me-4" href="{% url 'accounts:profile_detail' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>
+      Terug
+    </a>
+    {% if user.is_staff %}
+      <a class="btn general-btn hvr-grow" href="{% url 'liederen:lied_manage_list' %}">
+        Beheer
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="row g-3">
+    {% for lied in liederen %}
+      <div class="col-12 col-md-6">
+        <a href="{% url 'liederen:lied_pdf' lied.pk %}"
+           target="_blank"
+           class="lied-card">
+
+          <span class="lied-nummer">{{ lied.nummer }}.</span>
+          <span class="lied-titel">{{ lied.titel }}</span>
+          <span class="lied-open">Open</span>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+<div class="mb-10"></div>
+{% endblock %}

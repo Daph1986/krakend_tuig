@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'about',
     'agenda',
     'contact',
+    'liederen',
     'planning',
     'public_content',
     'sponsors',

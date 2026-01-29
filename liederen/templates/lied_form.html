@@ -1,0 +1,91 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}{% if mode == 'create' %}Nieuw lied{% else %}Lied bewerken{% endif %}{% endblock %}
+
+{% block page_header %}
+<div class="container mt-3 mb-3">
+  <div class="row text-center">
+    <h1 class="h3 mt-5 mb-2">
+      {% if mode == 'create' %}Nieuw lied{% else %}Lied bewerken{% endif %}
+    </h1>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+
+  <div class="d-flex justify-content-center justify-content-md-between mb-4">
+    <a class="btn general-btn hvr-grow" href="{% url 'liederen:lied_manage_list' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>
+      Terug
+    </a>
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="p-3">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <div class="row g-3">
+      <div class="col-12 col-md-2">
+        <label class="form-label" for="{{ form.nummer.id_for_label }}">Nummer</label>
+        {{ form.nummer }}
+        {{ form.nummer.errors }}
+      </div>
+
+      <div class="col-12 col-md-7">
+        <label class="form-label" for="{{ form.titel.id_for_label }}">Titel</label>
+        {{ form.titel }}
+        {{ form.titel.errors }}
+      </div>
+
+      <div class="col-12 col-md-3">
+        <label class="form-label" for="{{ form.volgorde.id_for_label }}">Volgorde</label>
+        {{ form.volgorde }}
+        {{ form.volgorde.errors }}
+      </div>
+
+      <div class="col-12">
+        <label class="form-label" for="{{ form.pdf.id_for_label }}">Pdf</label>
+        {{ form.pdf }}
+        {{ form.pdf.errors }}
+
+        {% if mode == 'edit' and lied and lied.pdf %}
+          <div class="mt-2">
+            Huidig bestand:
+            <a class="text-decoration-underline" target="_blank" href="{% url 'liederen:lied_pdf' lied.pk %}">
+              open pdf
+            </a>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="col-12">
+        <div class="form-check">
+          {{ form.actief }}
+          <label class="form-check-label" for="{{ form.actief.id_for_label }}">
+            Actief (zichtbaar voor leden)
+          </label>
+        </div>
+        {{ form.actief.errors }}
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 mt-4 justify-content-between">
+      <button class="btn hvr-grow btn-outline-success btn-gen-spec me-3" type="submit">
+        <i class="fa-regular fa-floppy-disk me-2"></i>
+        Opslaan
+      </button>
+
+      <a class="btn hvr-grow btn-outline-secondary btn-gen-spec" href="{% url 'liederen:lied_manage_list' %}">
+        <i class="fa-solid fa-ban me-2"></i>
+        Annuleren
+      </a>
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}
