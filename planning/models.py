@@ -8,11 +8,18 @@ class Optreden(models.Model):
     tijd = models.TimeField(blank=True, null=True)
     locatie = models.CharField(max_length=255, blank=True)
     adres = models.TextField(blank=True)
+
     actief = models.BooleanField(default=True)
     openbaar = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.titel} ({self.datum})'
+
+    @property
+    def tijd_display(self):
+        if self.tijd:
+            return f'{self.tijd.strftime("%H:%M")} uur'
+        return ''
 
 
 class Aanwezigheid(models.Model):
