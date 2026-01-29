@@ -49,7 +49,7 @@
           <div class="fw-semibold">{{ optreden.titel }}</div>
 
           <div class="small text-muted">
-            {{ optreden.datum|date:"d-m-Y" }}{% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }}{% endif %}
+            {{ optreden.datum|date:"d-m-Y" }}{% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
           </div>
 
           {% if optreden.locatie or optreden.adres %}
@@ -125,7 +125,7 @@
 
                     <div class="small text-muted">
                       {{ optreden.datum|date:"d-m-Y" }}
-                      {% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }}{% endif %}
+                      {% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
                     </div>
 
                     {% if optreden.locatie or optreden.adres %}

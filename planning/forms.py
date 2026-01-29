@@ -5,7 +5,7 @@ from .models import Optreden
 class OptredenForm(forms.ModelForm):
     class Meta:
         model = Optreden
-        fields = ['datum', 'titel', 'tijd', 'locatie', 'adres', 'actief']
+        fields = ['datum', 'titel', 'tijd', 'locatie', 'adres', 'openbaar', 'actief']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

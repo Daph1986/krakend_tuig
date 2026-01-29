@@ -9,6 +9,7 @@ class Optreden(models.Model):
     locatie = models.CharField(max_length=255, blank=True)
     adres = models.TextField(blank=True)
     actief = models.BooleanField(default=True)
+    openbaar = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.titel} ({self.datum})'

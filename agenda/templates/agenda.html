@@ -1,22 +1,11 @@
 {% extends 'main.html' %}
 {% load static %}
-{% block title %} Agenda {% endblock %}
+{% block title %}Agenda{% endblock %}
 
 {% block page_header %}
 <div class="container mb-3">
   <div class="row text-center">
-    <h2 class="mt-5 mb-2 mx-md-auto col-12">
-      Agenda
-    </h2>
-
-    {# Beheerknop: alleen zichtbaar met recht om toe te voegen #}
-    {% if perms.agenda.add_optreden %}
-      <div class="col-12 mt-4">
-        <a class="btn btn-outline-success btn-gen-spec hvr-grow" href="{% url 'agenda:optreden_create' %}">
-          <i class="fa-solid fa-plus me-2"></i>Optreden toevoegen
-        </a>
-      </div>
-    {% endif %}
+    <h2 class="mt-5 mb-2 mx-md-auto col-12">Agenda</h2>
   </div>
 </div>
 {% endblock %}
@@ -25,80 +14,58 @@
 <div class="container my-5">
   <div class="row justify-content-center mb-10">
     <div class="col-12 col-lg-8 col-xl-7">
+
       {% if optredens %}
-      <div class="row g-4">
-        {% for optreden in optredens %}
-        <div class="col-12">
-          <div class="info-card p-4 rounded shadow-sm text-center text-md-start">
-            <div class="d-flex flex-column flex-md-row align-items-md-start justify-content-md-between gap-3">
+        <div class="row g-4">
+          {% for optreden in optredens %}
+            <div class="col-12">
+              <div class="info-card p-4 rounded shadow-sm text-center text-md-start">
+                <div class="d-flex flex-column flex-md-row align-items-md-start justify-content-md-between gap-3">
 
-              <div class="agenda-date">
-                <div class="fw-semibold">
-                  <i class="fa-regular fa-calendar-days me-2 agenda-icon"></i>
-                  {{ optreden.datum|date:'l' }}
-                </div>
-                <div class="h5 mb-0">{{ optreden.datum|date:'d-m-Y' }}</div>
-              </div>
+                  <div class="agenda-date">
+                    <div class="fw-semibold">
+                      <i class="fa-regular fa-calendar-days me-2 agenda-icon"></i>
+                      {{ optreden.datum|date:'l' }}
+                    </div>
+                    <div class="h5 mb-0">{{ optreden.datum|date:'d-m-Y' }}</div>
+                  </div>
 
-              <div class="flex-grow-1 agenda-details">
-                <div class="h5 mb-2">{{ optreden.titel }}</div>
-                {% if optreden.locatie %}
-                <div>
-                  <i class="fa-solid fa-location-dot me-2"></i>{{ optreden.locatie }}
-                </div>
-                {% endif %}
+                  <div class="flex-grow-1 agenda-details">
+                    <div class="h5 mb-2">{{ optreden.titel }}</div>
 
-                {# Beheerknoppen bij elk optreden #}
-                {% if perms.agenda.change_optreden or perms.agenda.delete_optreden %}
-                  <div class="mt-3 d-flex gap-2 justify-content-center justify-content-md-start flex-wrap">
-                    {% if perms.agenda.change_optreden %}
-                      <a class="btn btn-sm btn-outline-primary btn-gen-spec-sm hvr-grow me-2"
-                         href="{% url 'agenda:optreden_update' optreden.pk %}">
-                        <i class="fa-solid fa-pen me-2"></i>Bewerken
-                      </a>
+                    {% if optreden.locatie %}
+                      <div class="mb-1">
+                        <i class="fa-solid fa-location-dot me-2"></i>{{ optreden.locatie }}
+                      </div>
                     {% endif %}
-                    {% if perms.agenda.delete_optreden %}
-                      <a class="btn btn-sm btn-outline-danger btn-gen-spec-sm hvr-grow"
-                         href="{% url 'agenda:optreden_delete' optreden.pk %}">
-                        <i class="fa-solid fa-trash me-2"></i>Verwijderen
-                      </a>
+
+                    {% if optreden.adres %}
+                      <div class="text-muted small">
+                        {{ optreden.adres }}
+                      </div>
                     {% endif %}
                   </div>
-                {% endif %}
-              </div>
 
-              {% if optreden.tijd %}
-              <div class="agenda-time text-md-end">
-                <i class="fa-regular fa-clock me-2"></i>{{ optreden.tijd_display }}
-              </div>
-              {% endif %}
+                  {% if optreden.tijd %}
+                    <div class="agenda-time text-md-end">
+                      <i class="fa-regular fa-clock me-2"></i>{{ optreden.tijd|time:"H:i" }} uur
+                    </div>
+                  {% endif %}
 
+                </div>
+              </div>
             </div>
-          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </div>
-      {% else %}
-      <div class="info-card p-4 rounded shadow-sm text-center">
-        <h5 class="mb-2">Geen optredens gepland</h5>
-        <p class="mb-0">Houd de agenda in de gaten, er komen regelmatig nieuwe optredens bij.</p>
 
-        {# Ook hier eventueel de beheerknop tonen als er nog niets is #}
-        {% if perms.agenda.add_optreden %}
-          <div class="mt-3">
-            <a class="btn btn-primary" href="{% url 'agenda:optreden_create' %}">
-              <i class="fa-solid fa-plus me-2"></i>Optreden toevoegen
-            </a>
-          </div>
-        {% endif %}
-      </div>
+      {% else %}
+        <div class="info-card p-4 rounded shadow-sm text-center">
+          <h5 class="mb-2">Geen optredens gepland</h5>
+          <p class="mb-0">Houd de agenda in de gaten, er komen regelmatig nieuwe optredens bij.</p>
+        </div>
       {% endif %}
+
     </div>
   </div>
-
 </div>
-{% endblock %}
-
-{% block postloadjs %}
-{{ block.super }}
 {% endblock %}
