@@ -11,7 +11,7 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import mm
 
-from .forms import MemberProfileForm
+from .forms import ProfileEditCombinedForm
 from .models import MemberProfile
 
 
@@ -26,13 +26,21 @@ def profile_edit(request):
     profile, _ = MemberProfile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
-        form = MemberProfileForm(request.POST, request.FILES, instance=profile)
+        form = ProfileEditCombinedForm(
+            request.POST,
+            user=request.user,
+            profile_instance=profile,
+            files=request.FILES,
+        )
         if form.is_valid():
             form.save()
             messages.success(request, 'Je profiel is opgeslagen.')
             return redirect('accounts:profile_detail')
     else:
-        form = MemberProfileForm(instance=profile)
+        form = ProfileEditCombinedForm(
+            user=request.user,
+            profile_instance=profile,
+        )
 
     return render(request, 'profile_edit.html', {
         'form': form,
@@ -46,7 +54,7 @@ def members_list(request):
         MemberProfile.objects
         .filter(is_active=True)
         .exclude(user__username='HelloDaphneAdmin')
-        .order_by('last_name', 'last_name_prefix', 'first_name')
+        .order_by('user__last_name', 'last_name_prefix', 'user__first_name')
     )
 
     muzikanten = base_qs.filter(role__icontains='muzikant')
@@ -64,7 +72,7 @@ def members_pdf(request):
         MemberProfile.objects
         .filter(is_active=True)
         .exclude(user__username='HelloDaphneAdmin')
-        .order_by('last_name', 'last_name_prefix', 'first_name')
+        .order_by('user__last_name', 'last_name_prefix', 'user__first_name')
     )
 
     zangers = base_qs.exclude(role__icontains='muzikant')
@@ -115,7 +123,7 @@ def members_pdf(request):
             phone = (m.phone or '').replace(' / ', '\n').replace('/', '\n')
             data.append([
                 p(m.sortable_last_name),
-                p(m.first_name),
+                p(m.user.first_name),
                 p(m.address),
                 p(m.postal_code),
                 p(m.city),

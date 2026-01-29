@@ -8,8 +8,6 @@ User = settings.AUTH_USER_MODEL
 class MemberProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='member_profile')
 
-    first_name = models.CharField(max_length=80)
-    last_name = models.CharField('Achternaam', max_length=80)
     last_name_prefix = models.CharField(
         'Tussenvoegsel',
         max_length=30,
@@ -24,7 +22,6 @@ class MemberProfile(models.Model):
     postal_code = models.CharField('Postcode', max_length=20, blank=True)
     city = models.CharField('Plaats', max_length=120, blank=True)
     phone = models.CharField('Telefoon', max_length=50, blank=True)
-    email = models.EmailField('Email', blank=True)
 
     consent_public_profile = models.BooleanField(
         default=False,
@@ -35,19 +32,43 @@ class MemberProfile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['last_name', 'last_name_prefix', 'first_name']
+        ordering = ['user__last_name', 'user__first_name', 'last_name_prefix']
 
     @property
     def full_last_name(self):
-        if self.last_name_prefix:
-            return f'{self.last_name_prefix} {self.last_name}'
-        return self.last_name
+        ln = (self.user.last_name or '').strip()
+        prefix = (self.last_name_prefix or '').strip()
+
+        if prefix:
+            return f'{prefix} {ln}'.strip()
+        return ln
 
     @property
     def sortable_last_name(self):
+        ln = (self.user.last_name or '').strip()
         if self.last_name_prefix:
-            return f'{self.last_name}, {self.last_name_prefix}'
-        return self.last_name
+            return f'{ln}, {self.last_name_prefix}'.strip(', ')
+        return ln
 
     def __str__(self):
-        return f'{self.first_name} {self.full_last_name}'.strip() or self.user.get_username()
+        fn = (self.user.first_name or '').strip()
+        return f'{fn} {self.full_last_name}'.strip() or self.user.get_username()
+
+    @property
+    def display_name(self):
+        fn = (self.user.first_name or '').strip()
+        return f'{fn} {self.full_last_name}'.strip() or self.user.get_username()
+
+    @property
+    def display_name_lastname_comma(self):
+        """
+        Miltenburg, van Lydia
+        Agterberg Kees (zonder komma als er geen prefix is)
+        """
+        last = (self.user.last_name or '').strip()
+        prefix = (self.last_name_prefix or '').strip()
+        first = (self.user.first_name or '').strip()
+
+        if prefix:
+            return f'{last}, {prefix} {first}'.strip()
+        return f'{last} {first}'.strip()

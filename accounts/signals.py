@@ -10,9 +10,4 @@ User = get_user_model()
 @receiver(post_save, sender=User)
 def ensure_member_profile(sender, instance, created, **kwargs):
     if created:
-        MemberProfile.objects.create(
-            user=instance,
-            first_name=getattr(instance, 'first_name', '') or '',
-            last_name=getattr(instance, 'last_name', '') or '',
-            email=getattr(instance, 'email', '') or '',
-        )
+        MemberProfile.objects.create(user=instance)

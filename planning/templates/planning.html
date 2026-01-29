@@ -49,7 +49,7 @@
           <div class="fw-semibold">{{ optreden.titel }}</div>
 
           <div class="small text-muted">
-            {{ optreden.datum|date:"d-m-Y" }}{% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
+            {{ optreden.datum|date:"D d-m-Y" }}{% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
           </div>
 
           {% if optreden.locatie or optreden.adres %}
@@ -63,8 +63,12 @@
 
           {% if is_beheer %}
             <div class="d-flex gap-3 mt-2">
-              <a class="small" href="{% url 'planning:optreden_update' optreden.pk %}">bewerken</a>
-              <a class="small text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">verwijderen</a>
+              <a class="small me-2" href="{% url 'planning:optreden_update' optreden.pk %}">
+                <i class="fa-solid fa-pen-to-square me-1"></i> Bewerken
+              </a>
+              <a class="small text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">
+                <i class="fa-solid fa-trash me-1"></i> Verwijderen
+              </a>
             </div>
           {% endif %}
         </div>
@@ -74,7 +78,8 @@
             {% cell_key lid.user_id optreden.id as k %}
             <div class="d-flex align-items-center gap-2 py-2 border-top">
               <div class="fw-semibold" style="min-width: 42%;">
-                {{ lid.first_name }} {{ lid.full_last_name }}
+                <div>{{ lid.user.last_name }}{% if lid.last_name_prefix %}, {{ lid.last_name_prefix }}{% endif %}</div>
+                <div class="fw-normal small text-muted">{{ lid.user.first_name }}</div>
               </div>
 
               <div class="planning-cell flex-grow-1" data-status="{{ status_map|get_cell_status:k }}">
@@ -116,7 +121,8 @@
         <table class="table table-sm align-middle planning-table">
           <thead>
             <tr>
-              <th class="sticky-col sticky-head">Lid</th>
+              <th class="sticky-col sticky-head">Achternaam</th>
+              <th class="sticky-head">Voornaam</th>
 
               {% for optreden in optredens %}
                 <th class="sticky-head">
@@ -124,7 +130,7 @@
                     <div class="fw-semibold">{{ optreden.titel }}</div>
 
                     <div class="small text-muted">
-                      {{ optreden.datum|date:"d-m-Y" }}
+                      {{ optreden.datum|date:"D d-m-Y" }}
                       {% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
                     </div>
 
@@ -139,8 +145,12 @@
 
                     {% if is_beheer %}
                       <div class="d-flex gap-2 mt-1">
-                        <a class="small" href="{% url 'planning:optreden_update' optreden.pk %}">bewerken</a>
-                        <a class="small text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">verwijderen</a>
+                        <a class="small me-2" href="{% url 'planning:optreden_update' optreden.pk %}">
+                          <i class="fa-solid fa-pen-to-square me-1"></i> Bewerken
+                        </a>
+                        <a class="small text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">
+                          <i class="fa-solid fa-trash me-1"></i> Verwijderen
+                        </a>
                       </div>
                     {% endif %}
                   </div>
@@ -153,7 +163,10 @@
             {% for lid in leden %}
               <tr>
                 <td class="sticky-col">
-                  {{ lid.first_name }} {{ lid.full_last_name }}
+                  {{ lid.user.last_name }}{% if lid.last_name_prefix %}, {{ lid.last_name_prefix }}{% endif %}
+                </td>
+                <td>
+                  {{ lid.user.first_name }}
                 </td>
 
                 {% for optreden in optredens %}

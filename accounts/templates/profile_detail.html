@@ -28,7 +28,7 @@
       <img src="{{ profile.photo.url }}" alt="Profielfoto" class="profile-avatar mb-3">
       {% else %}
       <div class="profile-avatar-fallback mb-3">
-        {{ profile.first_name|slice:":1" }}{{ profile.last_name|slice:":1" }}
+        {{ user.first_name|slice:":1" }}{{ profile.full_last_name|slice:":1" }}
       </div>
       {% endif %}
     </div>
@@ -36,12 +36,12 @@
       <div class="row g-3">
         <div class="col-md-6">
           <p class="mb-1 text-muted">Voornaam</p>
-          <p class="fw-medium">{{ profile.first_name|default:"—" }}</p>
+          <p class="fw-medium">{{ user.first_name|default:"—" }}</p>
         </div>
 
         <div class="col-md-6">
           <p class="mb-1 text-muted">Achternaam</p>
-          <p class="fw-medium">{{ profile.last_name|default:"—" }}</p>
+          <p class="fw-medium">{{ profile.full_last_name|default:"—" }}</p>
         </div>
 
         <div class="col-md-6">
@@ -51,14 +51,20 @@
 
         <div class="col-md-6">
           <p class="mb-1 text-muted">Openbaar profiel</p>
-          <p class="fw-medium">
-            {% if profile.consent_public_profile %}
-            Ja
-            {% else %}
-            Nee
-            {% endif %}
-          </p>
+
+          {% if profile.consent_public_profile %}
+            <span class="profile-badge profile-badge--public">
+              <i class="fa-solid fa-eye me-1"></i>
+              Openbaar
+            </span>
+          {% else %}
+            <span class="profile-badge profile-badge--private">
+              <i class="fa-solid fa-eye-slash me-1"></i>
+              Niet openbaar
+            </span>
+          {% endif %}
         </div>
+
       </div>
     </div>
   </div>

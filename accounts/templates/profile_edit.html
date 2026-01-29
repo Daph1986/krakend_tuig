@@ -1,65 +1,182 @@
 {% extends 'main.html' %}
 {% load static %}
 
-{% block title %} Mijn profiel bewerken {% endblock %}
+{% block title %}Mijn profiel bewerken{% endblock %}
 
 {% block page_header %}
-<div class="container mb-3">
+<div class="container">
   <div class="row text-center">
-    <h2 class="mt-5 mb-2 mx-md-auto col-12">
-      Mijn profiel bewerken
-    </h2>
+    <h2 class="mt-5 mb-3 col-12">Mijn profiel bewerken</h2>
   </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="container py-5">
-  <form method="post" enctype="multipart/form-data" class="p-3" novalidate>
-    {% csrf_token %}
+<div class="container pb-5">
 
-    <div class="row g-3">
-      <div class="col-md-6">
-        <label class="form-label" for="{{ form.first_name.id_for_label }}">Voornaam</label>
-        {{ form.first_name }}
-        {{ form.first_name.errors }}
-      </div>
+  <div class="alert alert-info d-flex align-items-start gap-2 mb-4">
+    <i class="fa-solid fa-circle-info mt-1"></i>
+    <div>
+      Naam en e-mailadres kun je niet zelf wijzigen.
+      Neem hiervoor contact op met de beheerder.
+    </div>
+  </div>
 
-      <div class="col-md-6">
-        <label class="form-label" for="{{ form.last_name.id_for_label }}">Achternaam</label>
-        {{ form.last_name }}
-        {{ form.last_name.errors }}
-      </div>
+  <div class="card info-card p-3 p-md-4">
+    <form method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
 
-      <div class="col-md-6">
-        <label class="form-label" for="{{ form.role.id_for_label }}">Rol</label>
-        {{ form.role }}
-        {{ form.role.errors }}
-      </div>
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+      {% endif %}
 
-      <div class="col-md-6">
-        <label class="form-label" for="{{ form.photo.id_for_label }}">Profielfoto</label>
-        {{ form.photo }}
-        {{ form.photo.errors }}
-      </div>
+      {% if form.profile_form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.profile_form.non_field_errors }}</div>
+      {% endif %}
 
-      <div class="col-12">
-        <div class="form-check mt-2">
-          {{ form.consent_public_profile }}
-          <label class="form-check-label" for="{{ form.consent_public_profile.id_for_label }}">
-            Ik geef toestemming om mijn profiel te tonen in het openbare smoelenboek
-          </label>
-          {{ form.consent_public_profile.errors }}
+      <div class="row g-4">
+
+        <div class="col-md-4">
+          <label class="form-label" for="{{ form.first_name.id_for_label }}">Voornaam</label>
+          {{ form.first_name }}
         </div>
-      </div>
-    </div>
-    <div class="d-flex gap-2 mt-4 justify-content-between">
-      <button class="btn hvr-grow btn-outline-success btn-gen-spec me-3" type="submit">
-        <i class="fa-regular fa-floppy-disk me-2"></i>Opslaan</button>
-      <a class="btn hvr-grow btn-outline-secondary btn-gen-spec" href="{% url 'accounts:profile_detail' %}">
-        <i class="fa-solid fa-ban me-2"></i>Annuleren</a>
-    </div>
-  </form>
-</div>
 
+        <div class="col-md-4">
+          <label class="form-label" for="{{ form.last_name.id_for_label }}">Achternaam</label>
+          {{ form.last_name }}
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" for="{{ form.email.id_for_label }}">E-mailadres</label>
+          {{ form.email }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="{{ form.profile_form.role.id_for_label }}">{{ form.profile_form.role.label }}</label>
+          {{ form.profile_form.role }}
+          {% if form.profile_form.role.errors %}
+            <div class="invalid-feedback d-block">{{ form.profile_form.role.errors|striptags }}</div>
+          {% endif %}
+        </div>
+
+        <label class="form-label">Profielfoto</label>
+
+        <div class="d-flex align-items-center gap-3 mb-2">
+          {% if profile.photo %}
+            <img
+              src="{{ profile.photo.url }}"
+              alt="Huidige profielfoto"
+              class="rounded-circle border"
+              style="width: 56px; height: 56px; object-fit: cover;"
+              data-photo-preview
+            >
+            <span class="small text-muted">Huidige foto</span>
+          {% else %}
+            <span class="small text-muted">Nog geen profielfoto ingesteld</span>
+          {% endif %}
+        </div>
+
+        {# Upload nieuw bestand #}
+        <input
+          type="file"
+          name="{{ form.profile_form.photo.name }}"
+          id="{{ form.profile_form.photo.id_for_label }}"
+          class="form-control"
+          accept="image/*"
+          data-photo-input
+        >
+
+        {# Checkbox: foto verwijderen #}
+        {% if profile.photo %}
+          <div class="form-check mt-2">
+            <input
+              type="checkbox"
+              name="{{ form.profile_form.photo.clear_checkbox_name }}"
+              id="{{ form.profile_form.photo.clear_checkbox_id }}"
+              class="form-check-input"
+            >
+            <label
+              class="form-check-label"
+              for="{{ form.profile_form.photo.clear_checkbox_id }}"
+            >
+              Foto verwijderen
+            </label>
+          </div>
+        {% endif %}
+
+        {% if form.profile_form.photo.errors %}
+          <div class="invalid-feedback d-block">
+            {{ form.profile_form.photo.errors|striptags }}
+          </div>
+        {% endif %}
+
+
+        <div class="col-md-6">
+          <label class="form-label" for="{{ form.profile_form.address.id_for_label }}">{{ form.profile_form.address.label }}</label>
+          {{ form.profile_form.address }}
+          {% if form.profile_form.address.errors %}
+            <div class="invalid-feedback d-block">{{ form.profile_form.address.errors|striptags }}</div>
+          {% endif %}
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label" for="{{ form.profile_form.postal_code.id_for_label }}">{{ form.profile_form.postal_code.label }}</label>
+          {{ form.profile_form.postal_code }}
+          {% if form.profile_form.postal_code.errors %}
+            <div class="invalid-feedback d-block">{{ form.profile_form.postal_code.errors|striptags }}</div>
+          {% endif %}
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label" for="{{ form.profile_form.city.id_for_label }}">{{ form.profile_form.city.label }}</label>
+          {{ form.profile_form.city }}
+          {% if form.profile_form.city.errors %}
+            <div class="invalid-feedback d-block">{{ form.profile_form.city.errors|striptags }}</div>
+          {% endif %}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="{{ form.profile_form.phone.id_for_label }}">{{ form.profile_form.phone.label }}</label>
+          {{ form.profile_form.phone }}
+          {% if form.profile_form.phone.help_text %}
+            <div class="form-text">{{ form.profile_form.phone.help_text }}</div>
+          {% endif %}
+          {% if form.profile_form.phone.errors %}
+            <div class="invalid-feedback d-block">{{ form.profile_form.phone.errors|striptags }}</div>
+          {% endif %}
+        </div>
+
+        <div class="col-12">
+          <div class="form-check mt-1">
+            {{ form.profile_form.consent_public_profile }}
+            <label class="form-check-label" for="{{ form.profile_form.consent_public_profile.id_for_label }}">
+              {{ form.profile_form.consent_public_profile.label }}
+            </label>
+          </div>
+          {% if form.profile_form.consent_public_profile.errors %}
+            <div class="invalid-feedback d-block">{{ form.profile_form.consent_public_profile.errors|striptags }}</div>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <hr class="my-4">
+
+      <div class="d-flex justify-content-center justify-content-md-between mb-2">
+        <button class="btn hvr-grow btn-outline-success btn-gen-spec me-4" type="submit">
+          <i class="fa-regular fa-floppy-disk me-2"></i>Opslaan
+        </button>
+        <a class="btn hvr-grow btn-outline-secondary btn-gen-spec" href="{% url 'accounts:profile_detail' %}">
+          <i class="fa-solid fa-ban me-2"></i>Annuleren
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>
+<div class="mb-10"></div>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/profile_photo_preview.js' %}" defer></script>
 {% endblock %}

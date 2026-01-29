@@ -21,7 +21,8 @@ def planning_overzicht(request):
         .filter(is_active=True)
         .exclude(user__username='HelloDaphneAdmin')
         .select_related('user')
-        .order_by('last_name', 'last_name_prefix', 'first_name')
+        .order_by('user__last_name', 'last_name_prefix', 'user__first_name')
+
     )
 
     aanwez = Aanwezigheid.objects.filter(

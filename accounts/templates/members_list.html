@@ -35,7 +35,7 @@
         {% for m in zangers %}
           <tr>
             <td>{{ m.sortable_last_name }}</td>
-            <td>{{ m.first_name }}</td>
+            <td>{{ m.user.first_name }}</td>
             <td>{{ m.address|default:"—" }}</td>
             <td>{{ m.postal_code|default:"—" }}</td>
             <td>{{ m.city|default:"—" }}</td>
@@ -61,7 +61,7 @@
         {% for m in muzikanten %}
           <tr>
             <td>{{ m.sortable_last_name }}</td>
-            <td>{{ m.first_name }}</td>
+            <td>{{ m.user.first_name }}</td>
             <td>{{ m.address|default:"—" }}</td>
             <td>{{ m.postal_code|default:"—" }}</td>
             <td>{{ m.city|default:"—" }}</td>
