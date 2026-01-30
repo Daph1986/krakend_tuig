@@ -417,6 +417,12 @@ footer {
   color: #A65A2A;
 }
 
+.navbar .nav-link {
+  padding-left: .6rem;
+  padding-right: .6rem;
+  white-space: nowrap;
+}
+
 /* -------------------------- Planning --------------------------- */
 .planning-card {
   background-color: #f3efe6;

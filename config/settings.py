@@ -1,31 +1,62 @@
 from pathlib import Path
-
-import environ
 import os
+
+import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
+import environ
 
 # set casting, default value
 env = environ.Env(
-    DEBUG=(bool, False)
+    DEBUG=(bool, False),
+    DB_SSL_REQUIRE=(bool, True),
+    DB_CONN_MAX_AGE=(int, 600),
 )
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Take environment variables from .env file
+# Take environment variables from .env file (lokaal / als aanwezig)
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # False if not in os.environ because of casting above
 DEBUG = env.bool('DEBUG', default=False)
 
-HOST_NAME = env.str('ALLOWED_HOSTS')
-ALLOWED_HOSTS = HOST_NAME.split(',')
+# -----------------------
+# Database configuration
+# -----------------------
+DATABASE_URL = env('DATABASE_URL', default=None)
+
+if DATABASE_URL:
+    # DigitalOcean Managed PostgreSQL (of andere Postgres via DATABASE_URL)
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=env.int('DB_CONN_MAX_AGE', default=600),
+            ssl_require=env.bool('DB_SSL_REQUIRE', default=True),
+        )
+    }
+else:
+    # Lokale development fallback
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+# Hard fail in production als DATABASE_URL ontbreekt
+if not DEBUG and not DATABASE_URL:
+    raise ImproperlyConfigured('DATABASE_URL is not set (required in production).')
+
+# -----------------------
+# Basic security / hosts
+# -----------------------
+ALLOWED_HOSTS = [h.strip() for h in env.str('ALLOWED_HOSTS', default='').split(',') if h.strip()]
 
 SECRET_KEY = env('SECRET_KEY')
 
 CAPTCHA_FAILURE_FORM = True
 
 # Application definition
-
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -130,18 +161,8 @@ JAZZMIN_UI_TWEAKS = {
     },
 }
 
-
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
-DATABASES = {
-    'default': env.db('DATABASE_URL', default=f'sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}')
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -157,42 +178,35 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
-
 LANGUAGE_CODE = 'nl'
 TIME_ZONE = 'Europe/Amsterdam'
 USE_I18N = True
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 # SMTP Configuration
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-DEFAULT_FROM_EMAIL = os.environ.get('GMAIL_FROM_EMAIL', '')
+
+DEFAULT_FROM_EMAIL = env.str('GMAIL_FROM_EMAIL', default='')
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS', '')
-CONTACT_RECIPIENT_EMAIL = os.environ.get(
-    'CONTACT_RECIPIENT_EMAIL', EMAIL_HOST_USER)
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASS', default='')
+
+CONTACT_RECIPIENT_EMAIL = env.str('CONTACT_RECIPIENT_EMAIL', default=EMAIL_HOST_USER)
 
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'home'
