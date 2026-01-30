@@ -1,11 +1,14 @@
 {% extends 'main.html' %}
 {% load static %}
 
+{% block title %}Smoelenboek{% endblock %}
+
 {% block page_header %}
 <div class="container mt-3 mb-3">
   <div class="row text-center">
     <div>
       <h1 class="h3 mt-5 mb-2">Smoelenboek</h1>
+    </div>
   </div>
 </div>
 {% endblock %}
@@ -19,7 +22,6 @@
       Terug
     </a>
   </div>
-</div>
 
   <div class="row g-4">
     {% for m in members %}
@@ -29,11 +31,18 @@
             <img
               src="{{ m.photo.url }}"
               class="rounded-circle mx-auto mt-3 member-photo"
-              alt="{{ m.first_name }} {{ m.last_name }}">
+              alt="{% if m.consent_public_profile %}{{ m.user.first_name }} {% if m.last_name_prefix %}{{ m.last_name_prefix }} {% endif %}{{ m.user.last_name }}{% else %}Profielfoto{% endif %}">
           {% endif %}
 
           <div class="card-body">
-            <div class="fw-semibold">{{ m.first_name }} {{ m.last_name }}</div>
+            {% if m.consent_public_profile %}
+              <div class="fw-semibold">
+                {{ m.user.first_name }}
+                {% if m.last_name_prefix %}{{ m.last_name_prefix }} {% endif %}
+                {{ m.user.last_name }}
+              </div>
+            {% endif %}
+
             {% if m.role %}
               <div class="text-muted small mt-1">{{ m.role }}</div>
             {% endif %}
@@ -45,5 +54,6 @@
     {% endfor %}
   </div>
 </div>
+
 <div class="mb-10"></div>
 {% endblock %}

@@ -515,7 +515,7 @@ footer {
 
 .planning-table th:nth-child(2),
 .planning-table td:nth-child(2) {
-  width: 100px;      /* pas aan naar smaak */
+  width: 100px;
   white-space: nowrap;
 }
 
@@ -545,22 +545,19 @@ footer {
   border-right-color: #25324A;
 }
 
-/* --- Planning: smalle naamkolommen (override) --- */
 .planning-table th.sticky-col,
 .planning-table td.sticky-col {
-  min-width: 140px; /* was 180px */
+  min-width: 140px;
 }
 
-/* Voornaam kolom (2e kolom) */
 .planning-table th:nth-child(2),
 .planning-table td:nth-child(2) {
-  min-width: 110px;   /* belangrijker dan width */
+  min-width: 110px;
   width: 110px;
   max-width: 110px;
   white-space: nowrap;
 }
 
-/* Override: kolom 2 mag smaller dan 220px */
 .planning-table thead th:nth-child(2),
 .planning-table tbody td:nth-child(2) {
   min-width: 110px;
@@ -572,13 +569,103 @@ footer {
   font-weight: 400;
 }
 
-/* --- Echte kolomruimte in de planningtabel --- */
 .planning-table {
   border-collapse: separate;
-  border-spacing: 8px 0;   /* horizontaal 8px, verticaal 0 */
+  border-spacing: 8px 0;
 }
 
+/* =========================
+   Planning custom dropdown (mobiel)
+   ========================= */
 
+.planning-dropdown{
+  position: relative;
+  width: 100%;
+}
+
+/* Button (de "select") */
+.planning-dd-btn{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 12px;
+  padding: .75rem 1rem;
+
+  background: rgba(255,255,255,0.35);
+}
+
+.planning-dd-btn:disabled{
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.planning-dd-label{
+  font-weight: 600;
+}
+
+.planning-dd-icon{
+  opacity: .75;
+}
+
+/* Menu container */
+.planning-dd-menu{
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 9999;
+
+  box-sizing: border-box;
+  padding: .25rem;
+  border-radius: 14px;
+
+  background: #f6f1e7;
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+
+  /* voorkomt mega menu op mobiel */
+  max-height: 240px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.planning-dropdown.is-open .planning-dd-menu{
+  display: block;
+}
+
+/* Items (keuzes) - compacter maar nog goed leesbaar */
+.planning-dd-item{
+  width: 100%;
+  text-align: left;
+  border: 0;
+
+  background: transparent;
+  color: inherit;
+
+  font-size: 1.05rem;
+  line-height: 1.2;
+  padding: .65rem .85rem;
+  border-radius: 12px;
+}
+
+.planning-dd-item:hover{
+  background: rgba(0,0,0,0.06);
+}
+
+.planning-dd-item.is-selected{
+  background: rgba(0,0,0,0.08);
+}
+
+/* Omhoog openen */
+.planning-dropdown.open-up .planning-dd-menu{
+  top: auto;
+  bottom: calc(100% + 8px);
+}
 
 /* --------------------------- Profile --------------------------- */
 .profile-avatar {
@@ -840,5 +927,5 @@ footer {
   .sponsor-logo-wrap {
     width: 240px;
     height: 130px;
-  }
+  }  
 }
