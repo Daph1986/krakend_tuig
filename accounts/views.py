@@ -128,7 +128,7 @@ def members_pdf(request):
                 p(m.postal_code),
                 p(m.city),
                 p(phone),
-                p(m.email),
+                p(m.user.email),
             ])
 
         ratios = [1.2, 1.0, 2.2, 0.8, 1.1, 1.1, 1.6]
