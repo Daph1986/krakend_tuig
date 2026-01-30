@@ -1,12 +1,12 @@
 {% extends 'main.html' %}
 {% load static %}
 
-{% block title %}Geen toegang{% endblock %}
+{% block title %}Pagina niet gevonden{% endblock %}
 
 {% block page_header %}
 <div class='container mb-3'>
   <div class='row text-center'>
-    <h2 class='mt-5 mb-2 mx-md-auto col-12'>Geen toegang</h2>
+    <h2 class='mt-5 mb-2 mx-md-auto col-12'>Pagina niet gevonden</h2>
   </div>
 </div>
 {% endblock %}
@@ -16,8 +16,12 @@
   <div class='row justify-content-center'>
     <div class='col-12 col-lg-8 col-xl-7'>
       <div class='info-card p-4 rounded shadow-sm text-center'>
-        <p class='mb-3'>Je bent ingelogd, maar je hebt geen rechten om deze actie uit te voeren.</p>
-        <a class='btn general-btn hvr-grow' href="{% url 'home' %}">
+        <p class='mb-3'>
+          De pagina die je zoekt bestaat niet (meer) of is verplaatst.
+        </p>
+
+        <a class='btn general-btn hvr-grow'
+           href="{% url 'home' %}">
           <i class="fa-solid fa-arrow-rotate-left me-2"></i> Terug naar de homepage
         </a>
       </div>

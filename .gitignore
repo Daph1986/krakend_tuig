@@ -9,3 +9,15 @@ __pycache__
 .env
 env.py
 venv/
+
+# Django static collect
+/staticfiles/
+
+# Media uploads
+/media/
+
+# Virtualenv
+/venv/
+
+# Env vars
+.env
