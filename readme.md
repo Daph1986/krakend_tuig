@@ -131,8 +131,9 @@ python manage.py runserver
 ### Deployment guide
 Deployment is handled separately and documented in detail.
 
-Please see:<br>
-readme/deployment/README.md
+Please see the deployment guide:
+[readme/deployment/README.md](readme/deployment/README.md)
+
 
 This guide covers:
 - Server setup
@@ -156,7 +157,8 @@ All content has been reviewed and adapted where needed.
 - ChatGPT for code-related problem solving
 
 ### Media
-- Photos and videos are provided by the choir or taken during performances
-- Logos and visual assets are created specifically for this project
+- Logos are provided by the sponsors of Shantykoor Krakend Tuig
+- Photos and videos are supplied by the choir or taken during performances
+- The hero image was created using ChatGPT and Canva
 
 <div align="right"><a href="#top">🔝</a></div>
