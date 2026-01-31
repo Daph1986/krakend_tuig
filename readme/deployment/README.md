@@ -92,7 +92,7 @@ python manage.py createsuperuser
 
 <div align="right"><a href="#top">🔝</a></div>
 
-:frame_with_picture: Static & media files
+:framed_picture: Static & media files
 ======
 
 Static files:
