@@ -21,3 +21,6 @@ venv/
 
 # Env vars
 .env
+
+*.json
+databasedump.json
