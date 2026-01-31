@@ -29,6 +29,11 @@ class MemberProfile(models.Model):
     )
 
     is_active = models.BooleanField(default=True)
+    must_change_password = models.BooleanField(
+        default=False,
+        help_text='Gebruiker moet bij volgende login wachtwoord wijzigen'
+    )
+
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

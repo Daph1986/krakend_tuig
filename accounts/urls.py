@@ -1,6 +1,7 @@
 from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_views
 from . import views
+from .views import ForcedPasswordChangeView
 
 app_name = 'accounts'
 
@@ -11,6 +12,7 @@ urlpatterns = [
         name='login',
     ),
     path('logout/', views.logout_view, name='logout'),
+    path('wachtwoord-wijzigen/', ForcedPasswordChangeView.as_view(), name='password_change'),
 
     path('profiel/', views.profile_detail, name='profile_detail'),
     path('profiel/bewerken/', views.profile_edit, name='profile_edit'),

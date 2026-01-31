@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.http import HttpResponse
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
@@ -183,3 +185,19 @@ def logout_view(request):
         return redirect(next_url)
 
     return redirect('home')
+
+
+class ForcedPasswordChangeView(PasswordChangeView):
+    success_url = reverse_lazy('accounts:profile_detail')
+    template_name = 'password_change.html'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        profile = getattr(self.request.user, 'member_profile', None)
+        if profile and profile.must_change_password:
+            profile.must_change_password = False
+            profile.save(update_fields=['must_change_password'])
+
+        messages.success(self.request, 'Wachtwoord gewijzigd.')
+        return response

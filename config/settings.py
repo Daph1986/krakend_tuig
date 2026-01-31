@@ -89,6 +89,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.middleware.ForcePasswordChangeMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -208,5 +209,13 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASS', default='')
 
 CONTACT_RECIPIENT_EMAIL = env.str('CONTACT_RECIPIENT_EMAIL', default=EMAIL_HOST_USER)
 
+# AUTHENTICATION & SESSIONS
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'home'
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 jaar
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
