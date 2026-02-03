@@ -4,6 +4,7 @@ charset-normalizer==3.4.*
 crispy-bootstrap5==2025.*
 dj-database-url==3.1.*
 Django==6.0.*
+django-cleanup==9.0.*
 django-crispy-forms==2.*
 django-environ==0.12.*
 django-jazzmin==3.0.*

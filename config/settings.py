@@ -86,6 +86,7 @@ INSTALLED_APPS = [
 
     'storages',
 ]
+INSTALLED_APPS += ["django_cleanup.apps.CleanupConfig"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
