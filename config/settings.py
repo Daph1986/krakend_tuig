@@ -20,13 +20,16 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # False if not in os.environ because of casting above
 DEBUG = env.bool('DEBUG', default=False)
 
+# CSRF trusted origins (space-separated in env)
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split()
+
 # -----------------------
 # Database configuration
 # -----------------------
 DATABASE_URL = env('DATABASE_URL', default=None)
 
 if DATABASE_URL:
-    # DigitalOcean Managed PostgreSQL (of andere Postgres via DATABASE_URL)
+    # Postgres via DATABASE_URL
     DATABASES = {
         'default': dj_database_url.parse(
             DATABASE_URL,
@@ -51,7 +54,6 @@ if not DEBUG and not DATABASE_URL:
 # Basic security / hosts
 # -----------------------
 ALLOWED_HOSTS = [h.strip() for h in env.str('ALLOWED_HOSTS', default='').split(',') if h.strip()]
-
 SECRET_KEY = env('SECRET_KEY')
 
 CAPTCHA_FAILURE_FORM = True
@@ -65,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'accounts.apps.AccountsConfig',
 
     'about',
@@ -80,6 +83,8 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'crispy_bootstrap5',
+
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +94,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+
     'accounts.middleware.ForcePasswordChangeMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -122,14 +129,11 @@ JAZZMIN_SETTINGS = {
     'site_brand': 'Krakend Tuig',
     'welcome_sign': 'Welkom in de beheeromgeving van Krakend Tuig',
     'copyright': 'Krakend Tuig',
-
     'topmenu_links': [
         {'name': 'Website', 'url': '/', 'new_window': True},
     ],
-
     'show_sidebar': True,
     'navigation_expanded': True,
-
     'search_model': [
         'auth.User',
     ],
@@ -144,11 +148,9 @@ JAZZMIN_UI_TWEAKS = {
     'footer_small_text': True,
     'body_small_text': False,
     'brand_small_text': False,
-
     'sidebar_nav_small_text': False,
     'sidebar_disable_expand': False,
     'sidebar_nav_child_indent': True,
-
     'navbar': 'navbar-dark navbar-navy',
     'accent': 'accent-navy',
     'sidebar': 'sidebar-dark-navy',
@@ -163,40 +165,66 @@ JAZZMIN_UI_TWEAKS = {
 }
 
 # Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
 LANGUAGE_CODE = 'nl'
 TIME_ZONE = 'Europe/Amsterdam'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
+# -----------------------
+# Static & Media
+# -----------------------
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+USE_S3 = os.environ.get('USE_S3', '0') == '1'
+
+# Default storages (lokaal)
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+# S3 settings (alleen als USE_S3=1)
+if USE_S3:
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', 'krakendtuig-media')
+    AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'eu-north-1')
+
+    AWS_DEFAULT_ACL = None
+    AWS_QUERYSTRING_AUTH = False
+
+    # Optioneel: caching headers voor S3 objecten (kan later strakker)
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+
+    # Alleen MEDIA naar S3 (static blijft via WhiteNoise)
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    }
+
+    MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/'
+
+# -----------------------
 # SMTP Configuration
+# -----------------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -209,13 +237,21 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASS', default='')
 
 CONTACT_RECIPIENT_EMAIL = env.str('CONTACT_RECIPIENT_EMAIL', default=EMAIL_HOST_USER)
 
-# AUTHENTICATION & SESSIONS
+# -----------------------
+# Authentication & Sessions
+# -----------------------
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'home'
 
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 jaar
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    USE_X_FORWARDED_HOST = True
+
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
