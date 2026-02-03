@@ -23,7 +23,7 @@ def lied_pdf(request, pk):
         raise Http404
 
     return FileResponse(
-        open(lied.pdf.path, 'rb'),
+        open(lied.pdf.open('rb')),
         content_type='application/pdf'
     )
 
