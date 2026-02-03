@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import FileResponse, Http404
-import os
+
 
 from .models import Lied
 from .forms import LiedForm
@@ -19,7 +19,7 @@ def liedlijst(request):
 def lied_pdf(request, pk):
     lied = get_object_or_404(Lied, pk=pk, actief=True)
 
-    if not os.path.exists(lied.pdf.path):
+    if not lied.pdf.storage.exists(lied.pdf.name):
         raise Http404
 
     return FileResponse(
