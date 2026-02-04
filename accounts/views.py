@@ -15,6 +15,7 @@ from reportlab.lib.units import mm
 
 from .forms import ProfileEditCombinedForm
 from .models import MemberProfile
+from .utils import get_member_groups
 
 
 @login_required
@@ -52,36 +53,22 @@ def profile_edit(request):
 
 @login_required
 def members_list(request):
-    base_qs = (
-        MemberProfile.objects
-        .filter(is_active=True)
-        .exclude(user__username='HelloDaphneAdmin')
-        .order_by('user__last_name', 'last_name_prefix', 'user__first_name')
-    )
-
-    muzikanten = base_qs.filter(role__icontains='muzikant')
-    zwaaibaas = base_qs.filter(role__icontains='zwaaibaas')
-    zangers = base_qs.filter(role__icontains='zanger')
+    groups = get_member_groups()
 
     return render(request, 'members_list.html', {
-        'zangers': zangers,
-        'zwaaibaas': zwaaibaas,
-        'muzikanten': muzikanten,
+        'zangers': groups['zangers'],
+        'zwaaibaas': groups['zwaaibaas'],
+        'muzikanten': groups['muzikanten'],
     })
 
 
 @login_required
 def members_pdf(request):
-    base_qs = (
-        MemberProfile.objects
-        .filter(is_active=True)
-        .exclude(user__username='HelloDaphneAdmin')
-        .order_by('user__last_name', 'last_name_prefix', 'user__first_name')
-    )
+    groups = get_member_groups()
 
-    muzikanten = base_qs.filter(role__icontains='muzikant')
-    zwaaibaas = base_qs.filter(role__icontains='zwaaibaas')
-    zangers = base_qs.filter(role__icontains='zanger')
+    zangers = groups['zangers']
+    zwaaibaas = groups['zwaaibaas']
+    muzikanten = groups['muzikanten']
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="ledenlijst.pdf"'

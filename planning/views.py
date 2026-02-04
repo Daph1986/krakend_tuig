@@ -3,9 +3,9 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
-from accounts.models import MemberProfile
 from .forms import OptredenForm
 from .models import Aanwezigheid, Optreden
+from accounts.utils import get_member_groups
 
 
 def is_planning_beheer(user):
@@ -16,18 +16,16 @@ def is_planning_beheer(user):
 def planning_overzicht(request):
     optredens = Optreden.objects.filter(actief=True).order_by('datum', 'tijd', 'titel')
 
-    leden = (
-        MemberProfile.objects
-        .filter(is_active=True)
-        .exclude(user__username='HelloDaphneAdmin')
-        .select_related('user')
-        .order_by('user__last_name', 'last_name_prefix', 'user__first_name')
+    groups = get_member_groups()
+    zangers = groups['zangers']
+    zwaaibaas = groups['zwaaibaas']
+    muzikanten = groups['muzikanten']
 
-    )
+    leden = list(zangers) + list(zwaaibaas) + list(muzikanten)
 
     aanwez = Aanwezigheid.objects.filter(
         optreden__in=optredens,
-        user__in=[m.user_id for m in leden],
+        user_id__in=[m.user_id for m in leden],
     ).values('user_id', 'optreden_id', 'status')
 
     status_map = {(a['user_id'], a['optreden_id']): a['status'] for a in aanwez}
@@ -35,6 +33,9 @@ def planning_overzicht(request):
     context = {
         'optredens': optredens,
         'leden': leden,
+        'zangers': zangers,
+        'zwaaibaas': zwaaibaas,
+        'muzikanten': muzikanten,
         'status_map': status_map,
         'status_choices': Aanwezigheid.STATUS_CHOICES,
         'is_beheer': is_planning_beheer(request.user),
