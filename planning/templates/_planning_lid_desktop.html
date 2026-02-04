@@ -1,0 +1,42 @@
+{% load planning_extras %}
+
+<tr>
+  <td class="sticky-col">
+    {{ lid.user.last_name }}{% if lid.last_name_prefix %}, {{ lid.last_name_prefix }}{% endif %}
+  </td>
+  <td>
+    {{ lid.user.first_name }}
+  </td>
+
+  {% for optreden in optredens %}
+    {% cell_key lid.user_id optreden.id as k %}
+    {% with current=status_map|get_cell_status:k %}
+
+    <td class="planning-cell" data-status="{{ current }}">
+      <div
+        {% if not is_beheer and lid.user_id != current_user_id %}
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title="Je kunt alleen je eigen aanwezigheid aanpassen"
+        {% endif %}
+      >
+        <select
+          class="form-select form-select-sm planning-select"
+          data-optreden-id="{{ optreden.id }}"
+          {% if is_beheer %}data-user-id="{{ lid.user_id }}"{% endif %}
+          {% if not is_beheer and lid.user_id != current_user_id %}disabled{% endif %}
+        >
+          <option value="" disabled {% if not current %}selected{% endif %}>-- Maak een keuze --</option>
+
+          {% for value,label in status_choices %}
+            <option value="{{ value }}" {% if current == value %}selected{% endif %}>
+              {{ label }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    </td>
+
+    {% endwith %}
+  {% endfor %}
+</tr>
