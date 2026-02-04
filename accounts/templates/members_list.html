@@ -49,6 +49,32 @@
     </table>
   </div>
 
+   <h3 class="h5">Zwaaibaas</h3>
+  <div class="table-responsive">
+    <table class="table align-middle members-table kt-table">
+      <thead>
+        <tr>
+          <th>Achternaam</th><th>Voornaam</th><th>Adres</th><th>Postcode</th><th>Plaats</th><th>Telefoon</th><th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in zwaaibaas %}
+          <tr>
+            <td>{{ m.sortable_last_name }}</td>
+            <td>{{ m.user.first_name }}</td>
+            <td>{{ m.address|default:"—" }}</td>
+            <td>{{ m.postal_code|default:"—" }}</td>
+            <td>{{ m.city|default:"—" }}</td>
+            <td>{{ m.phone|default:"—"|split_lines:"/"|linebreaksbr }}</td>
+            <td>{{ m.user.email|default:"—" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7">Geen zwaaibaas gevonden.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
   <h3 class="h5">Muzikanten</h3>
   <div class="table-responsive">
     <table class="table align-middle members-table kt-table">

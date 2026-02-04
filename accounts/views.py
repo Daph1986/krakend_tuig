@@ -60,10 +60,12 @@ def members_list(request):
     )
 
     muzikanten = base_qs.filter(role__icontains='muzikant')
-    zangers = base_qs.exclude(role__icontains='muzikant')
+    zwaaibaas = base_qs.filter(role__icontains='zwaaibaas')
+    zangers = base_qs.filter(role__icontains='zanger')
 
     return render(request, 'members_list.html', {
         'zangers': zangers,
+        'zwaaibaas': zwaaibaas,
         'muzikanten': muzikanten,
     })
 
@@ -77,8 +79,9 @@ def members_pdf(request):
         .order_by('user__last_name', 'last_name_prefix', 'user__first_name')
     )
 
-    zangers = base_qs.exclude(role__icontains='muzikant')
     muzikanten = base_qs.filter(role__icontains='muzikant')
+    zwaaibaas = base_qs.filter(role__icontains='zwaaibaas')
+    zangers = base_qs.filter(role__icontains='zanger')
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="ledenlijst.pdf"'
@@ -159,6 +162,12 @@ def members_pdf(request):
         Paragraph('Zangers', styles['Heading2']),
         Spacer(1, 4),
         make_table(zangers),
+
+        Spacer(1, 12),
+
+        Paragraph('Zwaaibaas', styles['Heading2']),
+        Spacer(1, 4),
+        make_table(zwaaibaas),
 
         Spacer(1, 12),
 
