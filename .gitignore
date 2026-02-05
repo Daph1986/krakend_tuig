@@ -10,9 +10,6 @@ __pycache__
 env.py
 venv/
 
-# Django static collect
-/staticfiles/
-
 # Media uploads
 /media/
 
