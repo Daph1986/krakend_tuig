@@ -19,11 +19,11 @@
     <div class="col-md-6">
       <h4 class="mb-3">Vrienden &amp; Sponsors van Krakend Tuig</h4>
       <p>
-        Shantykoor “Krakend Tuig” treedt niet alleen op tijdens reguliere optredens, maar ook in verzorgingstehuizen, 
+        Shantykoor “Krakend Tuig” treedt niet alleen op tijdens reguliere optredens, maar ook in verzorgingstehuizen,
         waar wij tegen een gereduceerd tarief zingen.
       </p>
       <p>
-        Om het koor te kunnen voorzien van goede geluidsapparatuur en om de bijkomende kosten te kunnen dragen, 
+        Om het koor te kunnen voorzien van goede geluidsapparatuur en om de bijkomende kosten te kunnen dragen,
         zijn er de “Vrienden van Krakend Tuig”.
       </p>
       <p class="mb-0">
@@ -42,8 +42,8 @@
         <span class="fw-semibold">Bankrekening:</span> NL31RABO0120556529
       </p>
       <p class="mb4">
-      Interesse om sponsor te worden van ons shantyfestival of shantycafé?
-      Bekijk dan het Bidbook en het Sponsorcontract via de knoppen hieronder.
+        Interesse om sponsor te worden van ons shantyfestival of shantycafé?
+        Bekijk dan het Bidbook en het Sponsorcontract via de knoppen hieronder.
       </p>
 
       <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -58,25 +58,28 @@
   <h2 class="h4 text-center mb-4">Dankzij hun steun kan Krakend Tuig blijven zingen en optreden.</h2>
 
   <div class="sponsor-grid">
-  {% for sponsor in sponsors %}
-    {% if sponsor.website %}
-      <a href="{{ sponsor.website }}" target="_blank" rel="noreferrer" class="sponsor-item">
-    {% else %}
-      <div class="sponsor-item">
-    {% endif %}
+    {% for sponsor in sponsors %}
+      {% if sponsor.website %}
+        <a href="{{ sponsor.website }}" target="_blank" rel="noreferrer" class="sponsor-item">
+      {% else %}
+        <div class="sponsor-item">
+      {% endif %}
 
-        <div class="sponsor-logo-wrap">
-          <img src="{{ sponsor.logo.url }}" alt="{{ sponsor.naam }}">
+          <div class="sponsor-logo-wrap">
+            {% if sponsor.logo %}
+              <img src="{{ sponsor.logo.url }}" alt="{{ sponsor.naam }}">
+            {% else %}
+              <span>{{ sponsor.naam }}</span>
+            {% endif %}
+          </div>
+
+      {% if sponsor.website %}
+        </a>
+      {% else %}
         </div>
-
-    {% if sponsor.website %}
-      </a>
-    {% else %}
-      </div>
-    {% endif %}
-  {% endfor %}
-</div>
-
+      {% endif %}
+    {% endfor %}
+  </div>
 
   {% if user.is_staff %}
     <div class="text-center mt-5 mb-10">
@@ -86,4 +89,3 @@
 </section>
 <div class="mb-10"></div>
 {% endblock %}
-
