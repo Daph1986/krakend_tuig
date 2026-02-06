@@ -13,6 +13,10 @@ venv/
 # Media uploads
 /media/
 
+# Django static collect
+/staticfiles/
+staticfiles_build/
+
 # Virtualenv
 /venv/
 
