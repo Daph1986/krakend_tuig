@@ -101,32 +101,32 @@
               <th class="sticky-head">Voornaam</th>
               {% for optreden in optredens %}
               <th class="sticky-head">
-  <div class="fw-semibold">{{ optreden.titel }}</div>
+                <div class="fw-semibold">{{ optreden.titel }}</div>
 
-  <div class="small text-muted">
-    {{ optreden.datum|date:"D d-m-Y" }}
-    {% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
-  </div>
+                <div class="small text-muted">
+                  {{ optreden.datum|date:"D d-m-Y" }}
+                  {% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
+                </div>
 
-  {% if optreden.locatie %}
-    <div class="small">{{ optreden.locatie }}</div>
-  {% endif %}
+                {% if optreden.locatie %}
+                <div class="small">{{ optreden.locatie }}</div>
+                {% endif %}
 
-  {% if optreden.adres %}
-    <div class="small text-muted">{{ optreden.adres|linebreaksbr }}</div>
-  {% endif %}
+                {% if optreden.adres %}
+                <div class="small text-muted">{{ optreden.adres|linebreaksbr }}</div>
+                {% endif %}
 
-  {% if is_beheer %}
-    <div class="small mt-1 d-flex gap-3">
-      <a href="{% url 'planning:optreden_update' optreden.pk %}">
-        <i class="fa-regular fa-pen-to-square me-1"></i>Bewerken
-      </a>
-      <a class="text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">
-        <i class="fa-regular fa-trash-can me-1"></i>Verwijderen
-      </a>
-    </div>
-  {% endif %}
-</th>
+                {% if is_beheer %}
+                <div class="small mt-1 d-flex gap-3">
+                  <a href="{% url 'planning:optreden_update' optreden.pk %}">
+                    <i class="fa-regular fa-pen-to-square me-1"></i>Bewerken
+                  </a>
+                  <a class="text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">
+                    <i class="fa-regular fa-trash-can me-1"></i>Verwijderen
+                  </a>
+                </div>
+                {% endif %}
+              </th>
 
               {% endfor %}
             </tr>
