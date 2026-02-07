@@ -27,8 +27,7 @@
             <div class="card h-100 info-card">
               {% with cover=album.photos.first %}
               {% if cover %}
-              <img src="{{ cover.image.url }}" class="card-img-top album-photo"
-                alt="{{ album.title }}">
+              <img src="{{ cover.image.url }}" class="card-img-top album-photo" alt="{{ album.title }}">
               {% else %}
               <div class="d-flex align-items-center justify-content-center bg-light image-placeholder">
                 <span class="text-muted">Geen foto</span>
@@ -57,35 +56,39 @@
       {% endif %}
       {% if members %}
       <h2 class="d-flex justify-content-center justify-content-md-start h5 mb-3">Smoelenboek</h2>
-      <div class="row g-4">
-        {% for m in members %}
-        <div class="col-6 col-md-4 col-xl-3">
-          <div class="card h-100 text-center info-card">
-            {% if m.photo %}
-            <img src="{{ m.photo.url }}" class="rounded-circle mx-auto mt-3 member-photo" alt="{{ m.first_name }} {{ m.last_name }}">
-            {% endif %}
-            <div class="card-body">
-              <div class="fw-semibold">
-                {{ m.user.first_name }}
-                {% if m.last_name_prefix %}{{ m.last_name_prefix }} {% endif %}
-                {{ m.user.last_name }}
-              </div>
-              {% if m.role %}
-              <div class="text-muted small mt-1">{{ m.role }}</div>
+      <div class="smoelenboek-strip">
+        <div class="d-flex flex-wrap gap-4 justify-content-center justify-content-md-start">
+          {% for m in members %}
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center info-card">
+              {% if m.photo %}
+              <img src="{{ m.photo.url }}" class="rounded-circle mx-auto mt-3 member-photo"
+                alt="{{ m.first_name }} {{ m.last_name }}">
               {% endif %}
+              <div class="card-body">
+                <div class="fw-semibold">
+                  {{ m.user.first_name }}
+                  {% if m.last_name_prefix %}{{ m.last_name_prefix }} {% endif %}
+                  {{ m.user.last_name }}
+                </div>
+                {% if m.role %}
+                <div class="text-muted small mt-1">{{ m.role }}</div>
+                {% endif %}
+              </div>
             </div>
           </div>
+          {% endfor %}
         </div>
-        {% endfor %}
+
+        {% if members_total > members|length %}
+        <div class="text-center mt-4">
+          <a class="btn general-btn" href="{% url 'public_content:smoelenboek_public' %}">
+            Alle smoelen bekijken ({{ members_total }})
+          </a>
+        </div>
+        {% endif %}
+        {% endif %}
       </div>
-      {% if members_total > members|length %}
-      <div class="text-center mt-4">
-        <a class="btn general-btn" href="{% url 'public_content:smoelenboek_public' %}">
-          Alle smoelen bekijken ({{ members_total }})
-        </a>
-      </div>
-      {% endif %}
-      {% endif %}
     </div>
     <div class="col-12 col-lg-5 mb-10">
       <h2 class="d-flex justify-content-center justify-content-md-start h5 mb-3">Video’s</h2>

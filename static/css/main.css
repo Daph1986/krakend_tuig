@@ -340,6 +340,23 @@ footer {
   object-fit: cover;
 }
 
+.smoelenboek-strip .member-photo{
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  display: block;
+}
+
+.smoelenboek-strip .info-card{
+  min-width: 150px;
+}
+
+.smoelenboek-strip .fw-semibold{
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: manual;
+}
+
 /* --------------------------- Members --------------------------- */
 .members-table thead th {
   border-bottom: 1px solid rgba(0, 0, 0, .15);
@@ -589,7 +606,6 @@ footer {
   width: 100%;
 }
 
-/* Button (de "select") */
 .planning-dd-btn{
   width: 100%;
   display: flex;
@@ -617,7 +633,6 @@ footer {
   opacity: .75;
 }
 
-/* Menu container */
 .planning-dd-menu{
   display: none;
   position: absolute;
@@ -634,7 +649,6 @@ footer {
   border: 1px solid rgba(0,0,0,0.10);
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 
-  /* voorkomt mega menu op mobiel */
   max-height: 240px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -644,7 +658,6 @@ footer {
   display: block;
 }
 
-/* Items (keuzes) - compacter maar nog goed leesbaar */
 .planning-dd-item{
   width: 100%;
   text-align: left;

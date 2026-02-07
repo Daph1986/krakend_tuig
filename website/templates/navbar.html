@@ -44,14 +44,6 @@
               Foto’s & video’s
             </a>
           </li>
-          <!-- Behind login -->
-          {% if user.is_authenticated and user.is_staff %}
-          <li class="nav-item">
-            <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="{% url 'public_content:media_manage_home' %}">
-              Media beheren
-            </a>
-          </li>
-          {% endif %}
           <li class="nav-item {% if request.path == '/vrienden_&amp;_sponsors/'%}active{% endif %}">
             <a class="nav-link text-sand ms-lg-2 ms-xl-4" href="{% url 'sponsors:sponsoren' %}">
               Vrienden &amp; Sponsors
@@ -60,14 +52,19 @@
           <!-- Behind login -->
           {% if request.user.is_authenticated %}
           <li class="nav-item dropdown {% if request.path == 'accounts/profiel/'%}active{% endif %}">
-            <a class="nav-link text-sand ms-lg-2 ms-xl-4 dropdown-toggle" href="{% url 'accounts:profile_detail' %}"
-              role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link text-sand ms-lg-2 ms-xl-4 dropdown-toggle" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
               Profiel van {{ request.user.first_name|default:request.user.username }}
             </a>
             <ul class="dropdown-menu bg-grey border-0">
               <li><a href="{% url 'accounts:profile_detail' %}" class="dropdown-item">Profiel pagina</a></li>
               <li><a href="{% url 'accounts:members_list' %}" class="dropdown-item">Ledenlijst</a></li>
               <li><a href="{% url 'liederen:liedlijst' %}" class="dropdown-item">Liedteksten</a></li>
+              {% if user.is_staff %}
+              <li>
+              </li>
+              <li><a href="{% url 'public_content:media_manage_home' %}" class="dropdown-item">Media beheren</a></li>
+              {% endif %}
               <li><a href="{% url 'planning:overzicht' %}" class="dropdown-item">Planning optredens</a></li>
               <li><a href="{% url 'public_content:smoelenboek_private' %}" class="dropdown-item">Smoelenboek</a></li>
               <li>
