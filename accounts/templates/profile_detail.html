@@ -82,6 +82,14 @@
         <span>Liedteksten</span>
       </a>
     </div>
+    {% if user.is_staff %}
+    <div>
+      <a href="{% url 'public_content:media_manage_home' %}" class="btn hvr-grow general-btn">
+        <i class="fa-solid fa-calendar-days me-2"></i>
+        <span>Media beheren</span>
+      </a>
+    </div>
+    {% endif %}
     <div>
       <a href="{% url 'planning:overzicht' %}" class="btn hvr-grow general-btn">
         <i class="fa-solid fa-calendar-days me-2"></i>
