@@ -13,124 +13,172 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container py-4">
+<div class="container py-4">
 
-    <div class="d-flex justify-content-center justify-content-md-between mb-4">
-      <a class="btn general-btn hvr-grow me-4" href="{% url 'accounts:profile_detail' %}">
-        <i class="fa-solid fa-arrow-rotate-left me-2"></i>
-        Terug
-      </a>
+  <div class="d-flex justify-content-center justify-content-md-between mb-4">
+    <a class="btn general-btn hvr-grow me-4" href="{% url 'accounts:profile_detail' %}">
+      <i class="fa-solid fa-arrow-rotate-left me-2"></i>
+      Terug
+    </a>
 
-      {% if is_beheer %}
-        <a class="btn btn-outline-success btn-gen-spec hvr-grow" href="{% url 'planning:optreden_create' %}">
-          <i class="fa-solid fa-plus me-2"></i>
-          Nieuw optreden
-        </a>
-      {% endif %}
-    </div>
-
-    {# ===================== MOBIEL ===================== #}
-    <div class="d-block d-md-none">
-
-      {% for optreden in optredens %}
-        <div class="planning-card mb-3">
-          <div class="p-3 pb-2">
-            <div class="fw-semibold">{{ optreden.titel }}</div>
-            <div class="small text-muted">
-              {{ optreden.datum|date:"D d-m-Y" }}{% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
-            </div>
-          </div>
-
-          <div class="px-3 pb-3">
-
-            <div class="fw-semibold text-orange pt-2">Zangers</div>
-            {% for lid in zangers %}
-              {% include "_planning_lid_mobile.html" %}
-            {% empty %}
-              <div class="small text-muted py-2">Geen zangers.</div>
-            {% endfor %}
-
-            <div class="fw-semibold text-orange pt-3">Zwaaibaas</div>
-            {% for lid in zwaaibaas %}
-              {% include "_planning_lid_mobile.html" %}
-            {% empty %}
-              <div class="small text-muted py-2">Geen zwaaibaas.</div>
-            {% endfor %}
-
-            <div class="fw-semibold text-orange pt-3">Muzikanten</div>
-            {% for lid in muzikanten %}
-              {% include "_planning_lid_mobile.html" %}
-            {% empty %}
-              <div class="small text-muted py-2">Geen muzikanten.</div>
-            {% endfor %}
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-
-    {# ===================== DESKTOP ===================== #}
-    <div class="d-none d-md-block">
-      <div class="planning-card">
-        <div class="table-responsive">
-          <table class="table table-sm align-middle planning-table">
-
-            <thead>
-              <tr>
-                <th class="sticky-col sticky-head">Achternaam</th>
-                <th class="sticky-head">Voornaam</th>
-                {% for optreden in optredens %}
-                  <th class="sticky-head">
-                    <div class="fw-semibold">{{ optreden.titel }}</div>
-                    <div class="small text-muted">
-                      {{ optreden.datum|date:"D d-m-Y" }}
-                      {% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
-                    </div>
-                  </th>
-                {% endfor %}
-              </tr>
-            </thead>
-
-            <tbody>
-
-              {# === ZANGERS === #}
-              <tr class="planning-group-row">
-                <td class="sticky-col fw-semibold" colspan="{{ optredens|length|add:2 }}">Zangers</td>
-              </tr>
-              {% for lid in zangers %}
-                {% include "_planning_lid_desktop.html" %}
-              {% empty %}
-                <tr><td colspan="{{ optredens|length|add:2 }}">Geen zangers.</td></tr>
-              {% endfor %}
-
-              {# === ZWAAIBAAS === #}
-              <tr class="planning-group-row">
-                <td class="sticky-col fw-semibold" colspan="{{ optredens|length|add:2 }}">Zwaaibaas</td>
-              </tr>
-              {% for lid in zwaaibaas %}
-                {% include "_planning_lid_desktop.html" %}
-              {% empty %}
-                <tr><td colspan="{{ optredens|length|add:2 }}">Geen zwaaibaas.</td></tr>
-              {% endfor %}
-
-              {# === MUZIKANTEN === #}
-              <tr class="planning-group-row">
-                <td class="sticky-col fw-semibold" colspan="{{ optredens|length|add:2 }}">Muzikanten</td>
-              </tr>
-              {% for lid in muzikanten %}
-                {% include "_planning_lid_desktop.html" %}
-              {% empty %}
-                <tr><td colspan="{{ optredens|length|add:2 }}">Geen muzikanten.</td></tr>
-              {% endfor %}
-
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
+    {% if is_beheer %}
+    <a class="btn btn-outline-success btn-gen-spec hvr-grow" href="{% url 'planning:optreden_create' %}">
+      <i class="fa-solid fa-plus me-2"></i>
+      Nieuw optreden
+    </a>
+    {% endif %}
   </div>
 
-  <div id="planning-config" data-status-url="{% url 'planning:status_update' %}"></div>
+  {# ===================== MOBIEL ===================== #}
+  <div class="d-block d-md-none">
+
+    {% for optreden in optredens %}
+    <div class="planning-card mb-3">
+      <div class="p-3 pb-2">
+        <div class="fw-semibold">{{ optreden.titel }}</div>
+
+        <div class="small text-muted">
+          {{ optreden.datum|date:"D d-m-Y" }}{% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
+        </div>
+
+        {% if optreden.locatie %}
+        <div class="mt-2 fw-semibold">{{ optreden.locatie }}</div>
+        {% endif %}
+
+        {% if optreden.adres %}
+        <div class="small text-muted">{{ optreden.adres|linebreaksbr }}</div>
+        {% endif %}
+
+        {% if is_beheer %}
+        <div class="mt-2 d-flex gap-3">
+          <a class="text-decoration-none" href="{% url 'planning:optreden_update' optreden.pk %}">
+            <i class="fa-regular fa-pen-to-square me-1"></i> Bewerken
+          </a>
+          <a class="text-decoration-none text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">
+            <i class="fa-regular fa-trash-can me-1"></i> Verwijderen
+          </a>
+        </div>
+        {% endif %}
+      </div>
+
+
+      <div class="px-3 pb-3">
+
+        <div class="fw-semibold text-orange pt-2">Zangers</div>
+        {% for lid in zangers %}
+        {% include "_planning_lid_mobile.html" %}
+        {% empty %}
+        <div class="small text-muted py-2">Geen zangers.</div>
+        {% endfor %}
+
+        <div class="fw-semibold text-orange pt-3">Zwaaibaas</div>
+        {% for lid in zwaaibaas %}
+        {% include "_planning_lid_mobile.html" %}
+        {% empty %}
+        <div class="small text-muted py-2">Geen zwaaibaas.</div>
+        {% endfor %}
+
+        <div class="fw-semibold text-orange pt-3">Muzikanten</div>
+        {% for lid in muzikanten %}
+        {% include "_planning_lid_mobile.html" %}
+        {% empty %}
+        <div class="small text-muted py-2">Geen muzikanten.</div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {# ===================== DESKTOP ===================== #}
+  <div class="d-none d-md-block">
+    <div class="planning-card">
+      <div class="table-responsive">
+        <table class="table table-sm align-middle planning-table">
+
+          <thead>
+            <tr>
+              <th class="sticky-col sticky-head">Achternaam</th>
+              <th class="sticky-head">Voornaam</th>
+              {% for optreden in optredens %}
+              <th class="sticky-head">
+  <div class="fw-semibold">{{ optreden.titel }}</div>
+
+  <div class="small text-muted">
+    {{ optreden.datum|date:"D d-m-Y" }}
+    {% if optreden.tijd %} · {{ optreden.tijd|time:"H:i" }} uur{% endif %}
+  </div>
+
+  {% if optreden.locatie %}
+    <div class="small">{{ optreden.locatie }}</div>
+  {% endif %}
+
+  {% if optreden.adres %}
+    <div class="small text-muted">{{ optreden.adres|linebreaksbr }}</div>
+  {% endif %}
+
+  {% if is_beheer %}
+    <div class="small mt-1 d-flex gap-3">
+      <a href="{% url 'planning:optreden_update' optreden.pk %}">
+        <i class="fa-regular fa-pen-to-square me-1"></i>Bewerken
+      </a>
+      <a class="text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">
+        <i class="fa-regular fa-trash-can me-1"></i>Verwijderen
+      </a>
+    </div>
+  {% endif %}
+</th>
+
+              {% endfor %}
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {# === ZANGERS === #}
+            <tr class="planning-group-row">
+              <td class="sticky-col fw-semibold" colspan="{{ optredens|length|add:2 }}">Zangers</td>
+            </tr>
+            {% for lid in zangers %}
+            {% include "_planning_lid_desktop.html" %}
+            {% empty %}
+            <tr>
+              <td colspan="{{ optredens|length|add:2 }}">Geen zangers.</td>
+            </tr>
+            {% endfor %}
+
+            {# === ZWAAIBAAS === #}
+            <tr class="planning-group-row">
+              <td class="sticky-col fw-semibold" colspan="{{ optredens|length|add:2 }}">Zwaaibaas</td>
+            </tr>
+            {% for lid in zwaaibaas %}
+            {% include "_planning_lid_desktop.html" %}
+            {% empty %}
+            <tr>
+              <td colspan="{{ optredens|length|add:2 }}">Geen zwaaibaas.</td>
+            </tr>
+            {% endfor %}
+
+            {# === MUZIKANTEN === #}
+            <tr class="planning-group-row">
+              <td class="sticky-col fw-semibold" colspan="{{ optredens|length|add:2 }}">Muzikanten</td>
+            </tr>
+            {% for lid in muzikanten %}
+            {% include "_planning_lid_desktop.html" %}
+            {% empty %}
+            <tr>
+              <td colspan="{{ optredens|length|add:2 }}">Geen muzikanten.</td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="planning-config" data-status-url="{% url 'planning:status_update' %}"></div>
 <div class="mb-10"></div>
 {% endblock %}
 
