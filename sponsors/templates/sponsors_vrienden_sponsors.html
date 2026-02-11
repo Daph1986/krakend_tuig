@@ -47,8 +47,12 @@
       </p>
 
       <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a class="btn general-btn hvr-grow me-2" href="#" target="_blank" rel="noreferrer">Bidbook</a>
-        <a class="btn general-btn hvr-grow" href="#" target="_blank" rel="noreferrer">Sponsorcontract</a>
+        <a class="btn general-btn hvr-grow me-2"
+          href="https://krakendtuig-media.s3.eu-north-1.amazonaws.com/sponsors/bidbook_shantycafe.pdf"
+          target="_blank" rel="noreferrer">Bidbook</a>
+        <a class="btn general-btn hvr-grow"
+          href="https://krakendtuig-media.s3.eu-north-1.amazonaws.com/sponsors/blanco_sponsorcontract.pdf"
+          target="_blank" rel="noreferrer">Sponsorcontract</a>
       </div>
     </div>
   </div>
@@ -60,32 +64,32 @@
 
   <div class="sponsor-grid">
     {% for sponsor in sponsors %}
-      {% if sponsor.website %}
-        <a href="{{ sponsor.website }}" target="_blank" rel="noreferrer" class="sponsor-item">
+    {% if sponsor.website %}
+    <a href="{{ sponsor.website }}" target="_blank" rel="noreferrer" class="sponsor-item">
       {% else %}
-        <div class="sponsor-item">
-      {% endif %}
+      <div class="sponsor-item">
+        {% endif %}
 
-          <div class="sponsor-logo-wrap">
-            {% if sponsor.logo %}
-              <img src="{{ sponsor.logo.url }}" alt="{{ sponsor.naam }}">
-            {% else %}
-              <span>{{ sponsor.naam }}</span>
-            {% endif %}
-          </div>
-
-      {% if sponsor.website %}
-        </a>
-      {% else %}
+        <div class="sponsor-logo-wrap">
+          {% if sponsor.logo %}
+          <img src="{{ sponsor.logo.url }}" alt="{{ sponsor.naam }}">
+          {% else %}
+          <span>{{ sponsor.naam }}</span>
+          {% endif %}
         </div>
-      {% endif %}
-    {% endfor %}
+
+        {% if sponsor.website %}
+    </a>
+    {% else %}
+  </div>
+  {% endif %}
+  {% endfor %}
   </div>
 
   {% if user.is_staff %}
-    <div class="text-center mt-5 mb-10">
-      <a class="btn general-btn hvr-grow" href="{% url 'sponsors:beheer' %}">Sponsors beheren</a>
-    </div>
+  <div class="text-center mt-5 mb-10">
+    <a class="btn general-btn hvr-grow" href="{% url 'sponsors:beheer' %}">Sponsors beheren</a>
+  </div>
   {% endif %}
 </section>
 <div class="mb-10"></div>
