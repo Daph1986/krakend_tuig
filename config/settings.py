@@ -200,7 +200,7 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-WHITENOISE_KEEP_ONLY_HASHED_FILES = False
+WHITENOISE_MANIFEST_STRICT = False
 
 # S3 settings (alleen als USE_S3=1)
 if USE_S3:
