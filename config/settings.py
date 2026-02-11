@@ -200,6 +200,7 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+WHITENOISE_KEEP_ONLY_HASHED_FILES = False
 
 # S3 settings (alleen als USE_S3=1)
 if USE_S3:
@@ -222,6 +223,7 @@ if USE_S3:
     }
 
     MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/'
+
 
 # -----------------------
 # SMTP Configuration
