@@ -197,10 +197,9 @@ STORAGES = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
-WHITENOISE_MANIFEST_STRICT = False
 
 # S3 settings (alleen als USE_S3=1)
 if USE_S3:
