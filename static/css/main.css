@@ -966,6 +966,12 @@ footer {
   .tooltip {
     padding: 0 10px;
   }
+  .footer_icons {
+  margin-right: 15px;
+  margin-left: 15px;
+  font-weight: bold;
+  font-size: 18px;
+}
 }
 
 @media (max-width: 576px) {
