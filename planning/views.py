@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
+from collections import defaultdict
 from .forms import OptredenForm
 from .models import Aanwezigheid, Optreden
 from accounts.utils import get_member_groups
@@ -30,6 +31,12 @@ def planning_overzicht(request):
 
     status_map = {(a['user_id'], a['optreden_id']): a['status'] for a in aanwez}
 
+    aanwezig_telling = defaultdict(lambda: {'aanwezig': 0, 'afwezig': 0, 'onzeker': 0})
+
+    for (user_id, optreden_id), status in status_map.items():
+        if status in ('aanwezig', 'afwezig', 'onzeker'):
+            aanwezig_telling[optreden_id][status] += 1
+
     context = {
         'optredens': optredens,
         'leden': leden,
@@ -37,6 +44,7 @@ def planning_overzicht(request):
         'zwaaibaas': zwaaibaas,
         'muzikanten': muzikanten,
         'status_map': status_map,
+        'aanwezig_telling': dict(aanwezig_telling),
         'status_choices': Aanwezigheid.STATUS_CHOICES,
         'is_beheer': is_planning_beheer(request.user),
         'current_user_id': request.user.id,

@@ -58,6 +58,19 @@
             <i class="fa-regular fa-trash-can me-1"></i> Verwijderen
           </a>
         </div>
+        <div class="mt-2">
+          {% with tellen=aanwezig_telling|get_item:optreden.id %}
+          <span class="badge bg-success text-dark me-1">
+            {{ tellen.aanwezig|default:0 }} aanwezig
+          </span>
+          <span class="badge bg-danger text-dark me-1">
+            {{ tellen.afwezig|default:0 }} afwezig
+          </span>
+          <span class="badge bg-warning text-dark">
+            {{ tellen.onzeker|default:0 }} nog niet zeker
+          </span>
+          {% endwith %}
+        </div>
         {% endif %}
       </div>
 
@@ -124,6 +137,19 @@
                   <a class="text-danger" href="{% url 'planning:optreden_delete' optreden.pk %}">
                     <i class="fa-regular fa-trash-can me-1"></i>Verwijderen
                   </a>
+                </div>
+                <div class="mt-2">
+                  {% with tellen=aanwezig_telling|get_item:optreden.id %}
+                  <span class="badge bg-success me-1 text-dark">
+                    {{ tellen.aanwezig|default:0 }} aanwezig
+                  </span>
+                  <span class="badge bg-danger me-1 text-dark">
+                    {{ tellen.afwezig|default:0 }} afwezig
+                  </span>
+                  <span class="badge bg-warning text-dark">
+                    {{ tellen.onzeker|default:0 }} nog niet zeker
+                  </span>
+                  {% endwith %}
                 </div>
                 {% endif %}
               </th>

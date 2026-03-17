@@ -15,3 +15,8 @@ def get_cell_status(status_map, args):
 @register.simple_tag
 def cell_key(user_id, optreden_id):
     return f'{user_id}:{optreden_id}'
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
