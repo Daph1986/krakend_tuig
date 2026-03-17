@@ -1,10 +1,11 @@
 {% load planning_extras %}
 
 <tr>
-  <td class="sticky-col">
+  <td class="sticky-col first">
     {{ lid.user.last_name }}{% if lid.last_name_prefix %}, {{ lid.last_name_prefix }}{% endif %}
   </td>
-  <td>
+  
+  <td class="sticky-col second">
     {{ lid.user.first_name }}
   </td>
 
