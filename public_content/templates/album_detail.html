@@ -35,7 +35,7 @@
           {% if p.caption or p.credit %}
             <div class="card-body">
               {% if p.caption %}<div class="fw-semibold">{{ p.caption }}</div>{% endif %}
-              {% if p.credit %}<div class="text-muted small mt-1">{{ p.credit }}</div>{% endif %}
+              {% if p.credit %}<div class="text-muted small fst-italic mt-1">Foto: {{ p.credit }}</div>{% endif %}
             </div>
           {% endif %}
         </div>
