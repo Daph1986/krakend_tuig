@@ -202,6 +202,18 @@ footer {
   transform: scaleX(1);
 }
 
+.footer_icons {
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.footer_icons.hvr-grow:hover,
+.footer_icons.hvr-grow:focus {
+  color: #8F4C22;
+}
+
+
 /* ---------------------------- Home ----------------------------- */
 .hero-image {
   position: relative;
