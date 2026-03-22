@@ -1,13 +1,17 @@
 from django.shortcuts import render
 from planning.models import Optreden
+from django.utils import timezone
 
 
 def agenda(request):
+    vandaag = timezone.now().date()
+
     optredens = (
         Optreden.objects
         .filter(
             actief=True,
-            openbaar=True,   # 👈 dit is de sleutel
+            openbaar=True,
+            datum__gte=vandaag
         )
         .order_by('datum', 'tijd')
     )

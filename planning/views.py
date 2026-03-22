@@ -7,6 +7,8 @@ from collections import defaultdict
 from .forms import OptredenForm
 from .models import Aanwezigheid, Optreden
 from accounts.utils import get_member_groups
+from datetime import timedelta
+from django.utils import timezone
 
 
 def is_planning_beheer(user):
@@ -15,7 +17,17 @@ def is_planning_beheer(user):
 
 @login_required
 def planning_overzicht(request):
-    optredens = Optreden.objects.filter(actief=True).order_by('datum', 'tijd', 'titel')
+    toon_archief = request.GET.get('archief') == '1'
+
+    vandaag = timezone.now().date()
+    grens_datum = vandaag - timedelta(days=7)
+
+    optredens_qs = Optreden.objects.filter(actief=True)
+
+    if not toon_archief:
+        optredens_qs = optredens_qs.filter(datum__gte=grens_datum)
+
+    optredens = optredens_qs.order_by('datum', 'tijd', 'titel')
 
     groups = get_member_groups()
     zangers = groups['zangers']
@@ -48,6 +60,7 @@ def planning_overzicht(request):
         'status_choices': Aanwezigheid.STATUS_CHOICES,
         'is_beheer': is_planning_beheer(request.user),
         'current_user_id': request.user.id,
+        'toon_archief': toon_archief,
     }
 
     return render(request, 'planning.html', context)
