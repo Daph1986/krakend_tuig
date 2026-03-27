@@ -68,9 +68,9 @@
 </div>
 <div class="container mt-5">
   <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
+    <div class="carousel-inner mb-5">
       {% for slide in slides %}
-      <div class="carousel-item {% if forloop.first %}active{% endif %}"
+      <div class="carousel-item mb-5 {% if forloop.first %}active{% endif %}"
         data-bs-interval="{{ slide.interval_ms }}">
         <img src="{{ slide.image.url }}" class="d-block w-100" alt="{{ slide.caption|default:'Krakend Tuig' }}">
 
