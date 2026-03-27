@@ -70,7 +70,7 @@
       <div class="sponsor-item">
         {% endif %}
 
-        <div class="sponsor-logo-wrap">
+        <div class="sponsor-logo-wrap mb-4">
           {% if sponsor.logo %}
           <img src="{{ sponsor.logo.url }}" alt="{{ sponsor.naam }}">
           {% else %}
@@ -85,12 +85,12 @@
   {% endif %}
   {% endfor %}
   </div>
+  <div class="mb-10"></div>
 
   {% if user.is_staff %}
   <div class="text-center mt-5 mb-10">
-    <a class="btn general-btn hvr-grow" href="{% url 'sponsors:beheer' %}">Sponsors beheren</a>
+    <a class="btn general-btn hvr-grow mb-4" href="{% url 'sponsors:beheer' %}">Sponsors beheren</a>
   </div>
   {% endif %}
 </section>
-<div class="mb-10"></div>
 {% endblock %}
