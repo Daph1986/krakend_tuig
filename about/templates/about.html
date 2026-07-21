@@ -19,18 +19,19 @@
     <div class="col-12 col-md-7 text-center text-md-start">
       <h5>{{ intro.title }}</h5>
 
-      {% if intro.paragraph_1 %}<p>{{ intro.paragraph_1 }}</p>{% endif %}
-      {% if intro.paragraph_2 %}<p>{{ intro.paragraph_2 }}</p>{% endif %}
-      {% if intro.paragraph_3 %}<p>{{ intro.paragraph_3 }}</p>{% endif %}
-      {% if intro.paragraph_4 %}<p>{{ intro.paragraph_4 }}</p>{% endif %}
-      {% if intro.paragraph_5 %}<p>{{ intro.paragraph_5 }}</p>{% endif %}
-      {% if intro.paragraph_6 %}<p>{{ intro.paragraph_6 }}</p>{% endif %}
-      {% if intro.paragraph_7 %}
+      {% if paragraphs.paragraph_1 %}<p>{{ paragraphs.paragraph_1 }}</p>{% endif %}
+      {% if paragraphs.paragraph_2 %}<p>{{ paragraphs.paragraph_2 }}</p>{% endif %}
+      {% if paragraphs.paragraph_3 %}<p>{{ paragraphs.paragraph_3 }}</p>{% endif %}
+      {% if paragraphs.paragraph_4 %}<p>{{ paragraphs.paragraph_4 }}</p>{% endif %}
+      {% if paragraphs.paragraph_5 %}<p>{{ paragraphs.paragraph_5 }}</p>{% endif %}
+      {% if paragraphs.paragraph_6 %}<p>{{ paragraphs.paragraph_6 }}</p>{% endif %}
+      {% if paragraphs.paragraph_7 %}
       <p>
-        {{ intro.paragraph_7 }}
+        {{ paragraphs.paragraph_7 }}
         <a class="contact-link" href="{% url 'zing_mee' %}">hier</a>.
       </p>
       {% endif %}
+
       {% if user.is_staff %}
       <div class="container text-center text-md-start mt-3">
         <a class="btn general-btn hvr-grow" href="{% url 'about:about_intro_edit' %}">
