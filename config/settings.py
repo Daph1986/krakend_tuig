@@ -144,7 +144,7 @@ JAZZMIN_SETTINGS['custom_css'] = 'css/admin.css'
 
 JAZZMIN_UI_TWEAKS = {
     'theme': 'simplex',
-    'dark_mode_theme': 'darkly',
+    'dark_mode_theme': 'cyborg',
     'navbar_small_text': False,
     'footer_small_text': True,
     'body_small_text': False,
@@ -153,7 +153,7 @@ JAZZMIN_UI_TWEAKS = {
     'sidebar_disable_expand': False,
     'sidebar_nav_child_indent': True,
     'navbar': 'navbar-dark navbar-navy',
-    'accent': 'accent-navy',
+    'accent': 'accent-info',
     'sidebar': 'sidebar-dark-navy',
     'button_classes': {
         'primary': 'btn-primary',
